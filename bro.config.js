@@ -9,14 +9,16 @@ module.exports = {
   },
   /* use https://admin.bro-js.ru/ to create config, navigations and features */
   navigations: {
-    "sbertech.main": "/sbertech",
+    "smartini_crypto.main": "/smartini_crypto",
+    "smartini_crypto.detail": "/smartini_crypto/detail",
+    "smartini_crypto.mining": "/smartini_crypto/mining",
   },
   features: {
-    "sbertech": {
+    "smartini_crypto": {
       // add your features here in the format [featureName]: { value: string }
     },
   },
   config: {
-    "sbertech.api": "/api",
+    "smartini_crypto.api": "/api",
   },
 };
