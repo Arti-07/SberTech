@@ -25,6 +25,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.14.0",
+        "@types/webpack-env": "^1.18.5",
         "eslint": "^9.14.0",
         "eslint-plugin-react": "^7.37.2",
         "globals": "^15.12.0",
