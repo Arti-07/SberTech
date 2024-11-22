@@ -1,7 +1,8 @@
 import React from 'react';
+import Redbutton from './components/Redbutton';
 
 const MiningPage = (): React.ReactElement => {
-    return <h1>Mining crypto!</h1>;
+    return <Redbutton />;
 };
 
 export default MiningPage;
