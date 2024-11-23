@@ -6,6 +6,10 @@ import {styled} from '@mui/material/styles';
 
 const navigations: Array<{ name: string; href: string }> = [
     {
+        name: 'Account Page',
+        href: getNavigationsValue('smartini_crypto.account'),
+    },
+    {
         name: 'Main Page',
         href: getNavigationsValue('smartini_crypto.main'),
     },
