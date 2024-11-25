@@ -12,6 +12,7 @@ module.exports = {
     "smartini_crypto.main": "/smartini_crypto",
     "smartini_crypto.detail": "/smartini_crypto/detail",
     "smartini_crypto.mining": "/smartini_crypto/mining",
+    "smartini_crypto.account": "/smartini_crypto/account",
   },
   features: {
     "smartini_crypto": {

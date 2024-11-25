@@ -3,6 +3,7 @@ import {createBrowserRouter} from 'react-router-dom';
 import ListPage from '../list';
 import DetailPage from '../detail';
 import MiningPage from "../mining";
+import AccountPage from "../account";
 import {getNavigationsValue} from '@brojs/cli';
 import Layout from './components/layout';
 
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
         path: getNavigationsValue('smartini_crypto.main'),
         element: <Layout/>,
         children: [
+            {
+                path: getNavigationsValue('smartini_crypto.account'),
+                element:<AccountPage/>
+            },
             {
                 path: getNavigationsValue('smartini_crypto.main'),
                 element: <ListPage/>
