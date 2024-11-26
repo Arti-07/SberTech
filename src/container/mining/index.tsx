@@ -11,8 +11,11 @@ const MiningPage = (): React.ReactElement => {
 
             {/* <motion.div className="box" animate={{ x: 100 }} /> */}
             <motion.div className="box" 
-                animate={{
-                    scale: 0.1,
+                drag 
+                dragConstraints={{ top: 100, left: 0, right: 300, bottom: 400 }}
+                whileDrag={{ scale: 0.9 }}
+                animate={{                    
+                    scale: 2,
                     transition: { 
                         duration: 2
                     }
