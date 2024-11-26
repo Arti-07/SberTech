@@ -1,7 +1,8 @@
 import React from 'react';
+import { StrictMode } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
-import AppRouter from './container/main/index';
+import Main from './container/main';
 
 const theme = createTheme({
     palette: {
@@ -16,10 +17,12 @@ const theme = createTheme({
 
 const App = () => {
     return (
+        <StrictMode>
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppRouter />
+            <Main />
         </ThemeProvider>
+        </StrictMode>
     );
 };
 

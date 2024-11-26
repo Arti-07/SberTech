@@ -14,7 +14,7 @@ const navigations: Array<{ name: string; href: string }> = [
         href: getNavigationsValue('smartini_crypto.main'),
     },
     {
-        name: 'Детальная информация',
+        name: 'Detail',
         href: getNavigationsValue('smartini_crypto.detail'),
     },
     {
