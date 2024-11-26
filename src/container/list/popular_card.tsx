@@ -1,29 +1,30 @@
 import React from "react";
 import { Card, CardContent, Typography, CardMedia } from "@mui/material";
 
-interface FavoriteCardProps {
+interface PopularCardProps {
     title: string;
     imageUrl: string;
     price: string;
 }
 
-const FavoriteCard: React.FC<FavoriteCardProps> = ({ title, imageUrl, price }) => {
+const PopularCard: React.FC<PopularCardProps> = ({ title, imageUrl, price }) => {
     return (
         <Card
             sx={{
                 maxWidth: 400,
                 borderRadius: "20px",
                 boxShadow: 5,
+                backgroundColor: "#49455E",
                 border: "2px solid transparent",
-                transition: "all 0.3s ease-in-out",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 "&:hover": {
-                    transform: "scale(1.05) rotate(5deg)",
-                    boxShadow: "0 4px 15px rgba(0, 255, 255, 0.5)",
-                    borderColor: "rgba(78, 57, 222, 1.00)",
-                },
-                "&:active": {
-                    transform: "scale(0.98) rotate(-5deg)",
-                    boxShadow: "0 6px 20px rgba(0, 255, 255, 0.7)",
+                    transform: "scale(1.1)",
+                    boxShadow: "0 4px 15px",
+                    backgroundColor: "#797993",
+                    borderColor: "#FFFFFF",
+                    "& .price": {
+                        color: "#FFFFFF",
+                    },
                 },
             }}
         >
@@ -46,6 +47,7 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({ title, imageUrl, price }) =
                     sx={{
                         marginTop: "10px",
                         display: "flex",
+                        color: "#1E1E2A"
                     }}
                 >
                     {title}
@@ -55,11 +57,12 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({ title, imageUrl, price }) =
                 <Typography
                     variant="body2"
                     component="p"
+                    className="price"
                     sx={{
                         marginTop: "13px",
                         fontWeight: "bold",
                         fontSize: "20px",
-                        color: "rgba(78, 57, 222, 1.00)",
+                        color: "#797993",
                         textAlign: "center",
                     }}
                 >
@@ -71,4 +74,4 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({ title, imageUrl, price }) =
     );
 };
 
-export default FavoriteCard;
+export default PopularCard;

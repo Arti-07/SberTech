@@ -1,7 +1,7 @@
 import React from "react";
-import FavoriteCard from "./favorite_card";
+import PopularCard from "./popular_card";
 
-const Favorites = () => {
+const Popular = () => {
     return (
         <div style={{ padding: "5px" }}>
             <div
@@ -12,27 +12,27 @@ const Favorites = () => {
                     marginTop: "0px",
                 }}
             >
-                <FavoriteCard
+                <PopularCard
                     title="Bitcoin"
                     imageUrl={require("./logo/bitcoin.png")}
                     price="$100"
                 />
-                <FavoriteCard
+                <PopularCard
                     title="Tether"
                     imageUrl={require("./logo/tether.png")}
                     price="$200"
                 />
-                <FavoriteCard
+                <PopularCard
                     title="Ethereum"
                     imageUrl={require("./logo/ethereum.png")}
                     price="$300"
                 />
-                <FavoriteCard
+                <PopularCard
                     title="Solana"
                     imageUrl={require("./logo/solana.png")}
                     price="$400"
                 />
-                <FavoriteCard
+                <PopularCard
                     title="Dogecoin"
                     imageUrl={require("./logo/dogecoin.png")}
                     price="$150"
@@ -42,4 +42,4 @@ const Favorites = () => {
     );
 };
 
-export default Favorites;
+export default Popular;
