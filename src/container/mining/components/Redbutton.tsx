@@ -2,6 +2,8 @@ import React from 'react';
 import {useState} from 'react';
 
 
+import "./counter_styles.css";
+
 export default function Redbutton() {
     const [count, setCount] = useState(0);
 
