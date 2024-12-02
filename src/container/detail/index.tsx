@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import api from '../../../stubs/api';
+import api from '../../api';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
 const DetailPage = (): React.ReactElement => {
