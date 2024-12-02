@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 
 import Redbutton from './components/Redbutton';
 
-// import "./styles.css";
+import "./scroll_styles.css";
 // import { LoremIpsum } from "./components/LoremIpsum";
 
 import "./button_styles.css";
-import { motion, useScroll } from "framer-motion";
+import { motion, motionValue } from "framer-motion";
 
 import "./tank_styles.css";
 function Tank() {
@@ -20,34 +20,52 @@ function Tank() {
     )
 };
 
-
-function Counter() {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-        const id = setInterval(() => {
-        setCount(c => c + 1);
-        }, 100);
-        return () => clearInterval(id);
-    }, []);
-
-    return <h1>{count}</h1>;
-}
-
+function Babah() {
+    return (
+        <h1> БАБАХ </h1>
+    )
+};
 
 const MiningPage = (): React.ReactElement => {
+
+    const [countMining, setCountMining] = useState(0)
+    const [progress, setProgress] = useState(0.01)
+    const [babah, setBabah] = useState(0)
+
+    useEffect(() => {
+        
+        const interval = setInterval(() => {
+            setProgress( Math.max(progress - 0.0025, 0.01) );            
+            setBabah( Number(progress > 1) );
+        }, 10);
+        
+        // Очистка интервала при размонтаже компонента
+        return () => clearInterval(interval);
+    }, [progress, babah]);
+
         
     return (
         <>
-            <Tank />
-            <Counter />
-            <Redbutton />
             <motion.div
-                className="box"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 800, damping: 10 }}
+            className="progress-bar"
+            style={{ scaleX: progress }}
             />
+            <motion.div style={{ opacity: babah }}>
+                <Babah />
+            </motion.div>
+            <h1>{countMining}</h1>
+            <div className="button-container">
+                <motion.div
+                    className="box"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 800, damping: 10 }}
+                    onTap={() => {
+                        setProgress(Math.min(progress+0.05, 1.1));
+                        setCountMining(c => c + (babah ? 5 : 1));
+                    }}
+                />
+            </div>
         </>
     );
 };
