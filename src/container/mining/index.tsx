@@ -5,6 +5,7 @@ import Babah from './components/Babah';
 import ProgressBar from './components/ProgressBar';
 import MotioButton from './components/MotionButton';
 
+import { containerCenterStyle } from './components/ContainerCenter.style'
 
 const MiningPage = (): React.ReactElement => {
 
@@ -24,6 +25,10 @@ const MiningPage = (): React.ReactElement => {
     
     return (
         <>
+            
+            <div className={containerCenterStyle}>
+                <h1>{countMining}</h1>
+            </div>
             <Babah opacity={ isVisible }/>
             <ProgressBar progress={ progress } />
             <MotioButton
