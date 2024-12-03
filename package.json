@@ -14,7 +14,7 @@
     "description": "",
     "dependencies": {
         "@brojs/cli": "^1.0.0",
-        "@emotion/react": "^11.13.3",
+        "@emotion/react": "^11.13.5",
         "@emotion/styled": "^11.13.0",
         "@mui/material": "^6.1.7",
         "@nextui-org/react": "^2.4.8",
