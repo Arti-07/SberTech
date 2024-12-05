@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../api'
+import api from '../../api';
 
 const SignInPage = (): React.ReactElement => {
     const [login, setLogin] = useState('');
@@ -10,20 +10,33 @@ const SignInPage = (): React.ReactElement => {
 
     const navigate = useNavigate();  // Хук для навигации
 
-
-
     const handleSignIn = async () => {
+        setMessage('');
+
+        if (!login && !password) {
+            setMessage('Введите логин и пароль');
+            return;
+        } else if (!login) {
+            setMessage('Введите логин');
+            return;
+        } else if (!password) {
+            setMessage('Введите пароль');
+            return;
+        }
+
         try {
             const token = await api.login(login, password);
-
             sessionStorage.setItem('login', login);
 
             document.cookie = `token=${token}; path=/; Secure; SameSite=Strict;`;
             navigate('/smartini_crypto/userspage');
-
-        } catch (error) {
+        } catch (error: any) {
             console.error('Ошибка:', error);
-            setMessage('Произошла ошибка. Попробуйте позже.');
+            if (error.response && error.response.status === 401) {
+                setMessage('Неверный логин или пароль');
+            } else {
+                setMessage('Произошла ошибка. Попробуйте позже.');
+            }
         }
     };
 
