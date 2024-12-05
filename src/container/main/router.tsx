@@ -9,6 +9,7 @@ import SignupPage from "../signup";
 import UsersPage from "../userspage";
 import {getNavigationsValue} from '@brojs/cli';
 import Layout from './components/layout';
+import NotFoundPage from "../404/NotFoundPage";
 
 export const router = createBrowserRouter([
     {
@@ -17,15 +18,15 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: getNavigationsValue('smartini_crypto.account'),
-                element:<AccountPage/>
+                element: <AccountPage/>
             },
             {
                 path: getNavigationsValue('smartini_crypto.signin'),
-                element:<SigninPage/>
+                element: <SigninPage/>
             },
             {
                 path: getNavigationsValue('smartini_crypto.signup'),
-                element:<SignupPage/>
+                element: <SignupPage/>
             },
             {
                 path: getNavigationsValue('smartini_crypto.main'),
@@ -43,6 +44,9 @@ export const router = createBrowserRouter([
                 path: getNavigationsValue('smartini_crypto.userspage'),
                 element:<UsersPage/>
             },
+                path: "*",
+                element: <NotFoundPage/>
+            }
         ]
     }
 ]);
