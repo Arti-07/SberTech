@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import api from '../../api'
+import { useNavigate } from 'react-router-dom';
+import api from '../../api';
 
 const SignInPage = (): React.ReactElement => {
     const [login, setLogin] = useState('');
@@ -7,15 +8,35 @@ const SignInPage = (): React.ReactElement => {
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState('');
 
-    //TODO поработать над стилями (emotionreact), сохранить токен в куки и обработку ошибок сделать
+    const navigate = useNavigate();  // Хук для навигации
+
     const handleSignIn = async () => {
+        setMessage('');
+
+        if (!login && !password) {
+            setMessage('Введите логин и пароль');
+            return;
+        } else if (!login) {
+            setMessage('Введите логин');
+            return;
+        } else if (!password) {
+            setMessage('Введите пароль');
+            return;
+        }
+
         try {
             const token = await api.login(login, password);
-            alert('Успешная авторизация')
+            sessionStorage.setItem('login', login);
 
-        } catch (error) {
+            document.cookie = `token=${token}; path=/; Secure; SameSite=Strict;`;
+            navigate('/smartini_crypto/userspage');
+        } catch (error: any) {
             console.error('Ошибка:', error);
-            setMessage('Произошла ошибка. Попробуйте позже.');
+            if (error.response && error.response.status === 401) {
+                setMessage('Неверный логин или пароль');
+            } else {
+                setMessage('Произошла ошибка. Попробуйте позже.');
+            }
         }
     };
 
@@ -66,7 +87,7 @@ const SignInPage = (): React.ReactElement => {
                         onClick={() => setShowPassword((prev) => !prev)}
                         style={{
                             position: 'absolute',
-                            top: '50%',
+                            top: '70%',
                             right: '10px',
                             transform: 'translateY(-50%)',
                             cursor: 'pointer',
