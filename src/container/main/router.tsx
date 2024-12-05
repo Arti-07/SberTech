@@ -6,6 +6,7 @@ import MiningPage from "../mining";
 import AccountPage from "../account";
 import SigninPage from "../signin";
 import SignupPage from "../signup";
+import UsersPage from "../userspage";
 import {getNavigationsValue} from '@brojs/cli';
 import Layout from './components/layout';
 
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
             {
                 path: getNavigationsValue('smartini_crypto.mining'),
                 element: <MiningPage/>
+            },
+            {
+                path: getNavigationsValue('smartini_crypto.userspage'),
+                element:<UsersPage/>
             },
         ]
     }

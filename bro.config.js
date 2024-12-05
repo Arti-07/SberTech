@@ -15,6 +15,7 @@ module.exports = {
     "smartini_crypto.account": "/smartini_crypto/account",
     "smartini_crypto.signin": "/smartini_crypto/signin",
     "smartini_crypto.signup": "/smartini_crypto/signup",
+    "smartini_crypto.userspage": "/smartini_crypto/userspage",
   },
   features: {
     "smartini_crypto": {

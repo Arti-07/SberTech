@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../api'
 
 const SignInPage = (): React.ReactElement => {
@@ -7,11 +8,18 @@ const SignInPage = (): React.ReactElement => {
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState('');
 
-    //TODO поработать над стилями (emotionreact), сохранить токен в куки и обработку ошибок сделать
+    const navigate = useNavigate();  // Хук для навигации
+
+
+    //TODO поработать над стилями (emotionreact)
     const handleSignIn = async () => {
         try {
             const token = await api.login(login, password);
-            alert('Успешная авторизация')
+
+            sessionStorage.setItem('login', login);
+
+            document.cookie = `token=${token}; path=/; Secure; SameSite=Strict;`;
+            navigate('/smartini_crypto/userspage');
 
         } catch (error) {
             console.error('Ошибка:', error);
@@ -66,7 +74,7 @@ const SignInPage = (): React.ReactElement => {
                         onClick={() => setShowPassword((prev) => !prev)}
                         style={{
                             position: 'absolute',
-                            top: '50%',
+                            top: '70%',
                             right: '10px',
                             transform: 'translateY(-50%)',
                             cursor: 'pointer',
