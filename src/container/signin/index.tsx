@@ -11,7 +11,7 @@ const SignInPage = (): React.ReactElement => {
     const navigate = useNavigate();  // Хук для навигации
 
 
-    //TODO поработать над стилями (emotionreact)
+
     const handleSignIn = async () => {
         try {
             const token = await api.login(login, password);
