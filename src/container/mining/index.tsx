@@ -30,6 +30,9 @@ const MiningPage = (): React.ReactElement => {
     
     return (
         <>
+            <div className={containerCenterStyle}>
+                <h1>Счет: {countMining}</h1>                
+            </div>            
             <Global
             styles={css`
                 body {
@@ -38,11 +41,7 @@ const MiningPage = (): React.ReactElement => {
                     overflow-y: scroll;
                 }
             `}
-            />
-            <div className={containerCenterStyle}>
-                <h1>{countMining}</h1>
-                <Babah opacity={ isVisible }/>
-            </div>
+            />            
             <Speedometer turn={progress} />
             <MotioButton
             progress={progress}
@@ -51,6 +50,14 @@ const MiningPage = (): React.ReactElement => {
             stepMining={stepMining}
             setCountMining={setCountMining} 
             />
+            <div className={containerCenterStyle}>
+            {isVisible ? (
+                    <Babah/>
+                ) : (
+                    <></>
+                )
+            }
+            </div>
         </>
     );
 };
