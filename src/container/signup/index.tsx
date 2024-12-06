@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 import styled from '@emotion/styled';
 // @ts-ignore
-import gifKiss from '../../gifs/gif_kiss.gif';
+import gifKiss from '../../assets/gifs/gif_kiss.gif';
 
 // Анимация для появления gif
 const GifContainer = styled.div`

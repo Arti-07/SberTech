@@ -42,8 +42,9 @@ export const router = createBrowserRouter([
             },
             {
                 path: getNavigationsValue('smartini_crypto.userspage'),
-                element:<UsersPage/>
+                element: <UsersPage/>
             },
+            {
                 path: "*",
                 element: <NotFoundPage/>
             }
