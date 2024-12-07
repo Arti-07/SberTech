@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import api from '../../api';
 import styled from '@emotion/styled';
-// @ts-ignore
+
 import gifKiss from '../../assets/gifs/gif_kiss.gif';
 
 // Анимация для появления gif
@@ -84,18 +84,17 @@ const SignupTitle = styled.h1`
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
-    color: black; 
-    font-family: 'Poppins', sans-serif;  
+    color: black;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), 0 0 25px rgba(255, 255, 255, 0.1);  
-    letter-spacing: 1px;  
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), 0 0 25px rgba(255, 255, 255, 0.1);
+    letter-spacing: 1px;
     transition: all 0.3s ease-in-out;
 
     &:hover {
-        text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);  
+        text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
     }
 `;
-
 
 
 // Стиль для группы полей ввода (формы)
@@ -151,7 +150,7 @@ const Button = styled.button`
     padding: 12px 25px;
     font-size: 1rem;
     border: none;
-    border-radius: 25px;  
+    border-radius: 25px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -241,7 +240,7 @@ const SignupPage = (): React.ReactElement => {
         <SignupContainer>
             {showGif && (
                 <GifContainer>
-                    <img src={gifKiss} alt="Successful registration" />
+                    <img src={gifKiss} alt="Successful registration"/>
                 </GifContainer>
             )}
 
@@ -258,7 +257,8 @@ const SignupPage = (): React.ReactElement => {
                             onChange={(e) => setLogin(e.target.value)}
                         />
                     </label>
-                    <Tooltip title="The login must be at least 3 characters long and can contain only letters, numbers, @, $, hyphen and underscore characters">❓</Tooltip>
+                    <Tooltip
+                        title="The login must be at least 3 characters long and can contain only letters, numbers, @, $, hyphen and underscore characters">❓</Tooltip>
                 </FormGroup>
 
                 {/* Поле пароля */}
@@ -272,7 +272,8 @@ const SignupPage = (): React.ReactElement => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
-                    <Tooltip title="The password must contain at least 6 characters, including a letter and a number">❓</Tooltip>
+                    <Tooltip
+                        title="The password must contain at least 6 characters, including a letter and a number">❓</Tooltip>
                 </FormGroup>
 
                 {/* Поле подтверждения пароля */}
