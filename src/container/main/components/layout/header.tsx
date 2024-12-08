@@ -3,6 +3,8 @@ import {AppBar, Toolbar, Typography, Button} from '@mui/material';
 import {Link} from 'react-router-dom';
 import {getNavigationsValue} from '@brojs/cli';
 import {styled} from '@mui/material/styles';
+import Logo from './logo/logo';
+import { HeaderContainer } from './index.style';
 
 const navigations: Array<{ name: string; href: string }> = [
     {
@@ -41,31 +43,35 @@ const GradientButton = styled(Button)(({theme}) => ({
 
 const Header = (): React.ReactElement => {
     return (
-        <AppBar
-            position="static"
-            sx={{
-                background: 'linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)',
-            }}
-        >
-            <Toolbar>
-                <Typography
-                    variant="h6"
-                    sx={{
-                        flexGrow: 1,
-                        fontWeight: 'bold',
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase',
-                    }}
-                >
-                    Smartini Crypto
-                </Typography>
-                {navigations.map((item) => (
-                    <GradientButton key={item.name} component={Link} to={item.href}>
-                        {item.name}
-                    </GradientButton>
-                ))}
-            </Toolbar>
-        </AppBar>
+        <HeaderContainer>
+            <Logo />
+            <AppBar
+                position="static"
+                sx={{
+                    background: 'linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)',
+                }}
+            >
+
+                <Toolbar>
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            flexGrow: 1,
+                            fontWeight: 'bold',
+                            letterSpacing: '1px',
+                            textTransform: 'uppercase',
+                        }}
+                    >
+                        Smartini Crypto
+                    </Typography>
+                    {navigations.map((item) => (
+                        <GradientButton key={item.name} component={Link} to={item.href}>
+                            {item.name}
+                        </GradientButton>
+                    ))}
+                </Toolbar>
+            </AppBar>
+        </HeaderContainer>
     );
 };
 
