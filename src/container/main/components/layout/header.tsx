@@ -1,76 +1,96 @@
 import React from 'react';
 import {AppBar, Toolbar, Typography, Button} from '@mui/material';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {getNavigationsValue} from '@brojs/cli';
 import {styled} from '@mui/material/styles';
 import Logo from './logo/logo';
 import { HeaderContainer } from './index.style';
 
-const navigations: Array<{ name: string; href: string }> = [
-    {
-        name: 'Main Page',
-        href: getNavigationsValue('smartini_crypto.main'),
-    },
-    {
-        name: 'Detail',
-        href: getNavigationsValue('smartini_crypto.detail'),
-    },
-    {
-        name: 'Mining your crypto',
-        href: getNavigationsValue('smartini_crypto.mining'),
-    },
-    {
-        name: 'Account Page',
-        href: getNavigationsValue('smartini_crypto.account'),
-    },
+
+const navigations = [
+    { name: 'Main Page', href: getNavigationsValue('smartini_crypto.main') },
+    { name: 'Detail', href: getNavigationsValue('smartini_crypto.detail') },
+    { name: 'Mining your crypto', href: getNavigationsValue('smartini_crypto.mining') },
+    { name: 'Account Page', href: getNavigationsValue('smartini_crypto.account') },
 ];
 
-// Кастомные стили для кнопок
-const GradientButton = styled(Button)(({theme}) => ({
-    color: '#fff',
+const NavButton = styled(Button)(({ theme }) => ({
+    color: '#797993',
     borderRadius: '20px',
-    padding: '8px 16px',
-    marginLeft: theme.spacing(1),
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    fontFamily: 'Roboto, sans-serif',
+    fontWeight: 'bold',
     textTransform: 'none',
-    transition: 'transform 0.3s, box-shadow 0.3s',
+    padding: '6px 12px',
+    transition: 'all 0.3s ease',
     '&:hover': {
+        color: '#FFFFFF',
+        backgroundColor: '#797993',
         transform: 'scale(1.1)',
-        boxShadow: '0 5px 8px 3px rgba(255, 105, 135, .4)',
     },
 }));
 
+const ActiveNavButton = styled(NavButton)({
+    backgroundColor: '#797993',
+    color: '#FFFFFF',
+    '&:hover': {
+        backgroundColor: '#797993',
+    },
+});
+
+const StyledAppBar = styled(AppBar)({
+    backgroundColor: '#1E1E2A',
+    boxShadow: 'none',
+});
+
+// Стили для контейнера с логотипом и названием
+const LogoContainer = styled('div')({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+});
+
 const Header = (): React.ReactElement => {
+    const location = useLocation();
+
     return (
         <HeaderContainer>
-            <Logo />
-            <AppBar
-                position="static"
-                sx={{
-                    background: 'linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)',
-                }}
-            >
-
+            <StyledAppBar position="static">
                 <Toolbar>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            flexGrow: 1,
-                            fontWeight: 'bold',
-                            letterSpacing: '1px',
-                            textTransform: 'uppercase',
-                        }}
-                    >
-                        Smartini Crypto
-                    </Typography>
-                    {navigations.map((item) => (
-                        <GradientButton key={item.name} component={Link} to={item.href}>
-                            {item.name}
-                        </GradientButton>
-                    ))}
+                    {/* Логотип и название */}
+                    <LogoContainer>
+                        <Logo />
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontFamily: 'Roboto, sans-serif',
+                                fontWeight: 'bold',
+                                letterSpacing: '1px',
+                                color: '#FFFFFF',
+                            }}
+                        >
+                            Smartini Crypto
+                        </Typography>
+                    </LogoContainer>
+
+                    {/* Кнопки навигации */}
+                    <div style={{ marginLeft: 'auto' }}>
+                        {navigations.map((item) => {
+                            const isActive = location.pathname === item.href;
+                            const ButtonComponent = isActive ? ActiveNavButton : NavButton;
+
+                            return (
+                                <ButtonComponent
+                                    key={item.name}
+                                    component={Link}
+                                    to={item.href}
+                                >
+                                    {item.name}
+                                </ButtonComponent>
+                            );
+                        })}
+                    </div>
                 </Toolbar>
-            </AppBar>
+            </StyledAppBar>
         </HeaderContainer>
     );
 };
