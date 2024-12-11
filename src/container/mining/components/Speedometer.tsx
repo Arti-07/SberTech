@@ -1,12 +1,12 @@
 import  React from 'react';
 import { useEffect } from 'react';
-import { Wrapper, StyledSpeedometer } from './Speedometer.style';
+import { Wrapper, StyledSpeedometer } from './speedometer.style';
 
 const Speedometer = ({turn}) => {
 
     const turnRef = React.useRef(null)
     const sliderRef = React.useRef(null)
-    const progress = Math.max(Math.min(turn, 0.999), 0.001);
+    const progress = Math.max(Math.min(turn, 1), 0);
 
     useEffect(() => {
         turnRef.current.style.transform = `rotate(${progress/2}turn)`
