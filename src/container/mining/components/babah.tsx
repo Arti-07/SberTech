@@ -1,6 +1,6 @@
 import  React from 'react';
 import { motion } from "framer-motion";
-import { containerCenterStyle } from './ContainerCenter.style'
+import { containerCenterStyle } from './containerCenter.style'
 
 const Babah = (): React.ReactElement => {
     
