@@ -1,8 +1,8 @@
 import React from 'react';
-import {AppBar, Toolbar, Typography, Button} from '@mui/material';
-import {Link, useLocation} from 'react-router-dom';
-import {getNavigationsValue} from '@brojs/cli';
-import {styled} from '@mui/material/styles';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+import { getNavigationsValue } from '@brojs/cli';
+import { styled } from '@mui/material/styles';
 import Logo from './logo/logo';
 import { HeaderContainer } from './index.style';
 
@@ -17,10 +17,11 @@ const navigations = [
 const NavButton = styled(Button)(({ theme }) => ({
     color: '#797993',
     borderRadius: '20px',
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Verdana',
     fontWeight: 'bold',
     textTransform: 'none',
     padding: '6px 12px',
+    margin: '0 8px',
     transition: 'all 0.3s ease',
     '&:hover': {
         color: '#FFFFFF',
@@ -56,15 +57,14 @@ const Header = (): React.ReactElement => {
         <HeaderContainer>
             <StyledAppBar position="static">
                 <Toolbar>
-                    {/* Логотип и название */}
                     <LogoContainer>
                         <Logo />
                         <Typography
                             variant="h6"
                             sx={{
-                                fontFamily: 'Roboto, sans-serif',
-                                fontWeight: 'bold',
-                                letterSpacing: '1px',
+                                fontFamily: 'Impact',
+                                fontSize: '30px',
+                                letterSpacing: '4px',
                                 color: '#FFFFFF',
                             }}
                         >
@@ -72,7 +72,6 @@ const Header = (): React.ReactElement => {
                         </Typography>
                     </LogoContainer>
 
-                    {/* Кнопки навигации */}
                     <div style={{ marginLeft: 'auto' }}>
                         {navigations.map((item) => {
                             const isActive = location.pathname === item.href;

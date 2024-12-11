@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import logoPng from './logo.png';
+import logoPng from './logo_white.png';
 
 const LogoStyled = styled.img`
   width: 100px;
@@ -9,7 +9,7 @@ const LogoStyled = styled.img`
 `;
 
 const Logo = () => {
-    return <LogoStyled src={logoPng} alt={'logo'} />;
+    return <LogoStyled src={logoPng} alt={'logo_white)'} />;
 };
 
 export default Logo;
