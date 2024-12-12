@@ -2,16 +2,19 @@ import  React from 'react';
 import { useEffect } from 'react';
 import { Wrapper, StyledSpeedometer } from './speedometer.style';
 
-const Speedometer = ({turn}) => {
+const Speedometer = ({turnAngle}) => {
 
     const turnRef = React.useRef(null)
     const sliderRef = React.useRef(null)
-    const progress = Math.max(Math.min(turn, 1), 0);
+    const minAngle = 0;
+    const maxAngle = 1;
+    turnAngle = Math.max(Math.min(turnAngle, maxAngle), minAngle);
+    const progress = Math.round(turnAngle * 100)
 
     useEffect(() => {
-        turnRef.current.style.transform = `rotate(${progress/2}turn)`
-        sliderRef.current.style.transform = `rotate(${progress/2+0.25}turn)`
-    }, [turn])
+        turnRef.current.style.transform = `rotate(${turnAngle/2}turn)`
+        sliderRef.current.style.transform = `rotate(${turnAngle/2+0.25}turn)`
+    }, [turnAngle])
 
     return (
         <Wrapper>
@@ -23,7 +26,7 @@ const Speedometer = ({turn}) => {
                 </div>
                     <div className="guage_indicator" />
                     <div className="text_content">
-                        <h3>{Math.round(progress * 100)}%</h3>
+                        <h3>{progress}%</h3>
                     </div>
                 </div>
             </StyledSpeedometer>

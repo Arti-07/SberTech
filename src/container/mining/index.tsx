@@ -25,13 +25,19 @@ const MiningPage = (): React.ReactElement => {
     const [stepMining, setStepMining] = useState(1)
     const [progress, setProgress] = useState(0)
     const [isVisible, setIsVisible] = useState(0)
+    const stepDecrease = 0.007;
+    const stepIncrease = 0.1;
+    const maxProgress = 1.5;
+    const timeDecrease = 10;
+    const minStepMining = 1;
+    const maxStepMining = 5;
     
     useEffect(() => {        
         const interval = setInterval(() => {
-            setProgress(p => Math.max(p - 0.007, 0) );            
+            setProgress(p => Math.max(p - stepDecrease, 0) );            
             setIsVisible(Number(progress > 1) );
-            setStepMining(isVisible ? 5 : 1);
-        }, 10); 
+            setStepMining(isVisible ? maxStepMining : minStepMining);
+        }, timeDecrease); 
         return () => clearInterval(interval);
     }, [progress, stepMining, isVisible]);
     
@@ -46,15 +52,17 @@ const MiningPage = (): React.ReactElement => {
             `}
             />            
             <div className={containerCenterStyle}>
-                <AccountTextStyled> Счет: {countMining}</AccountTextStyled>                
+                <AccountTextStyled> Account: {countMining}</AccountTextStyled>                
             </div>
-            <Speedometer turn={progress} />
+            <Speedometer turnAngle={progress} />
             <MotioButton
-            progress={progress}
-            setProgress={setProgress} 
-            countMining={countMining}
-            stepMining={stepMining}
-            setCountMining={setCountMining} 
+                progress={progress}
+                setProgress={setProgress} 
+                countMining={countMining}
+                stepMining={stepMining}
+                setCountMining={setCountMining} 
+                stepIncrease={stepIncrease}
+                maxProgress={maxProgress}
             />
             {isVisible ? (
                 <div className={containerCenterStyle}>
