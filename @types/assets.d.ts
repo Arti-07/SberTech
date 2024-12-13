@@ -9,3 +9,8 @@ declare module '*.gif' {
 
     export default gifPath;
 }
+declare module '*.png' {
+    const pngPath: string;
+
+    export default pngPath;
+}
