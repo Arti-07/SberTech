@@ -25,10 +25,10 @@ const SignInPage = (): React.ReactElement => {
         }
 
         try {
-            const token = await api.login(login, password);
+            await api.login(login, password);
             sessionStorage.setItem('login', login);
 
-            document.cookie = `token=${token}; path=/; Secure; SameSite=Strict;`;
+            //document.cookie = `token=${token}; path=/; Secure; SameSite=Strict;`;
             navigate('/smartini_crypto/userspage');
         } catch (error: any) {
             console.error('Ошибка:', error);

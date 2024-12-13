@@ -14,7 +14,14 @@ const DetailPage = (): React.ReactElement => {
         const fetchData = async () => {
             try {
                 const cryptoName = 'ethereum';
-                const token = await api.login('testUser', 'password123');
+
+                await api.login('testUser', 'password123');
+                /*
+                const token = document.cookie('token');
+                if (!token) {
+                    throw new Error('Token not found in cookies');
+                }
+                */
                 //console.log('Успешная авторизация, токен:', token);
 
                 const info = await api.getInfo(cryptoName);
@@ -122,5 +129,4 @@ const DetailPage = (): React.ReactElement => {
         </PageContainer>
     );
 };
-
 export default DetailPage;

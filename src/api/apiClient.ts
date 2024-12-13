@@ -3,21 +3,18 @@ import axios, {AxiosInstance} from "axios";
 class ApiClient {
     private axiosInstance: AxiosInstance;
 
-
-    constructor(baseURL: string, private token?: string) {
+    constructor(baseURL: string) {
         this.axiosInstance = axios.create({
             baseURL,
-            headers: this.token ? {secretoken: this.token} : undefined,
+            withCredentials: true,
         });
     }
 
     setToken(token: string) {
-        this.token = token;
-        this.axiosInstance.defaults.headers['secrettoken'] = token;
+        this.axiosInstance.defaults.headers['secretoken'] = token;
     }
 
     clearToken() {
-        this.token = undefined;
         delete this.axiosInstance.defaults.headers['secretoken'];
     }
 
@@ -51,9 +48,7 @@ class ApiClient {
 
     async login(username: string, password: string) {
         const response = await this.axiosInstance.post('/auth/login', {username, password});
-        const {token} = response.data;
-        this.setToken(token);
-        return token;
+        return response.data;
     }
 
     async verifyToken() {
