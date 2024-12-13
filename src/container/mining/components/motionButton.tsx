@@ -1,10 +1,9 @@
 import  React from 'react';
 import { motion } from "framer-motion";
-import { Global } from "@emotion/react"
-import { motionButtonStyle } from './MotionButton.style';
-import { containerCenterStyle } from './ContainerCenter.style'
+import { motionButtonStyle } from './motionButton.style';
+import { containerCenterStyle } from './containerCenter.style'
 
-const MotioButton = ({ progress, setProgress, countMining, stepMining, setCountMining}): React.ReactElement => {
+const MotioButton = ({ progress, setProgress, countMining, stepMining, setCountMining, stepIncrease, maxProgress}): React.ReactElement => {
     return (
         <>
         <div className={containerCenterStyle}>
@@ -14,7 +13,7 @@ const MotioButton = ({ progress, setProgress, countMining, stepMining, setCountM
                 whileTap={{ scale: 0.9 }}
                 transition={{ type: "spring", stiffness: 800, damping: 10 }}
                 onTap={() => {
-                    setProgress(Math.min(progress+0.1, 1.1));
+                    setProgress(Math.min(progress + stepIncrease, maxProgress));
                     setCountMining(countMining + stepMining);
                 }}
             />
