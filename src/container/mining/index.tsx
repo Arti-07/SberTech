@@ -16,7 +16,7 @@ import Lottie from 'react-lottie'
 
 
 const AccountTextStyled = styled.h3`
-    min-width: 200px;
+    min-width: 250px;
     font-size: 2.25rem;
     font-weight: 400;
     text-align: center;
@@ -51,13 +51,17 @@ align-items: center;
 }
 
 .card {
-width: 355px;
-height: 56px;
+min-width: 400px;
+width: 400px;
+height: 60px;
 background: linear-gradient(to right, lightgray, darkblue); /* Градиент */
 border-radius: 20px; /* Закругленные края */
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 display: flex;
 overflow: hidden;
+pointer-events: none;
+user-select: none;
+justify-content: center;
 }
 
 .card img {
@@ -66,17 +70,11 @@ object-fit: cover;
 }
 
 .account {
-margin-left: 16px;
 display: flex;
 flex-direction: column;
 justify-content: center;
 }
 
-.account p {
-font-size: 18px;
-color: white;
-margin-bottom: 24px;
-}
 
 .account-button {
 margin-left: 16px;
@@ -97,6 +95,10 @@ transform: scale(1);
 
 .account-button button:hover {
     transform: scale(1.1);
+}
+
+.coin{
+    z-index: 2;
 }
 `
 
@@ -176,19 +178,23 @@ const MiningPage = (): React.ReactElement => {
                 <ContainerAccount>
                     <div className="container">
                         <div className="card">
-                        <Lottie 
-                            options={defaultOptions2}
-                            height={"100%"}
-                            width={"100%"}
-                        />
-                        <div className="account">
-                        <AccountTextStyled> Account: {countMining}</AccountTextStyled>
-                        </div>
-                        <Lottie 
-                            options={defaultOptions2}
-                            height={"100%"}
-                            width={"100%"}
-                        />
+                            <div className='coin'>
+                                <Lottie 
+                                    options={defaultOptions2}
+                                    height={"100%"}
+                                    width={"100%"}
+                                />
+                            </div>
+                            <div className="account">
+                                <AccountTextStyled> Account: {countMining}</AccountTextStyled>
+                            </div>                        
+                            <div className='coin'>
+                                <Lottie 
+                                    options={defaultOptions2}
+                                    height={"100%"}
+                                    width={"100%"}
+                                />
+                            </div>
                         </div>
                     </div>
                 </ContainerAccount>
