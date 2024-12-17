@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import api from '../../api';
 import styled from '@emotion/styled';
 
@@ -15,7 +15,7 @@ const PageContainer = styled.div`
 const Title = styled.h1`
     font-size: 2.5rem;
     color: #333;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     margin-bottom: 30px;
     text-align: center;
 `;
@@ -24,7 +24,7 @@ const UserInfo = styled.div`
     background: #fff;
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 100%;
     max-width: 400px;
@@ -50,7 +50,7 @@ const StyledButton = styled.button`
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, transform 0.2s;
 
     &:hover {
@@ -92,53 +92,34 @@ const UsersPage = () => {
     const [showTopUp, setShowTopUp] = useState<boolean>(false);
     const [topUpAmount, setTopUpAmount] = useState<string>('');
 
-    const getCookie = (name: string) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop()?.split(';').shift();
-        return null;
-    };
 
     useEffect(() => {
-        const token = getCookie('token');
-        if (token) {
-            setIsAuthenticated(true);
-            api.setToken(token);
-        } else {
-            setIsAuthenticated(false);
-        }
+        const checkAuth = async () => {
+            const authStatus = await api.isAuthenticated();
+            setIsAuthenticated(authStatus);
 
-        const storedLogin = sessionStorage.getItem('login');
-        if (storedLogin) {
-            setLogin(storedLogin);
-        }
+            if (authStatus) {
+                const storedLogin = sessionStorage.getItem('login');
+                if (storedLogin) {
+                    setLogin(storedLogin);
+                }
+                try {
+                    const data = await api.getBalance();
+                    setBalance(data.balance || 0);
+                } catch (err) {
+                    console.error('Ошибка запроса баланса:', err);
+                }
+            }
+        };
+
+        checkAuth();
     }, []);
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            api.getBalance()
-                .then(data => {
-                    if (data.balance !== undefined) {
-                        setBalance(data.balance);
-                    } else {
-                        console.error('Ошибка получения баланса:', data);
-                    }
-                })
-                .catch(err => console.error('Ошибка запроса баланса:', err));
-        }
-    }, [isAuthenticated]);
 
     const handleTopUpClick = () => {
         setShowTopUp(true);
     };
 
     const handleConfirmTopUp = () => {
-        const token = getCookie('token');
-        if (!token) {
-            alert('Токен не найден. Авторизуйтесь заново.');
-            return;
-        }
-
         const amountNumber = parseFloat(topUpAmount);
         if (isNaN(amountNumber) || amountNumber <= 0) {
             alert('Введите корректную сумму');
