@@ -18,6 +18,18 @@ class ApiClient {
         delete this.axiosInstance.defaults.headers['secretoken'];
     }
 
+    async isAuthenticated(): Promise<boolean> {
+        try {
+            await this.axiosInstance.get('/auth/check-auth');
+            return true;
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response?.status === 401) {
+                return false;
+            }
+            throw error;
+        }
+    }
+
     async getListings() {
         return this.axiosInstance.get('/api/listings').then(res => res.data);
     }
