@@ -1,11 +1,11 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, useTheme } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { getNavigationsValue } from '@brojs/cli';
 import { styled } from '@mui/material/styles';
-import Logo from './logo/logo';
 import { HeaderContainer } from './index.style';
-
+import logoBlack from './logo/logo_black.png';
+import logoWhite from './logo/logo_white.png';
 
 const navigations = [
     { name: 'Main Page', href: getNavigationsValue('smartini_crypto.main') },
@@ -14,36 +14,39 @@ const navigations = [
     { name: 'Account Page', href: getNavigationsValue('smartini_crypto.account') },
 ];
 
+// Новый стиль для кнопок
 const NavButton = styled(Button)(({ theme }) => ({
-    color: '#797993',
+    color: theme.palette.text.secondary,
     borderRadius: '20px',
     fontFamily: 'Verdana',
     fontWeight: 'bold',
     textTransform: 'none',
-    padding: '6px 12px',
+    padding: '8px 16px',
     margin: '0 8px',
+    backgroundColor: '#9B6162',
     transition: 'all 0.3s ease',
     '&:hover': {
-        color: '#FFFFFF',
-        backgroundColor: '#797993',
-        transform: 'scale(1.1)',
+        backgroundColor: '#8A0402', // Темный оттенок при наведении
+        transform: 'scale(1.05)',
+    },
+    '&:focus': {
+        outline: 'none',
     },
 }));
 
-const ActiveNavButton = styled(NavButton)({
-    backgroundColor: '#797993',
-    color: '#FFFFFF',
+const ActiveNavButton = styled(NavButton)(({ theme }) => ({
+    backgroundColor: '#8A0402',
+    color: theme.palette.text.primary,
     '&:hover': {
-        backgroundColor: '#797993',
+        backgroundColor: '#8A0402',
     },
-});
+}));
 
-const StyledAppBar = styled(AppBar)({
-    backgroundColor: '#1E1E2A',
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1E1E2A' : '#ADD8E6', // Голубой для светлой и темный для темной темы
     boxShadow: 'none',
-});
+}));
 
-// Стили для контейнера с логотипом и названием
 const LogoContainer = styled('div')({
     display: 'flex',
     alignItems: 'center',
@@ -52,27 +55,40 @@ const LogoContainer = styled('div')({
 
 const Header = (): React.ReactElement => {
     const location = useLocation();
+    const theme = useTheme();
+
+    // Условие для логотипа и цвета текста
+    const isLightTheme = theme.palette.mode === 'light';
 
     return (
         <HeaderContainer>
             <StyledAppBar position="static">
                 <Toolbar>
                     <LogoContainer>
-                        <Logo />
+                        {/* Логотип меняется в зависимости от темы */}
+                        <img
+                            src={isLightTheme ? logoBlack : logoWhite}
+                            alt="Smartini Crypto Logo"
+                            style={{
+                                width: '50px',
+                                height: '50px',
+                                marginTop: '-8px',
+                            }}
+                        />
                         <Typography
                             variant="h6"
                             sx={{
                                 fontFamily: 'Impact',
                                 fontSize: '30px',
                                 letterSpacing: '4px',
-                                color: '#FFFFFF',
+                                color: isLightTheme ? 'black' : 'white',
                             }}
                         >
                             Smartini Crypto
                         </Typography>
                     </LogoContainer>
 
-                    <div style={{ marginLeft: 'auto' }}>
+                    <div style={{marginLeft: 'auto'}}>
                         {navigations.map((item) => {
                             const isActive = location.pathname === item.href;
                             const ButtonComponent = isActive ? ActiveNavButton : NavButton;

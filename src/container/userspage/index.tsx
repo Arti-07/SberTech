@@ -1,89 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../../api';
-import styled from '@emotion/styled';
-
-const PageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
-    min-height: 100vh;
-`;
-
-const Title = styled.h1`
-    font-size: 2.5rem;
-    color: #333;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    margin-bottom: 30px;
-    text-align: center;
-`;
-
-const UserInfo = styled.div`
-    background: #fff;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    transition: transform 0.3s ease;
-
-    &:hover {
-        transform: translateY(-5px);
-    }
-`;
-
-const BalanceText = styled.p`
-    font-size: 1.5rem;
-    margin: 20px 0;
-    color: #007bff;
-    font-weight: 600;
-`;
-
-const StyledButton = styled.button`
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, transform 0.2s;
-
-    &:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-    }
-
-    &:active {
-        transform: translateY(0);
-    }
-`;
-
-const TopUpContainer = styled.div`
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-`;
-
-const AmountInput = styled.input`
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    width: 150px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-
-    &:focus {
-        outline: none;
-        border-color: #007bff;
-    }
-`;
+import {
+    PageContainer,
+    Title,
+    UserInfo,
+    BalanceText,
+    StyledButton,
+    TopUpContainer,
+    AmountInput,
+} from './components/UsersPageStyles';
 
 const UsersPage = () => {
     const [login, setLogin] = useState<string>('');
@@ -91,7 +16,6 @@ const UsersPage = () => {
     const [balance, setBalance] = useState<number>(0);
     const [showTopUp, setShowTopUp] = useState<boolean>(false);
     const [topUpAmount, setTopUpAmount] = useState<string>('');
-
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -151,25 +75,25 @@ const UsersPage = () => {
         <PageContainer>
             {isAuthenticated ? (
                 <UserInfo>
-                    <Title>Привет, {login}!</Title>
-                    <BalanceText>Ваш баланс: {balance}</BalanceText>
+                    <Title>Hello, {login}!</Title>
+                    <BalanceText>Your balance: {balance}</BalanceText>
                     {!showTopUp && (
-                        <StyledButton onClick={handleTopUpClick}>Пополнить баланс</StyledButton>
+                        <StyledButton onClick={handleTopUpClick}>Top up balance</StyledButton>
                     )}
                     {showTopUp && (
                         <TopUpContainer>
                             <AmountInput
                                 type="number"
-                                placeholder="Введите сумму"
+                                placeholder="Enter the amount of money"
                                 value={topUpAmount}
                                 onChange={(e) => setTopUpAmount(e.target.value)}
                             />
-                            <StyledButton onClick={handleConfirmTopUp}>Подтвердить</StyledButton>
+                            <StyledButton onClick={handleConfirmTopUp}>Submit</StyledButton>
                         </TopUpContainer>
                     )}
                 </UserInfo>
             ) : (
-                <Title>Вы не авторизованы. Пожалуйста, войдите.</Title>
+                <Title>You are not logged in. Please come in.</Title>
             )}
         </PageContainer>
     );
