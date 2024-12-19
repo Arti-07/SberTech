@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import api from '../../api';
 import {
     PageContainer,
@@ -11,11 +13,13 @@ import {
 } from './components/UsersPageStyles';
 
 const UsersPage = () => {
+    const theme = useTheme(); // Получаем тему
     const [login, setLogin] = useState<string>('');
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [balance, setBalance] = useState<number>(0);
     const [showTopUp, setShowTopUp] = useState<boolean>(false);
     const [topUpAmount, setTopUpAmount] = useState<string>('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -71,29 +75,37 @@ const UsersPage = () => {
             });
     };
 
+    const handleSignOut = () => {
+        // Очистка данных из sessionStorage и обновление состояния
+        sessionStorage.removeItem('login');
+        setIsAuthenticated(false);
+        navigate('/smartini_crypto/signin');
+    };
+
     return (
-        <PageContainer>
+        <PageContainer theme={theme}> {/* Тема передается через контекст */}
             {isAuthenticated ? (
-                <UserInfo>
-                    <Title>Hello, {login}!</Title>
-                    <BalanceText>Your balance: {balance}</BalanceText>
+                <UserInfo theme={theme}>
+                    <Title theme={theme}>Hello, {login}!</Title>
+                    <BalanceText theme={theme}>Your balance: {balance}</BalanceText>
+                    <StyledButton theme={theme} onClick={handleSignOut}>Sign out</StyledButton>
                     {!showTopUp && (
-                        <StyledButton onClick={handleTopUpClick}>Top up balance</StyledButton>
+                        <StyledButton theme={theme} onClick={handleTopUpClick}>Top up balance</StyledButton>
                     )}
                     {showTopUp && (
                         <TopUpContainer>
-                            <AmountInput
+                            <AmountInput theme={theme}
                                 type="number"
-                                placeholder="Enter the amount of money"
+                                placeholder="Enter amount"
                                 value={topUpAmount}
                                 onChange={(e) => setTopUpAmount(e.target.value)}
                             />
-                            <StyledButton onClick={handleConfirmTopUp}>Submit</StyledButton>
+                            <StyledButton theme={theme} onClick={handleConfirmTopUp}>Submit</StyledButton>
                         </TopUpContainer>
                     )}
                 </UserInfo>
             ) : (
-                <Title>You are not logged in. Please come in.</Title>
+                <Title theme={theme}>You are not logged in. Please come in.</Title>
             )}
         </PageContainer>
     );
