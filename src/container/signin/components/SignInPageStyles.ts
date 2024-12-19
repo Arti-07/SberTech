@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useTheme, Theme } from '@mui/material/styles';
 
 export const Container = styled.div`
     text-align: center;
@@ -8,7 +9,7 @@ export const Container = styled.div`
 export const Title = styled.h1`
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #333;
+    color: ${(props) => props.theme.palette.text.primary}; /* Цвет текста зависит от темы */
 `;
 
 export const InputGroup = styled.div`
@@ -24,13 +25,15 @@ export const InputField = styled.input`
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid ${(props) => props.theme.palette.text.secondary}; 
     border-radius: 25px;
     font-size: 1rem;
     box-sizing: border-box;
-
+    background-color: ${(props) => props.theme.palette.background.paper}; 
+    color: ${(props) => props.theme.palette.text.primary}; 
+    
     &:focus {
-        border-color: #007bff;
+        border-color: ${(props) => props.theme.palette.primary.main}; 
         outline: none;
     }
 `;
@@ -42,28 +45,32 @@ export const PasswordToggle = styled.span`
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 1.2rem;
-    color: #007bff;
+    color: ${(props) => props.theme.palette.primary.main}; 
 
     &:hover {
-        color: #0056b3;
+        color: ${(props) => props.theme.palette.primary.dark}; 
     }
 `;
 
 export const Message = styled.div<{ isSuccess: boolean }>`
-    color: ${(props) => (props.isSuccess ? 'green' : 'red')};
+    color: ${(props) =>
+    props.isSuccess
+        ? props.theme.palette.success.main 
+        : props.theme.palette.error.main}; 
     margin-bottom: 20px;
 `;
 
 export const SignInButton = styled.button`
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: ${(props) => props.theme.palette.primary.main}; 
     color: white;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     font-size: 1rem;
+    margin-top: 20px; 
 
     &:hover {
-        background-color: #0056b3;
+        background-color: ${(props) => props.theme.palette.primary.dark}; 
     }
 `;

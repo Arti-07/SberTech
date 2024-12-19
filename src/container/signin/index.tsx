@@ -17,7 +17,7 @@ const SignInPage = (): React.ReactElement => {
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState('');
 
-    const navigate = useNavigate(); // Хук для навигации
+    const navigate = useNavigate();
 
     const handleSignIn = async () => {
         setMessage('');
@@ -34,10 +34,9 @@ const SignInPage = (): React.ReactElement => {
         }
 
         try {
-            await api.login(login, password);
-            sessionStorage.setItem('login', login);
-
-            navigate('/smartini_crypto/userspage');
+            await api.login(login, password); // Логика проверки через API
+            sessionStorage.setItem('login', login); // Сохраняем информацию о логине
+            navigate('/smartini_crypto/userspage'); // Перенаправляем после успешного входа
         } catch (error: any) {
             console.error('Ошибка:', error);
             if (error.response && error.response.status === 401) {
@@ -52,7 +51,6 @@ const SignInPage = (): React.ReactElement => {
         <Container>
             <Title>Log in to your personal account</Title>
             <InputGroup>
-                {/* Поле логина */}
                 <label>
                     Login:
                     <InputField
@@ -65,7 +63,6 @@ const SignInPage = (): React.ReactElement => {
             </InputGroup>
 
             <InputGroup>
-                {/* Поле пароля */}
                 <label>
                     Password:
                     <InputField
@@ -80,10 +77,8 @@ const SignInPage = (): React.ReactElement => {
                 </PasswordToggle>
             </InputGroup>
 
-            {/* Сообщение */}
             {message && <Message isSuccess={message === 'Вход выполнен!'}>{message}</Message>}
 
-            {/* Кнопка входа */}
             <SignInButton onClick={handleSignIn}>Sign In</SignInButton>
         </Container>
     );
