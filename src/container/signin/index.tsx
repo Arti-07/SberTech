@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
+import {
+    Container,
+    Title,
+    InputGroup,
+    InputField,
+    PasswordToggle,
+    Message,
+    SignInButton,
+} from './components/SignInPageStyles';
 
 const SignInPage = (): React.ReactElement => {
     const [login, setLogin] = useState('');
@@ -8,7 +17,7 @@ const SignInPage = (): React.ReactElement => {
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState('');
 
-    const navigate = useNavigate();  // Хук для навигации
+    const navigate = useNavigate(); // Хук для навигации
 
     const handleSignIn = async () => {
         setMessage('');
@@ -28,7 +37,6 @@ const SignInPage = (): React.ReactElement => {
             await api.login(login, password);
             sessionStorage.setItem('login', login);
 
-            //document.cookie = `token=${token}; path=/; Secure; SameSite=Strict;`;
             navigate('/smartini_crypto/userspage');
         } catch (error: any) {
             console.error('Ошибка:', error);
@@ -41,90 +49,43 @@ const SignInPage = (): React.ReactElement => {
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>Вход в личный кабинет</h1>
-            <div style={{ marginTop: '20px', maxWidth: '400px', margin: 'auto' }}>
+        <Container>
+            <Title>Log in to your personal account</Title>
+            <InputGroup>
                 {/* Поле логина */}
-                <div style={{ marginBottom: '20px' }}>
-                    <label>
-                        Логин:
-                        <input
-                            type="text"
-                            placeholder="Введите логин"
-                            value={login}
-                            onChange={(e) => setLogin(e.target.value)}
-                            style={{
-                                width: '100%',
-                                padding: '10px',
-                                marginTop: '10px',
-                                border: '1px solid #ccc',
-                                borderRadius: '5px',
-                            }}
-                        />
-                    </label>
-                </div>
+                <label>
+                    Login:
+                    <InputField
+                        type="text"
+                        placeholder="Enter username"
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
+                    />
+                </label>
+            </InputGroup>
 
+            <InputGroup>
                 {/* Поле пароля */}
-                <div style={{ marginBottom: '20px', position: 'relative' }}>
-                    <label>
-                        Пароль:
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            placeholder="Введите пароль"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            style={{
-                                width: '100%',
-                                padding: '10px',
-                                marginTop: '10px',
-                                border: '1px solid #ccc',
-                                borderRadius: '5px',
-                            }}
-                        />
-                    </label>
+                <label>
+                    Password:
+                    <InputField
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </label>
+                <PasswordToggle onClick={() => setShowPassword((prev) => !prev)}>
+                    {showPassword ? '🙉' : '🙈'}
+                </PasswordToggle>
+            </InputGroup>
 
-                    <span
-                        onClick={() => setShowPassword((prev) => !prev)}
-                        style={{
-                            position: 'absolute',
-                            top: '70%',
-                            right: '10px',
-                            transform: 'translateY(-50%)',
-                            cursor: 'pointer',
-                        }}
-                    >
-                        {showPassword ? '👁️' : '🙈'}
-                    </span>
-                </div>
+            {/* Сообщение */}
+            {message && <Message isSuccess={message === 'Вход выполнен!'}>{message}</Message>}
 
-                {/* Сообщение */}
-                {message && (
-                    <div
-                        style={{
-                            color: message === 'Вход выполнен!' ? 'green' : 'red',
-                            marginBottom: '20px',
-                        }}
-                    >
-                        {message}
-                    </div>
-                )}
-
-                {/* Кнопка входа */}
-                <button
-                    onClick={handleSignIn}
-                    style={{
-                        padding: '10px 20px',
-                        backgroundColor: '#007BFF',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                    }}
-                >
-                    Войти
-                </button>
-            </div>
-        </div>
+            {/* Кнопка входа */}
+            <SignInButton onClick={handleSignIn}>Sign In</SignInButton>
+        </Container>
     );
 };
 

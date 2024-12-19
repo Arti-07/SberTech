@@ -5,14 +5,15 @@ import PrivacyPolicy from './privacyPolicy';
 import TermsOfService from './termsOfService';
 import ContactUs from './contactUs';
 
+// Определение footerNavigations
 const footerNavigations = [
     { name: 'Privacy Policy', content: <PrivacyPolicy /> },
     { name: 'Terms of Service', content: <TermsOfService /> },
     { name: 'Contact', content: <ContactUs /> },
 ];
 
-const FooterNavButton = styled(Button)(() => ({
-    color: '#797993',
+const FooterNavButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.text.secondary,
     borderRadius: '20px',
     fontFamily: 'Verdana',
     fontWeight: 'bold',
@@ -21,23 +22,28 @@ const FooterNavButton = styled(Button)(() => ({
     margin: '0 8px',
     transition: 'all 0.3s ease',
     '&:hover': {
-        color: '#FFFFFF',
-        backgroundColor: '#797993',
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.action.hover,
         transform: 'scale(1.1)',
     },
 }));
 
-const FooterContainer = styled('footer')({
-    backgroundColor: '#1E1E2A',
+const FooterContainer = styled('footer')(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1E1E2A' : '#ADD8E6', // Устанавливаем цвет фона для светлой и темной темы
     padding: '20px',
     textAlign: 'center',
     marginTop: 'auto',
-});
+    position: 'fixed', // Фиксация футера
+    bottom: 0, // Привязываем футер к нижней части окна
+    left: 0,
+    right: 0,
+    zIndex: 1,
+}));
 
-const FooterText = styled(Typography)(() => ({
+const FooterText = styled(Typography)(({ theme }) => ({
     fontFamily: 'Verdana',
     fontSize: '14px',
-    color: '#797993',
+    color: theme.palette.mode === 'dark' ? 'white' : 'black', // Цвет текста для темной и светлой темы
     marginBottom: '10px',
 }));
 

@@ -1,30 +1,39 @@
 import React from 'react';
 import { Box, Typography, Link, Avatar } from '@mui/material';
 
+import postmalone from 'src/assets/images/postmalone.jpg';
+import dualipa from 'src/assets/images/dualipa.jpg';
+import eminem from 'src/assets/images/eminem.jpg';
+import shoopdog from 'src/assets/images/shoopdog.jpg';
+
 const teamMembers = [
     {
         name: 'Almaz',
         role: 'Frontend Developer',
         contact: 'https://t.me/postyvee',
         avatar: 'https://via.placeholder.com/150',
+        image: postmalone,
     },
     {
         name: 'Anna',
         role: 'Frontend Developer, Analyst',
         contact: 'https://t.me/anna_ferzz',
         avatar: 'https://via.placeholder.com/150',
+        image: dualipa,
     },
     {
         name: 'Artur',
         role: 'Frontend, Backend Developer',
         contact: 'https://t.me/ar_gin',
         avatar: 'https://via.placeholder.com/150',
+        image: eminem,
     },
     {
         name: 'Leonid',
         role: 'Frontend Developer',
         contact: 'https://t.me/ROwaGO',
         avatar: 'https://via.placeholder.com/150',
+        image: shoopdog,
     },
 ];
 
@@ -54,10 +63,17 @@ const TeamContacts: React.FC = () => {
                             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
                         }}
                     >
+                        {/* Используем Avatar для круглого отображения */}
                         <Avatar
-                            src={member.avatar}
+                            src={member.image}
                             alt={member.name}
-                            sx={{ width: 100, height: 100, margin: '0 auto' }}
+                            sx={{
+                                width: 100,
+                                height: 100,
+                                margin: '0 auto',
+                                border: '3px solid #fff',
+                                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+                            }}
                         />
                         <Typography
                             variant="subtitle1"
