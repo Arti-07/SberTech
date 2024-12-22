@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import api from '../../../api';
 import styles from './cryptoTable.style';
+import Pagination from './pagination';
 
 interface CryptoData {
     id: number;
@@ -7,78 +9,132 @@ interface CryptoData {
     name: string;
     symbol: string;
     price: number;
-    change: number;
+    percentage_change_1h: number;
+    percentage_change_24h: number;
 }
 
-const testData: CryptoData[] = [
-    { id: 1, icon: '', name: 'Bitcoin', symbol: 'BTC', price: 10667735.83, change: 0.84 },
-    { id: 2, icon: '', name: 'Ethereum', symbol: 'ETH', price: 403682.33, change: -0.27 },
-    { id: 3, icon: '', name: 'Tether', symbol: 'USDT', price: 103.35, change: -1.05 },
-    { id: 4, icon: '', name: 'Solana', symbol: 'SOL', price: 22940.66, change: 0.93 },
-    { id: 5, icon: '', name: 'Dogecoin', symbol: 'DOGE', price: 41.68, change: 1.94 },
-];
-
 const CryptoTable: React.FC = () => {
-    const [data, setData] = useState<CryptoData[]>(testData);
-    const [sortConfig, setSortConfig] = useState<{ key: keyof CryptoData; direction: string } | null>(null);
-    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [data] = useState<CryptoData[]>([]);
+    const [displayedData, setDisplayedData] = useState<CryptoData[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+    const [page, setPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const itemsPerPage = 10;
 
-    const sortData = (key: keyof CryptoData) => {
-        let direction = 'ascending';
-        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-            direction = 'descending';
+    const fetchCryptoData = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            await api.login('Anna', 'qwerty123');
+
+            const allCryptoData = await api.getListings();
+            const startIndex = (page - 1) * itemsPerPage;
+            const paginatedData = allCryptoData.slice(startIndex, startIndex + itemsPerPage);
+
+            const detailedDataPromises = paginatedData.map(async (crypto: any) => {
+                try {
+                    const data = await api.getTicker(crypto.id, 'USD');
+                    return {
+                        id: crypto.id,
+                        name: crypto.name,
+                        symbol: crypto.symbol,
+                        price: data?.price || 0,
+                        percentage_change_1h: data?.percentage_change_1h || 0,
+                        percentage_change_24h: data?.percentage_change_24h || 0,
+                    };
+                } catch (err: any) {
+                    console.error(`Error fetching details for ${crypto.id}:`, err);
+                    return {
+                        id: crypto.id,
+                        name: crypto.name,
+                        symbol: crypto.symbol,
+                        price: 0,
+                        percentage_change_1h: 0,
+                        percentage_change_24h: 0,
+                    };
+                }
+
+            });
+
+            const detailedData = await Promise.all(detailedDataPromises);
+            setDisplayedData(detailedData);
+            setTotalPages(Math.ceil(allCryptoData.length / itemsPerPage));
+        } catch (err: any) {
+            setError(err?.message || 'Ошибка загрузки данных');
+            console.error('Ошибка загрузки данных:', err);
+        } finally {
+            setLoading(false);
         }
-        const sortedData = [...data].sort((a, b) => {
-            if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
-            if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
-            return 0;
-        });
-        setData(sortedData);
-        setSortConfig({ key, direction });
-    };
+    }, [page]);
 
-    const filteredData = data.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.symbol.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    useEffect(() => {
+        fetchCryptoData();
+    }, [fetchCryptoData]);
+
+    useEffect(() => {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setDisplayedData(data.slice(startIndex, endIndex));
+    }, [data, page]);//
+
+    const handlePageChange = (newPage: number) => {
+        if (newPage !== page) {
+            setPage(newPage);
+        }
+    }; //
+
+    if (loading && page === 1) {
+        return <p>Loading data...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
 
     return (
         <div style={styles.container}>
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={styles.searchInput}
-            />
-            <table style={styles.table}>
-                <thead>
-                <tr>
-                    <th style={styles.th} onClick={() => sortData('id')}>#</th>
-                    <th style={styles.th} onClick={() => sortData('name')}>Name</th>
-                    <th style={styles.th} onClick={() => sortData('price')}>Price</th>
-                    <th style={styles.th} onClick={() => sortData('change')}>Change</th>
-                </tr>
-                </thead>
-                <tbody>
-                {filteredData.map((item, index) => (
-                    <tr key={item.id} style={index % 2 === 0 ? styles.evenRow : {}}>
-                        <td style={styles.td}>{item.id}</td>
-                        <td style={styles.td}>
-                            {item.icon} {item.name} ({item.symbol})
-                        </td>
-                        <td style={styles.td}>₽{item.price.toLocaleString()}</td>
-                        <td style={styles.td}>
-                            {item.change > 0 ? (
-                                <span style={styles.changeUp}>▲ {item.change}%</span>
-                            ) : (
-                                <span style={styles.changeDown}>▼ {Math.abs(item.change)}%</span>
-                            )}
-                        </td>
+            <div style={styles.tableContainer}>
+                <table style={styles.table}>
+                    <thead>
+                    <tr>
+                        <th style={styles.th}>#</th>
+                        <th style={styles.th}>Name</th>
+                        <th style={styles.th}>Price</th>
+                        <th style={styles.th}>1h % Change</th>
+                        <th style={styles.th}>24h % Change</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {displayedData.map((item, index) => (
+                        <tr key={item.id} style={index % 2 === 0 ? styles.evenRow : {}}>
+                            <td style={styles.td}>{item.id}</td>
+                            <td style={styles.td}>
+                                {item.icon} {item.name} ({item.symbol})
+                            </td>
+                            <td style={styles.td}>{item.price.toLocaleString()} $</td>
+                            <td style={styles.td}>
+                                {item.percentage_change_1h > 0 ? (
+                                    <span style={styles.changeUp}>▲ {item.percentage_change_1h.toFixed(2)}%</span>
+                                ) : (
+                                    <span style={styles.changeDown}>▼ {Math.abs(item.percentage_change_1h).toFixed(2)}%</span>
+                                )}
+                            </td>
+                            <td style={styles.td}>
+                                {item.percentage_change_24h > 0 ? (
+                                    <span style={styles.changeUp}>▲ {item.percentage_change_24h.toFixed(2)}%</span>
+                                ) : (
+                                    <span style={styles.changeDown}>▼ {Math.abs(item.percentage_change_24h).toFixed(2)}%</span>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+                {loading && <p>Loading more...</p>}
+            </div>
+            <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
+
         </div>
     );
 };
