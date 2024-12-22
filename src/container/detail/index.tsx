@@ -15,7 +15,7 @@ const DetailPage = (): React.ReactElement => {
             try {
                 const cryptoName = 'ethereum';
 
-                await api.login('testUser', 'password123');
+                await api.login('Anna', 'qwerty123');
                 /*
                 const token = document.cookie('token');
                 if (!token) {

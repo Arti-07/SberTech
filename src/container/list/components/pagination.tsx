@@ -53,14 +53,15 @@ const styles = {
         padding: '10px 20px',
         margin: '0 10px',
         cursor: 'pointer',
-        backgroundColor: '#007bff',
+        backgroundColor: '#797993',
         color: '#fff',
         border: 'none',
-        borderRadius: '5px',
+        borderRadius: '20px',
     },
     pageInfo: {
         fontSize: '16px',
         fontWeight: 'bold',
+        fontFamily: 'Verdana',
     },
 };
 
