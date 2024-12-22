@@ -14,7 +14,7 @@ export const StyledSpeedometer = styled.div`
     min-width: 350px;
     min-height: 175px;
     margin-top: 2%;
-    margin-bottom: 10%;
+    margin-bottom: 2%;
 
     .guage_body {
         position: relative;
