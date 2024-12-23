@@ -1,5 +1,7 @@
 
 import styled from '@emotion/styled';
+import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
+
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -25,7 +27,7 @@ export const StyledSpeedometer = styled.div`
         border-top-left-radius: 100% 200%;
         border-top-right-radius: 100% 200%;
         overflow: hidden;
-        background: chocolate;
+        background: #8a0402;
     }
     
     .guage_body_fill {
@@ -38,7 +40,7 @@ export const StyledSpeedometer = styled.div`
         transform: rotate(0turn);
         transition: transform;
         z-index: 1;
-        background: #00D;
+        background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#1E1E2A' : '#add8e6'};
     }
 
     .guage_body_cover {
@@ -102,10 +104,8 @@ export const StyledSpeedometer = styled.div`
         top: 50%;
         left: 25%;
         border-radius: 50%;
-        background: chocolate;
+        background: #8a0402;
         z-index: 3;
-        &::before {
-        }
     }
 
     .text_content {
@@ -114,7 +114,7 @@ export const StyledSpeedometer = styled.div`
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 4;        
-        background-color: chocolate;
+        background-color: #8a0402;
         user-select: none;
 
         h3 {

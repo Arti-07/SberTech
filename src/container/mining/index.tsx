@@ -4,11 +4,14 @@ import { useState, useEffect, useRef } from 'react';
 import Speedometer from './components/speedometer';
 import MotioButton from './components/motionButton';
 
-import {AccountTextStyled, confettiStyle, MiningContainer, ContainerAccount} from "./mining.style"
+import {AccountTextStyled, confettiStyle, MiningContainer, ContainerAccount, StyledConfirmButton, ContainerSubmit} from "./mining.style"
 
 import confettiAnimation from '../../assets/lotties/confetti.json';
 import coinAnimation from '../../assets/lotties/coin.json';
 import Lottie from 'react-lottie';
+
+import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
+import api from '../../api';
 
 const confettiOptions = {
     loop: true,
@@ -28,13 +31,16 @@ const coinOptions = {
     }
 };
 
+
 const MiningPage = (): React.ReactElement => {
     const lottieRef = useRef(null);
+    const theme = useTheme();
 
     const [countMining, setCountMining] = useState(0);
     const [stepMining, setStepMining] = useState(1);
     const [progress, setProgress] = useState(0);
-    const [isVisible, setIsVisible] = useState(0);
+    const [isVisible, setIsVisible] = useState(0);    
+    const [isConvertBalance, setIsConvertBalance] = useState<boolean>(false);
     const stepDecrease = 0.007;
     const stepIncrease = 0.1;
     const maxProgress = 1.5;
@@ -50,6 +56,17 @@ const MiningPage = (): React.ReactElement => {
         }, timeDecrease);
         return () => clearInterval(interval);
     }, [progress, stepMining, isVisible]);
+
+    const handleConfirmTopUp = () => {
+        api.updateBalance(countMining)
+            .then(() => {
+                setIsConvertBalance(true);
+                setCountMining(0);
+            })
+            .catch(err => {
+                console.error('Ошибка запроса:', err);
+            });
+    };
 
     return (
         <>
@@ -89,6 +106,22 @@ const MiningPage = (): React.ReactElement => {
                     stepIncrease={stepIncrease}
                     maxProgress={maxProgress}
                 />
+
+                <ContainerSubmit>
+                    <div className="container">
+                        <div className="card">
+                            <div className="coin">
+                                <Lottie options={coinOptions} height={'100%'} width={'100%'} />
+                            </div>
+                            <div className="account">
+                                <StyledConfirmButton theme={theme} onClick={handleConfirmTopUp}>Submit</StyledConfirmButton>
+                            </div>
+                            <div className="coin">
+                                <Lottie options={coinOptions} height={'100%'} width={'100%'} />
+                            </div>
+                        </div>
+                    </div>
+                </ContainerSubmit>
             </MiningContainer>
         </>
     );
