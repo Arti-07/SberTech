@@ -51,8 +51,35 @@ export const StyledSpeedometer = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 2;
-        background: #fff;
+        z-index: 3;
+
+        background-color: rgb(238, 163, 211);
+        background-size: 150% 150%;
+        background-image: radial-gradient(30% 40% at 65% 70%, rgb(192, 88, 254) 1%, rgba(192, 88, 254, 0) 100%), radial-gradient(30% 40% at 68% 45%, rgb(255, 57, 44) 1%, rgba(255, 57, 44, 0) 100%), radial-gradient(30% 40% at 38% 25%, rgb(255, 138, 53) 1%, rgba(255, 138, 53, 0) 100%), radial-gradient(60% 60% at 37% 68%, rgb(255, 125, 251) 1%, rgba(255, 125, 251, 0) 100%);
+        transform: scale(1);
+        animation-timeline: auto;
+        animation-range-start: normal;
+        animation-range-end: normal;
+        background-position: 0px 0px;
+        animation: 5s ease-in-out 0s infinite normal none running body-gradient;            
+    }
+
+    @keyframes body-gradient {
+        0% {
+            background-position:0% 0%
+        }
+        25% {
+            background-position:100% 0%
+        }
+        50% {
+            background-position:100% 100%
+        }
+        75% {
+            background-position:0% 100%
+        }
+        to {
+            background-position:0% 0%
+        }
     }
 
     .guage_indicator_slider {
@@ -83,7 +110,7 @@ export const StyledSpeedometer = styled.div`
 
     .text_content {
         position: absolute;
-        top: 75%;
+        top: 80%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 4;        
