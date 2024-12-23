@@ -40,7 +40,7 @@ export const StyledSpeedometer = styled.div`
         transform: rotate(0turn);
         transition: transform;
         z-index: 1;
-        background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#1E1E2A' : '#add8e6'};
+        background: darkblue;
     }
 
     .guage_body_cover {

@@ -47,7 +47,7 @@ export const ContainerAccount = styled.div`
         overflow: hidden;
         pointer-events: none;
         user-select: none;
-        justify-content: center;
+        justify-content: space-between;
     }
 
     .card img {
@@ -85,7 +85,7 @@ export const ContainerSubmit = styled.div`
         display: flex;
         overflow: hidden;
         user-select: none;
-        justify-content: center;
+        justify-content: space-between;
     }
 
     .card img {
