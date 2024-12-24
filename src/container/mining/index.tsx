@@ -8,6 +8,7 @@ import {AccountTextStyled, confettiStyle, MiningContainer, ContainerAccount, Sty
 
 import confettiAnimation from '../../assets/lotties/confetti.json';
 import coinAnimation from '../../assets/lotties/coin.json';
+import transferCoinAnimation from '../../assets/lotties/transferCoin.json';
 import Lottie from 'react-lottie';
 
 import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
@@ -31,6 +32,14 @@ const coinOptions = {
     }
 };
 
+const transferCoinAnimations = {
+    loop: true,
+    autoplay: true,
+    animationData: transferCoinAnimation,
+    rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+    }
+};
 
 const MiningPage = (): React.ReactElement => {
     const lottieRef = useRef(null);
@@ -111,13 +120,16 @@ const MiningPage = (): React.ReactElement => {
                     <div className="container">
                         <div className="card">
                             <div className="coin">
-                                <Lottie options={coinOptions} height={'100%'} width={'100%'} />
+                                <Lottie options={transferCoinAnimations} height={'100%'} width={'100%'} />
                             </div>
                             <div className="account">
                                 <StyledConfirmButton theme={theme} onClick={handleConfirmTopUp}>Submit</StyledConfirmButton>
                             </div>
+                            <div className="account">
+                                <StyledConfirmButton theme={theme} onClick={handleConfirmTopUp}>promocode</StyledConfirmButton>                                
+                            </div>
                             <div className="coin">
-                                <Lottie options={coinOptions} height={'100%'} width={'100%'} />
+                                <Lottie options={transferCoinAnimations} height={'100%'} width={'100%'} />
                             </div>
                         </div>
                     </div>

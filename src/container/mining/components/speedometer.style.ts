@@ -10,13 +10,10 @@ export const Wrapper = styled.div`
     align-items: center;
 `
 
-export const StyledSpeedometer = styled.div`
-    width: 350px;
-    height: 175px;
-    min-width: 350px;
-    min-height: 175px;
-    margin-top: 2%;
-    margin-bottom: 2%;
+export const StyledSpeedometer = styled.div`    
+    aspect-ratio: 2 / 1;
+    width: 400px;
+    min-width: 400px;
 
     .guage_body {
         position: relative;
