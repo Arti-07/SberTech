@@ -14,19 +14,20 @@ interface CryptoData {
 }
 
 const CryptoTable: React.FC = () => {
-    const [data] = useState<CryptoData[]>([]);
+    const [data, setData] = useState<CryptoData[]>([]);
     const [displayedData, setDisplayedData] = useState<CryptoData[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [page, setPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(1);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [sortConfig, setSortConfig] = useState<{ key: keyof CryptoData; direction: string } | null>(null);
     const itemsPerPage = 10;
 
     const fetchCryptoData = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
-            await api.login('Anna', 'qwerty123');
 
             const allCryptoData = await api.getListings();
             const startIndex = (page - 1) * itemsPerPage;
@@ -58,7 +59,17 @@ const CryptoTable: React.FC = () => {
             });
 
             const detailedData = await Promise.all(detailedDataPromises);
-            setDisplayedData(detailedData);
+            const uniqueData = detailedData.reduce((acc: CryptoData[], current: CryptoData) => {
+                if (!acc.some((item) => item.id === current.id)) {
+                    acc.push(current);
+                }
+                return acc;
+            }, []);
+            const newDataWithSequentialId = uniqueData.map((item, index) => ({
+                ...item,
+                id: startIndex + index + 1,
+            }));
+            setDisplayedData(newDataWithSequentialId);
             setTotalPages(Math.ceil(allCryptoData.length / itemsPerPage));
         } catch (err: any) {
             setError(err?.message || 'Ошибка загрузки данных');
@@ -72,17 +83,30 @@ const CryptoTable: React.FC = () => {
         fetchCryptoData();
     }, [fetchCryptoData]);
 
-    useEffect(() => {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        setDisplayedData(data.slice(startIndex, endIndex));
-    }, [data, page]);//
-
     const handlePageChange = (newPage: number) => {
         if (newPage !== page) {
             setPage(newPage);
         }
-    }; //
+    };
+
+    const sortData = (key: keyof CryptoData) => {
+        let direction = 'ascending';
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        const sortedData = [...data].sort((a, b) => {
+            if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
+            if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
+            return 0;
+        });
+        setData(sortedData);
+        setSortConfig({ key, direction });
+    };
+
+    const filteredData = displayedData.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     if (loading && page === 1) {
         return <p>Loading data...</p>;
@@ -94,19 +118,26 @@ const CryptoTable: React.FC = () => {
 
     return (
         <div style={styles.container}>
+            <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={styles.searchInput}
+            />
             <div style={styles.tableContainer}>
                 <table style={styles.table}>
                     <thead>
                     <tr>
-                        <th style={styles.th}>#</th>
-                        <th style={styles.th}>Name</th>
-                        <th style={styles.th}>Price</th>
-                        <th style={styles.th}>1h % Change</th>
-                        <th style={styles.th}>24h % Change</th>
+                        <th style={styles.th} onClick={() => sortData('id')}>#</th>
+                        <th style={styles.th} onClick={() => sortData('name')}>Name</th>
+                        <th style={styles.th} onClick={() => sortData('price')}>Price</th>
+                        <th style={styles.th} onClick={() => sortData('percentage_change_1h')}>1h % Change</th>
+                        <th style={styles.th} onClick={() => sortData('percentage_change_24h')}>24h % Change</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {displayedData.map((item, index) => (
+                    {filteredData.map((item, index) => (
                         <tr key={item.id} style={index % 2 === 0 ? styles.evenRow : {}}>
                             <td style={styles.td}>{item.id}</td>
                             <td style={styles.td}>
@@ -117,14 +148,16 @@ const CryptoTable: React.FC = () => {
                                 {item.percentage_change_1h > 0 ? (
                                     <span style={styles.changeUp}>▲ {item.percentage_change_1h.toFixed(2)}%</span>
                                 ) : (
-                                    <span style={styles.changeDown}>▼ {Math.abs(item.percentage_change_1h).toFixed(2)}%</span>
+                                    <span
+                                        style={styles.changeDown}>▼ {Math.abs(item.percentage_change_1h).toFixed(2)}%</span>
                                 )}
                             </td>
                             <td style={styles.td}>
                                 {item.percentage_change_24h > 0 ? (
                                     <span style={styles.changeUp}>▲ {item.percentage_change_24h.toFixed(2)}%</span>
                                 ) : (
-                                    <span style={styles.changeDown}>▼ {Math.abs(item.percentage_change_24h).toFixed(2)}%</span>
+                                    <span
+                                        style={styles.changeDown}>▼ {Math.abs(item.percentage_change_24h).toFixed(2)}%</span>
                                 )}
                             </td>
                         </tr>
