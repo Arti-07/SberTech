@@ -30,7 +30,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: getNavigationsValue('smartini_crypto.main'),
-                element: <ListPage />
+                element: (
+                    <ProtectedRoute>
+                        <ListPage />
+                    </ProtectedRoute>
+                )
             },
             {
                 path: getNavigationsValue('smartini_crypto.signin'),

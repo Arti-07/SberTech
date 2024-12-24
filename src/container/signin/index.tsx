@@ -36,6 +36,7 @@ const SignInPage = (): React.ReactElement => {
         try {
             await api.login(login, password); // Логика проверки через API
             sessionStorage.setItem('login', login); // Сохраняем информацию о логине
+            window.dispatchEvent(new Event('loginChanged')); // Генерируем событие
             navigate('/smartini_crypto/userspage'); // Перенаправляем после успешного входа
         } catch (error: any) {
             console.error('Ошибка:', error);
