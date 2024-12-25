@@ -3,8 +3,10 @@ import { Box, Typography, useTheme } from '@mui/material';
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material/styles';
 import { InputGroup, InputField, Message,  EnterButton } from './promocodeForm.style'
+import api from '../../../api';
 
 import { getConfig } from '@brojs/cli';
+
 
 function getPromocode() {
     const config = getConfig();
@@ -34,7 +36,18 @@ const PromocodeForm = () => {
         try {
             const isValidPromo = promo_list.includes(promocode);
             if(isValidPromo){
-                setMessage('promocode is valid!');
+                const promocodeUseFirst = sessionStorage.getItem(promocode);
+                if(!promocodeUseFirst){
+                    try {
+                        api.updateBalance(2024);
+                        sessionStorage.setItem(promocode, 'True');
+                        setMessage('promocode is valid! Add 2024 coin!');
+                    } catch (error: any) {
+                        setMessage('An error has occurred! Please try again later!');
+                    }                    
+                } else {
+                    setMessage('promocode is used!');
+                }
             } else {
                 setMessage('promocode is not valid!');
             }
