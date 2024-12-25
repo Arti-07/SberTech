@@ -1,5 +1,5 @@
-import {css} from '@emotion/react';
-import styled from '@emotion/styled'
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 export const PageContainer = styled.div`
     display: flex;
@@ -7,11 +7,31 @@ export const PageContainer = styled.div`
     color: #ffffff;
     padding: 20px;
     border-radius: 8px;
+    flex-wrap: wrap; /* Добавлено для обеспечения адаптивности на маленьких экранах */
+
+    @media (max-width: 768px) {
+        padding: 15px;
+    }
+
+    @media (max-width: 480px) {
+        flex-direction: column; /* Переключаем на вертикальное расположение */
+        padding: 10px;
+    }
 `;
 
 export const ChartContainer = styled.div`
     flex: 2;
     margin-right: 20px;
+
+    @media (max-width: 768px) {
+        flex: 1;
+        margin-right: 0;
+        margin-bottom: 20px; /* Добавлено отступ для мобильных устройств */
+    }
+
+    @media (max-width: 480px) {
+        margin-bottom: 15px;
+    }
 `;
 
 export const InfoContainer = styled.div`
@@ -44,8 +64,15 @@ export const InfoContainer = styled.div`
             margin-bottom: 8px;
         }
     }
-`;
 
+    @media (max-width: 768px) {
+        padding: 15px;
+    }
+
+    @media (max-width: 480px) {
+        padding: 10px;
+    }
+`;
 
 export const CryptoLink = styled.a`
     display: inline-block;
@@ -61,6 +88,15 @@ export const CryptoLink = styled.a`
     &:hover {
         background-color: #6fabd8;
     }
+
+    @media (max-width: 768px) {
+        font-size: 0.85rem;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
 `;
 
 export const ChartTitle = css`
@@ -69,4 +105,12 @@ export const ChartTitle = css`
     margin-bottom: 10px;
     text-align: center;
     color: #ffffff;
+
+    @media (max-width: 768px) {
+        font-size: 1.3rem;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1.1rem;
+    }
 `;

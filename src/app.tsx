@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StrictMode } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Main from './container/main';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { BackgroundContainer, ScrollableContent, BackgroundImage, GlobalStyle, ToggleButton, ToggleIcon } from './AppStyled1';
+import { BackgroundContainer, ScrollableContent, BackgroundImage, GlobalStyle } from './AppStyled1';
+import Footer from './container/main/components/layout/footer/footer';
 
 const App = () => {
-    // Читаем состояние темы из localStorage, если оно есть, иначе устанавливаем в светлую
     const storedDarkMode = localStorage.getItem('darkMode') === 'true';
     const [darkMode, setDarkMode] = useState(storedDarkMode);
 
@@ -22,8 +22,6 @@ const App = () => {
     const toggleTheme = () => {
         const newDarkMode = !darkMode;
         setDarkMode(newDarkMode);
-
-        // Сохраняем новое состояние темы в localStorage
         localStorage.setItem('darkMode', newDarkMode.toString());
     };
 
@@ -37,13 +35,7 @@ const App = () => {
                     <ScrollableContent>
                         <Main />
                     </ScrollableContent>
-
-                    {/* Кнопка переключения темы */}
-                    <ToggleButton darkMode={darkMode} onClick={toggleTheme}>
-                        <ToggleIcon>
-                            {darkMode ? '🌞' : '🌙'}
-                        </ToggleIcon>
-                    </ToggleButton>
+                    <Footer darkMode={darkMode} toggleTheme={toggleTheme} />
                 </BackgroundContainer>
             </ThemeProvider>
         </StrictMode>

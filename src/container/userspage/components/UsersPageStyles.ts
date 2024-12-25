@@ -1,17 +1,22 @@
 import styled from '@emotion/styled';
-import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
+import { useTheme, Theme } from '@mui/material/styles';
 
 export const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px; 
+    padding: 20px;
     font-family: 'Poppins', sans-serif;
     background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#1E1E2A' : '#f0f8ff'};
     min-height: 30vh;
     max-width: 400px;
-    margin: 0 auto; 
-    border-radius: 25px; 
+    margin: 0 auto;
+    border-radius: 25px;
+
+    @media (max-width: 768px) {
+        padding: 15px;
+        max-width: 90%;
+    }
 `;
 
 export const Title = styled.h1`
@@ -20,6 +25,11 @@ export const Title = styled.h1`
     text-shadow: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '1px 1px 3px rgba(0, 0, 0, 0.5)' : '1px 1px 3px rgba(0, 0, 0, 0.2)'};
     margin-bottom: 30px;
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
 `;
 
 export const UserInfo = styled.div`
@@ -35,6 +45,11 @@ export const UserInfo = styled.div`
     &:hover {
         transform: translateY(-5px);
     }
+
+    @media (max-width: 768px) {
+        padding: 20px;
+        max-width: 90%;
+    }
 `;
 
 export const BalanceText = styled.p`
@@ -42,6 +57,11 @@ export const BalanceText = styled.p`
     margin: 20px 0;
     color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#3498db' : '#007bff'};
     font-weight: 600;
+
+    @media (max-width: 768px) {
+        font-size: 1.2rem;
+        margin: 15px 0;
+    }
 `;
 
 export const StyledButton = styled.button`
@@ -63,6 +83,11 @@ export const StyledButton = styled.button`
     &:active {
         transform: translateY(0);
     }
+
+    @media (max-width: 768px) {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
 `;
 
 export const TopUpContainer = styled.div`
@@ -71,6 +96,10 @@ export const TopUpContainer = styled.div`
     gap: 10px;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        margin-top: 15px;
+    }
 `;
 
 export const AmountInput = styled.input`
@@ -86,5 +115,10 @@ export const AmountInput = styled.input`
     &:focus {
         outline: none;
         border-color: #007bff;
+    }
+
+    @media (max-width: 768px) {
+        width: 120px;
+        font-size: 0.9rem;
     }
 `;

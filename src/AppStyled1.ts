@@ -6,6 +6,9 @@ export const BackgroundContainer = styled('div')({
     width: '100vw',
     position: 'relative',
     overflow: 'hidden',
+    '@media (max-width: 768px)': {
+        height: 'auto',
+    },
 });
 
 export const ScrollableContent = styled('div')({
@@ -15,6 +18,9 @@ export const ScrollableContent = styled('div')({
     position: 'relative',
     zIndex: 1,
     paddingBottom: '70px',
+    '@media (max-width: 768px)': {
+        paddingBottom: '40px', // Уменьшаем отступ для мобильных
+    },
 });
 
 export const BackgroundImage = styled('div')({
@@ -29,6 +35,9 @@ export const BackgroundImage = styled('div')({
     backgroundRepeat: 'no-repeat',
     animation: 'zoomEffect 30s infinite ease-in-out',
     zIndex: -1,
+    '@media (max-width: 768px)': {
+        backgroundSize: 'cover', // Изменяем размер фона для мобильных устройств
+    },
 });
 
 export const GlobalStyle = styled('style')`
@@ -61,6 +70,10 @@ export const ToggleButton = styled('button')<{ darkMode: boolean }>(({ darkMode 
     cursor: 'pointer',
     boxSizing: 'border-box',
     zIndex: 2,
+    '@media (max-width: 768px)': {
+        width: '80px',  // Уменьшаем кнопку на мобильных устройствах
+        height: '40px',
+    },
 }));
 
 export const ToggleIcon = styled('div')({
@@ -72,4 +85,8 @@ export const ToggleIcon = styled('div')({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    '@media (max-width: 768px)': {
+        width: '30px',  // Уменьшаем иконку для мобильных устройств
+        height: '30px',
+    },
 });
