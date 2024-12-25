@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { FooterNavButton, FooterContainer, FooterText } from './components/FooterStyles';
+import { FooterNavButton, FooterContainer, FooterText, ToggleButton, ToggleIcon } from './components/FooterStyles';
 import PrivacyPolicy from './privacyPolicy';
 import TermsOfService from './termsOfService';
 import ContactUs from './contactUs';
@@ -12,11 +12,11 @@ const footerNavigations = [
     { name: 'Contact', content: <ContactUs /> },
 ];
 
-const Footer = (): React.ReactElement => {
+const Footer = ({ darkMode, toggleTheme }: { darkMode: boolean; toggleTheme: () => void }) => {
     const [open, setOpen] = useState(false);
     const [modalContent, setModalContent] = useState<React.ReactNode>(null);
     const [modalTitle, setModalTitle] = useState('');
-    const theme = useTheme(); // Получаем текущую тему
+    const theme = useTheme();
 
     const handleClickOpen = (title: string, content: React.ReactNode) => {
         setModalTitle(title);
@@ -43,6 +43,10 @@ const Footer = (): React.ReactElement => {
             </Box>
 
             <FooterText theme={theme}>&copy; 2024 Smartini Crypto | All rights reserved.</FooterText>
+
+            <ToggleButton darkMode={darkMode} onClick={toggleTheme}>
+                <ToggleIcon>{darkMode ? '🌙' : '🌞'}</ToggleIcon>
+            </ToggleButton>
 
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>{modalTitle}</DialogTitle>

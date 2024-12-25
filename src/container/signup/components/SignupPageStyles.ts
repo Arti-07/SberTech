@@ -13,6 +13,10 @@ export const GifContainer = styled.div`
             opacity: 1;
         }
     }
+
+    @media (max-width: 768px) {
+        width: 100%; /* Для мобильных устройств контент занимает 100% ширины */
+    }
 `;
 
 // Сообщение об успешной операции
@@ -20,7 +24,7 @@ export const SuccessMessage = styled.div`
     animation: slideUp 0.5s ease-in-out;
     color: ${(props: { theme: any }) => props.theme.palette.success.main};
     font-weight: bold;
-    margin-top: -5px; /* Подняли на 10px */
+    margin-top: -5px;
     text-align: center;
     width: 100%;
 
@@ -34,6 +38,11 @@ export const SuccessMessage = styled.div`
             transform: translateY(0);
         }
     }
+
+    @media (max-width: 768px) {
+        font-size: 1.1rem; /* Уменьшаем шрифт для мобильных устройств */
+        margin-top: 0; /* Убираем дополнительный отступ */
+    }
 `;
 
 // Сообщение об ошибке
@@ -41,7 +50,7 @@ export const ErrorMessage = styled.div`
     animation: shake 0.5s ease-in-out;
     color: ${(props: { theme: any }) => props.theme.palette.error.main};
     font-weight: bold;
-    margin-top: -5px; /* Подняли на 10px */
+    margin-top: -5px;
     text-align: center;
     width: 100%;
 
@@ -62,6 +71,11 @@ export const ErrorMessage = styled.div`
             transform: translateX(0);
         }
     }
+
+    @media (max-width: 768px) {
+        font-size: 1.1rem; /* Уменьшаем шрифт для мобильных устройств */
+        margin-top: 0; /* Убираем дополнительный отступ */
+    }
 `;
 
 // Контейнер для формы регистрации
@@ -69,16 +83,25 @@ export const SignupContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 20px 20px; /* Подняли на 10px */
+    padding: 10px 20px 20px;
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
+
+    @media (max-width: 768px) {
+        max-width: 90%; /* Для мобильных устройств форма занимает больше ширины */
+        padding: 10px 15px; /* Уменьшаем отступы */
+    }
+
+    @media (max-width: 480px) {
+        max-width: 100%; /* Форма занимает 100% ширины для самых маленьких экранов */
+    }
 `;
 
 // Заголовок формы
 export const SignupTitle = styled.h1`
     font-size: 2.5rem;
-    margin-bottom: 10px; /* Подняли на 10px */
+    margin-bottom: 10px;
     text-align: center;
     color: ${(props: { theme: any }) => props.theme.palette.text.primary};
     font-family: 'Poppins', sans-serif;
@@ -90,12 +113,24 @@ export const SignupTitle = styled.h1`
     &:hover {
         text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
     }
+
+    @media (max-width: 768px) {
+        font-size: 2rem; /* Уменьшаем размер шрифта для мобильных устройств */
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1.5rem; /* Ещё меньше для самых маленьких экранов */
+    }
 `;
 
 // Группа полей ввода
 export const FormGroup = styled.div`
-    margin-bottom: 10px; /* Подняли на 10px */
+    margin-bottom: 10px;
     position: relative;
+
+    @media (max-width: 768px) {
+        margin-bottom: 8px; /* Уменьшаем отступы на мобильных */
+    }
 `;
 
 // Поля ввода
@@ -133,6 +168,15 @@ export const FormInput = styled.input`
             color: ${(props: { theme: any }) => props.theme.palette.text.primary};
         }
     }
+
+    @media (max-width: 768px) {
+        font-size: 0.9rem; /* Уменьшаем размер шрифта для мобильных */
+        padding: 10px; /* Уменьшаем отступы на мобильных */
+    }
+
+    @media (max-width: 480px) {
+        font-size: 0.8rem; /* Ещё меньше для маленьких экранов */
+    }
 `;
 
 // Tooltip (всплывающее сообщение)
@@ -149,14 +193,23 @@ export const Tooltip = styled.span`
     &:hover {
         color: ${(props: { theme: any }) => props.theme.palette.primary.dark};
     }
+
+    @media (max-width: 768px) {
+        font-size: 1.2rem; /* Уменьшаем шрифт на мобильных устройствах */
+    }
 `;
 
 // Группа кнопок
 export const ButtonGroup = styled.div`
     display: flex;
     gap: 10px;
-    margin-top: 10px; /* Подняли на 10px */
+    margin-top: 10px;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        flex-direction: column; /* Для мобильных кнопки становятся в колонку */
+        gap: 8px; /* Уменьшаем расстояние между кнопками */
+    }
 `;
 
 // Кнопки
@@ -185,5 +238,15 @@ export const Button = styled.button`
         &:hover {
             background-color: ${(props: { theme: any }) => props.theme.palette.secondary.dark};
         }
+    }
+
+    @media (max-width: 768px) {
+        padding: 10px 20px; /* Уменьшаем отступы на мобильных устройствах */
+        font-size: 0.9rem; /* Уменьшаем размер шрифта */
+    }
+
+    @media (max-width: 480px) {
+        padding: 8px 16px; /* Уменьшаем ещё больше для маленьких экранов */
+        font-size: 0.8rem; /* Минимальный размер шрифта */
     }
 `;
