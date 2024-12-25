@@ -4,11 +4,19 @@ import styled from '@emotion/styled';
 import { Theme } from '@mui/material/styles';
 import { InputGroup, InputField, Message,  EnterButton } from './promocodeForm.style'
 
-import { getConfigValue } from '@brojs/cli';
-// getNavigationsValue('smartini_crypto.signin'),
+import { getConfig } from '@brojs/cli';
+
+function getPromocode() {
+    const config = getConfig();
+    const entries_config = Object.entries(config);
+    const promo_config = entries_config.filter(([key]) => key.includes('promocode'));
+    return promo_config.map(([, value]) => value)
+}
 
 const PromocodeForm = () => {
     const theme = useTheme();
+    // получаем список промокодов
+    const promo_list = getPromocode();
     
     const [promocode, setPromocode] = useState('');
     const [message, setMessage] = useState('');
@@ -24,7 +32,7 @@ const PromocodeForm = () => {
         }
 
         try {
-            var isValidPromo = promocode == 'AAA';
+            const isValidPromo = promo_list.includes(promocode);
             if(isValidPromo){
                 setMessage('promocode is valid!');
             } else {

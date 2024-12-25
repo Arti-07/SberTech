@@ -24,5 +24,7 @@ module.exports = {
   },
   config: {
     "smartini_crypto.api": "/api",
+    "smartini_crypto.promocode_new_year": "NEWYEAR",
+    "smartini_crypto.promocode_admin": "ADMIN",
   },
 };
