@@ -77,7 +77,7 @@ const PromocodeForm = () => {
                 />
             </InputGroup>  
 
-            {message && <Message isSuccess={message === 'promocode is valid!'}>{message}</Message>}
+            {message && <Message isSuccess={message.includes('promocode is valid!')}>{message}</Message>}
             
             <EnterButton theme={theme} onClick={handleSignIn}>Enter</EnterButton>           
         </Box>
