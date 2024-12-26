@@ -139,7 +139,7 @@ const MiningPage = (): React.ReactElement => {
                                 <StyledConfirmButton theme={theme} onClick={handleConfirmTopUp}>Submit</StyledConfirmButton>
                             </div>
                             <div className="account">
-                                <StyledConfirmButton theme={theme} onClick={handleClickOpen}>promocode</StyledConfirmButton>                                
+                                <StyledConfirmButton theme={theme} onClick={handleClickOpen}>Promo code</StyledConfirmButton>
                             </div>
                             <div className="coin">
                                 <Lottie options={transferCoinAnimations} height={'100%'} width={'100%'} />
@@ -149,7 +149,7 @@ const MiningPage = (): React.ReactElement => {
                 </ContainerSubmit>
 
                 <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>PROMOCODE</DialogTitle>
+                    <DialogTitle>Promo code</DialogTitle>
                     <DialogContent>
                         <PromocodeForm/>
                     </DialogContent>
