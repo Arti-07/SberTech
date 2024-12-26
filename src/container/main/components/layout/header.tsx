@@ -7,10 +7,9 @@ import logoBlack from './logo/logo_black.png';
 import logoWhite from './logo/logo_white.png';
 
 const navigations = [
-    { name: 'Main Page', href: getNavigationsValue('smartini_crypto.main') },
-    { name: 'Detail', href: getNavigationsValue('smartini_crypto.detail') },
-    { name: 'Mining your crypto', href: getNavigationsValue('smartini_crypto.mining') },
-    { name: 'Account Page', href: getNavigationsValue('smartini_crypto.account') },
+    { name: 'Home', href: getNavigationsValue('smartini_crypto.main') },
+    { name: 'Mining', href: getNavigationsValue('smartini_crypto.mining') },
+    { name: 'Account', href: getNavigationsValue('smartini_crypto.account') },
 ];
 
 const Header = (): React.ReactElement => {

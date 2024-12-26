@@ -40,7 +40,7 @@ export const FooterNavButton = styled(Button)`
 export const FooterContainer = styled('footer')`
   background-color: ${({ theme }: { theme: Theme }) =>
     theme.palette.mode === 'dark' ? '#1E1E2A' : '#ADD8E6'};
-  padding: 20px;
+  padding: 5px;
   text-align: center;
   margin-top: auto;
   position: fixed;

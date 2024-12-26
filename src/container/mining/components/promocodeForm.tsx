@@ -39,17 +39,17 @@ const PromocodeForm = () => {
                 const promocodeUseFirst = sessionStorage.getItem(promocode);
                 if(!promocodeUseFirst){
                     try {
-                        api.updateBalance(2024);
+                        await api.updateBalance(2024);
                         sessionStorage.setItem(promocode, 'True');
-                        setMessage('promocode is valid! Add 2024 coin!');
+                        setMessage('Promocode is valid! Add 2024 coin!');
                     } catch (error: any) {
                         setMessage('An error has occurred! Please try again later!');
                     }                    
                 } else {
-                    setMessage('promocode is used!');
+                    setMessage('Promocode is used!');
                 }
             } else {
-                setMessage('promocode is not valid!');
+                setMessage('Promocode is not valid!');
             }
         } catch (error: any) {
             setMessage('An error has occurred! Please try again later!');
@@ -77,7 +77,7 @@ const PromocodeForm = () => {
                 />
             </InputGroup>  
 
-            {message && <Message isSuccess={message.includes('promocode is valid!')}>{message}</Message>}
+            {message && <Message isSuccess={message.includes('Promocode is valid!')}>{message}</Message>}
             
             <EnterButton theme={theme} onClick={handleSignIn}>Enter</EnterButton>           
         </Box>

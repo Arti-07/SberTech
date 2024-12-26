@@ -10,11 +10,11 @@ export const NavButton = styled(Button)<{ theme: Theme }>`
   text-transform: none;
   padding: 8px 16px;
   margin: 0 8px;
-  background-color: #9b6162;
+  background-color: #242428;
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #8a0402;
+    background-color: #9494b3;
     transform: scale(1.05);
   }
 
@@ -36,11 +36,11 @@ export const NavButton = styled(Button)<{ theme: Theme }>`
 `;
 
 export const ActiveNavButton = styled(NavButton)<{ theme: Theme }>`
-  background-color: #8a0402;
+  background-color: #9494b3;
   color: ${({ theme }) => theme.palette.text.primary};
 
   &:hover {
-    background-color: #8a0402;
+    background-color: #9494b3;
   }
 
   @media (max-width: 768px) {
