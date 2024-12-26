@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import api from '../../../api';
 import styles from './cryptoTable.style';
 import Pagination from './pagination';
+import { useNavigate } from 'react-router-dom';
 
 interface CryptoData {
     id: number;
@@ -15,6 +16,7 @@ interface CryptoData {
 
 const CryptoTable: React.FC = () => {
     const [data, setData] = useState<CryptoData[]>([]);
+    const navigate = useNavigate();
     const [displayedData, setDisplayedData] = useState<CryptoData[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -28,7 +30,7 @@ const CryptoTable: React.FC = () => {
         setLoading(true);
         setError(null);
         try {
-
+            await api.login('Anna', 'qwerty123');
             const allCryptoData = await api.getListings();
             const startIndex = (page - 1) * itemsPerPage;
             const paginatedData = allCryptoData.slice(startIndex, startIndex + itemsPerPage);
@@ -89,6 +91,10 @@ const CryptoTable: React.FC = () => {
         }
     };
 
+    const handleRowClick = (name: string) => {
+        navigate('/smartini_crypto/detail', { state: { cryptoName: name } });
+    }
+
     const sortData = (key: keyof CryptoData) => {
         let direction = 'ascending';
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -138,7 +144,8 @@ const CryptoTable: React.FC = () => {
                     </thead>
                     <tbody>
                     {filteredData.map((item, index) => (
-                        <tr key={item.id} style={index % 2 === 0 ? styles.evenRow : {}}>
+                        <tr key={item.id} style={index % 2 === 0 ? styles.evenRow : {}}
+                            onClick={() => item.name && handleRowClick(item.name.toLowerCase())}>
                             <td style={styles.td}>{item.id}</td>
                             <td style={styles.td}>
                                 {item.icon} {item.name} ({item.symbol})

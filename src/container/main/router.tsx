@@ -33,6 +33,7 @@ export const router = createBrowserRouter([
                 element: <ListPage/>
             },
             {
+                //path: `${getNavigationsValue('smartini_crypto.detail')}/:cryptoName`,
                 path: getNavigationsValue('smartini_crypto.detail'),
                 element: <DetailPage/>
             },
