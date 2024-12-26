@@ -1,144 +1,53 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import api from '../../api';
-import styled from '@emotion/styled';
-
-const PageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
-    min-height: 100vh;
-`;
-
-const Title = styled.h1`
-    font-size: 2.5rem;
-    color: #333;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-    margin-bottom: 30px;
-    text-align: center;
-`;
-
-const UserInfo = styled.div`
-    background: #fff;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    transition: transform 0.3s ease;
-
-    &:hover {
-        transform: translateY(-5px);
-    }
-`;
-
-const BalanceText = styled.p`
-    font-size: 1.5rem;
-    margin: 20px 0;
-    color: #007bff;
-    font-weight: 600;
-`;
-
-const StyledButton = styled.button`
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: background-color 0.3s, transform 0.2s;
-
-    &:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-    }
-
-    &:active {
-        transform: translateY(0);
-    }
-`;
-
-const TopUpContainer = styled.div`
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-`;
-
-const AmountInput = styled.input`
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    width: 150px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-
-    &:focus {
-        outline: none;
-        border-color: #007bff;
-    }
-`;
+import {
+    PageContainer,
+    Title,
+    UserInfo,
+    BalanceText,
+    StyledButton,
+    TopUpContainer,
+    AmountInput,
+} from './components/UsersPageStyles';
 
 const UsersPage = () => {
+    const theme = useTheme(); // Получаем тему
     const [login, setLogin] = useState<string>('');
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [balance, setBalance] = useState<number>(0);
     const [showTopUp, setShowTopUp] = useState<boolean>(false);
     const [topUpAmount, setTopUpAmount] = useState<string>('');
-
-    const getCookie = (name: string) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop()?.split(';').shift();
-        return null;
-    };
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const token = getCookie('token');
-        if (token) {
-            setIsAuthenticated(true);
-            api.setToken(token);
-        } else {
-            setIsAuthenticated(false);
-        }
+        const checkAuth = async () => {
+            const authStatus = await api.isAuthenticated();
+            setIsAuthenticated(authStatus);
 
-        const storedLogin = sessionStorage.getItem('login');
-        if (storedLogin) {
-            setLogin(storedLogin);
-        }
+            if (authStatus) {
+                const storedLogin = sessionStorage.getItem('login');
+                if (storedLogin) {
+                    setLogin(storedLogin);
+                }
+                try {
+                    const data = await api.getBalance();
+                    setBalance(data.balance || 0);
+                } catch (err) {
+                    console.error('Ошибка запроса баланса:', err);
+                }
+            }
+        };
+
+        checkAuth();
     }, []);
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            api.getBalance()
-                .then(data => {
-                    if (data.balance !== undefined) {
-                        setBalance(data.balance);
-                    } else {
-                        console.error('Ошибка получения баланса:', data);
-                    }
-                })
-                .catch(err => console.error('Ошибка запроса баланса:', err));
-        }
-    }, [isAuthenticated]);
 
     const handleTopUpClick = () => {
         setShowTopUp(true);
     };
 
     const handleConfirmTopUp = () => {
-        const token = getCookie('token');
-        if (!token) {
-            alert('Токен не найден. Авторизуйтесь заново.');
-            return;
-        }
-
         const amountNumber = parseFloat(topUpAmount);
         if (isNaN(amountNumber) || amountNumber <= 0) {
             alert('Введите корректную сумму');
@@ -166,29 +75,37 @@ const UsersPage = () => {
             });
     };
 
+    const handleSignOut = () => {
+        // Очистка данных из sessionStorage и обновление состояния
+        sessionStorage.removeItem('login');
+        setIsAuthenticated(false);
+        navigate('/smartini_crypto/signin');
+    };
+
     return (
-        <PageContainer>
+        <PageContainer theme={theme}> {/* Тема передается через контекст */}
             {isAuthenticated ? (
-                <UserInfo>
-                    <Title>Привет, {login}!</Title>
-                    <BalanceText>Ваш баланс: {balance}</BalanceText>
+                <UserInfo theme={theme}>
+                    <Title theme={theme}>Hello, {login}!</Title>
+                    <BalanceText theme={theme}>Your balance: {balance}</BalanceText>
+                    <StyledButton theme={theme} onClick={handleSignOut}>Sign out</StyledButton>
                     {!showTopUp && (
-                        <StyledButton onClick={handleTopUpClick}>Пополнить баланс</StyledButton>
+                        <StyledButton theme={theme} onClick={handleTopUpClick}>Top up balance</StyledButton>
                     )}
                     {showTopUp && (
                         <TopUpContainer>
-                            <AmountInput
+                            <AmountInput theme={theme}
                                 type="number"
-                                placeholder="Введите сумму"
+                                placeholder="Enter amount"
                                 value={topUpAmount}
                                 onChange={(e) => setTopUpAmount(e.target.value)}
                             />
-                            <StyledButton onClick={handleConfirmTopUp}>Подтвердить</StyledButton>
+                            <StyledButton theme={theme} onClick={handleConfirmTopUp}>Submit</StyledButton>
                         </TopUpContainer>
                     )}
                 </UserInfo>
             ) : (
-                <Title>Вы не авторизованы. Пожалуйста, войдите.</Title>
+                <Title theme={theme}>You are not logged in. Please come in.</Title>
             )}
         </PageContainer>
     );

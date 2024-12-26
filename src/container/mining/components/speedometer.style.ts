@@ -1,5 +1,7 @@
 
 import styled from '@emotion/styled';
+import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
+
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -14,7 +16,7 @@ export const StyledSpeedometer = styled.div`
     min-width: 350px;
     min-height: 175px;
     margin-top: 2%;
-    margin-bottom: 10%;
+    margin-bottom: 2%;
 
     .guage_body {
         position: relative;
@@ -25,7 +27,7 @@ export const StyledSpeedometer = styled.div`
         border-top-left-radius: 100% 200%;
         border-top-right-radius: 100% 200%;
         overflow: hidden;
-        background: chocolate;
+        background: #8a0402;
     }
     
     .guage_body_fill {
@@ -38,7 +40,7 @@ export const StyledSpeedometer = styled.div`
         transform: rotate(0turn);
         transition: transform;
         z-index: 1;
-        background: #00D;
+        background: darkblue;
     }
 
     .guage_body_cover {
@@ -51,8 +53,35 @@ export const StyledSpeedometer = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 2;
-        background: #fff;
+        z-index: 3;
+
+        background-color: rgb(238, 163, 211);
+        background-size: 150% 150%;
+        background-image: radial-gradient(30% 40% at 65% 70%, rgb(192, 88, 254) 1%, rgba(192, 88, 254, 0) 100%), radial-gradient(30% 40% at 68% 45%, rgb(255, 57, 44) 1%, rgba(255, 57, 44, 0) 100%), radial-gradient(30% 40% at 38% 25%, rgb(255, 138, 53) 1%, rgba(255, 138, 53, 0) 100%), radial-gradient(60% 60% at 37% 68%, rgb(255, 125, 251) 1%, rgba(255, 125, 251, 0) 100%);
+        transform: scale(1);
+        animation-timeline: auto;
+        animation-range-start: normal;
+        animation-range-end: normal;
+        background-position: 0px 0px;
+        animation: 5s ease-in-out 0s infinite normal none running body-gradient;            
+    }
+
+    @keyframes body-gradient {
+        0% {
+            background-position:0% 0%
+        }
+        25% {
+            background-position:100% 0%
+        }
+        50% {
+            background-position:100% 100%
+        }
+        75% {
+            background-position:0% 100%
+        }
+        to {
+            background-position:0% 0%
+        }
     }
 
     .guage_indicator_slider {
@@ -75,19 +104,17 @@ export const StyledSpeedometer = styled.div`
         top: 50%;
         left: 25%;
         border-radius: 50%;
-        background: chocolate;
+        background: #8a0402;
         z-index: 3;
-        &::before {
-        }
     }
 
     .text_content {
         position: absolute;
-        top: 75%;
+        top: 80%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 4;        
-        background-color: chocolate;
+        background-color: #8a0402;
         user-select: none;
 
         h3 {

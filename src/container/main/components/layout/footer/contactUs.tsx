@@ -1,5 +1,10 @@
 import React from 'react';
-import { Box, Typography, Link, Avatar } from '@mui/material';
+import { Box, Typography, Link, Avatar, useTheme } from '@mui/material';
+
+import postmalone from 'src/assets/images/postmalone.jpg';
+import dualipa from 'src/assets/images/dualipa.jpg';
+import eminem from 'src/assets/images/eminem.jpg';
+import shoopdog from 'src/assets/images/shoopdog.jpg';
 
 const teamMembers = [
     {
@@ -7,31 +12,42 @@ const teamMembers = [
         role: 'Frontend Developer',
         contact: 'https://t.me/postyvee',
         avatar: 'https://via.placeholder.com/150',
+        image: postmalone,
     },
     {
         name: 'Anna',
         role: 'Frontend Developer, Analyst',
         contact: 'https://t.me/anna_ferzz',
         avatar: 'https://via.placeholder.com/150',
+        image: dualipa,
     },
     {
         name: 'Artur',
         role: 'Frontend, Backend Developer',
         contact: 'https://t.me/ar_gin',
         avatar: 'https://via.placeholder.com/150',
+        image: eminem,
     },
     {
         name: 'Leonid',
         role: 'Frontend Developer',
         contact: 'https://t.me/ROwaGO',
         avatar: 'https://via.placeholder.com/150',
+        image: shoopdog,
     },
 ];
 
 const TeamContacts: React.FC = () => {
+    const theme = useTheme(); // Получаем текущую тему
+
+    const backgroundColor = theme.palette.mode === 'dark' ? '#2F4F4F' : '#f9f9f9'; // Темный или светлый фон
+    const textColor = theme.palette.mode === 'dark' ? '#ffffff' : '#1E1E2A'; // Цвет текста
+    const roleColor = theme.palette.mode === 'dark' ? '#B0B0B0' : '#797993'; // Цвет описания роли
+    const linkColor = theme.palette.mode === 'dark' ? '#4CAF50' : '#007AFF'; // Цвет ссылок
+
     return (
-        <Box sx={{ textAlign: 'center', py: 4, backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
-            <Typography variant="h5" gutterBottom sx={{ color: '#1E1E2A', fontWeight: 'bold' }}>
+        <Box sx={{ textAlign: 'center', py: 4, backgroundColor, borderRadius: '8px' }}>
+            <Typography variant="h5" gutterBottom sx={{ color: textColor, fontWeight: 'bold' }}>
                 Smartini Crypto team
             </Typography>
             <Box
@@ -55,17 +71,23 @@ const TeamContacts: React.FC = () => {
                         }}
                     >
                         <Avatar
-                            src={member.avatar}
+                            src={member.image}
                             alt={member.name}
-                            sx={{ width: 100, height: 100, margin: '0 auto' }}
+                            sx={{
+                                width: 100,
+                                height: 100,
+                                margin: '0 auto',
+                                border: '3px solid #fff',
+                                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+                            }}
                         />
                         <Typography
                             variant="subtitle1"
-                            sx={{ mt: 2, fontWeight: 'bold', color: '#1E1E2A' }}
+                            sx={{ mt: 2, fontWeight: 'bold', color: textColor }}
                         >
                             {member.name}
                         </Typography>
-                        <Typography variant="body2" sx={{ color: '#797993' }}>
+                        <Typography variant="body2" sx={{ color: roleColor }}>
                             {member.role}
                         </Typography>
                         <Link
@@ -75,7 +97,7 @@ const TeamContacts: React.FC = () => {
                             sx={{
                                 display: 'block',
                                 mt: 1,
-                                color: '#007AFF',
+                                color: linkColor,
                                 textDecoration: 'none',
                                 fontWeight: 'medium',
                             }}

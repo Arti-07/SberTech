@@ -1,9 +1,11 @@
 import  React from 'react';
 import { useEffect } from 'react';
 import { Wrapper, StyledSpeedometer } from './speedometer.style';
+import { useTheme } from '@mui/material/styles';
 
 const Speedometer = ({turnAngle}) => {
 
+    const theme = useTheme();
     const turnRef = React.useRef(null)
     const sliderRef = React.useRef(null)
     const minAngle = 0;
@@ -18,7 +20,7 @@ const Speedometer = ({turnAngle}) => {
 
     return (
         <Wrapper>
-            <StyledSpeedometer>
+            <StyledSpeedometer theme={theme}>
                 <div className="guage_body">
                 <div className="guage_body_fill" ref={turnRef} />
                 <div className="guage_body_cover">
