@@ -30,12 +30,11 @@ const CryptoTable: React.FC = () => {
         setLoading(true);
         setError(null);
         try {
-            await api.login('Anna', 'qwerty123');
             const allCryptoData = await api.getListings();
             const startIndex = (page - 1) * itemsPerPage;
             const paginatedData = allCryptoData.slice(startIndex, startIndex + itemsPerPage);
 
-            const detailedDataPromises = paginatedData.map(async (crypto: any) => {
+            const detailedDataPromises = paginatedData.map(async (crypto: CryptoData) => {
                 try {
                     const data = await api.getTicker(crypto.id, 'USD');
                     return {
@@ -46,7 +45,7 @@ const CryptoTable: React.FC = () => {
                         percentage_change_1h: data?.percentage_change_1h || 0,
                         percentage_change_24h: data?.percentage_change_24h || 0,
                     };
-                } catch (err: any) {
+                } catch (err: unknown) {
                     console.error(`Error fetching details for ${crypto.id}:`, err);
                     return {
                         id: crypto.id,
@@ -73,9 +72,12 @@ const CryptoTable: React.FC = () => {
             }));
             setDisplayedData(newDataWithSequentialId);
             setTotalPages(Math.ceil(allCryptoData.length / itemsPerPage));
-        } catch (err: any) {
-            setError(err?.message || 'Ошибка загрузки данных');
-            console.error('Ошибка загрузки данных:', err);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message || 'Ошибка загрузки данных');
+            } else {
+                setError('Неизвестная ошибка');
+        }
         } finally {
             setLoading(false);
         }
@@ -143,9 +145,12 @@ const CryptoTable: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredData.map((item) => (
+                    {filteredData.map((item, index) => (
                         <tr key={item.id}
-                            style={styles.tableRow}
+                            style={{
+                                ...styles.tableRow,
+                                ...(index % 2 === 0 ? styles.evenRow : {})
+                            }}
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.tableRowHover.backgroundColor}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                             onClick={() => item.name && handleRowClick(item.name.toLowerCase())}>

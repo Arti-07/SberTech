@@ -1,3 +1,5 @@
+import React from 'react';
+
 const styles = {
     container: {
         backgroundColor: 'rgba(30, 30, 42, 0.9)',
@@ -22,7 +24,7 @@ const styles = {
         borderRadius: '5px',
         scrollbarWidth: 'thin',
         scrollbarColor: '#444444 #1e1e2a',
-    },
+    } as React.CSSProperties,
     table: {
         width: '100%',
         borderCollapse: 'collapse' as const,
