@@ -22,7 +22,7 @@ export const FooterNavButton = styled(Button)<{ theme: Theme }>`
 export const FooterContainer = styled('footer')<{ theme: Theme }>`
   background-color: ${({ theme }) =>
     theme.palette.mode === 'dark' ? '#1E1E2A' : '#ADD8E6'};
-  padding: 20px;
+  padding: 5px;
   text-align: center;
   margin-top: auto;
   position: fixed;
