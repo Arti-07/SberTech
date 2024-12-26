@@ -14,27 +14,27 @@ const Favorites = () => {
             >
                 <FavoriteCard
                     title="Bitcoin"
-                    imageUrl={require("./logo/bitcoin.png")}
+                    imageUrl={require("../logo/bitcoin.png")}
                     price="$100"
                 />
                 <FavoriteCard
                     title="Tether"
-                    imageUrl={require("./logo/tether.png")}
+                    imageUrl={require("../logo/tether.png")}
                     price="$200"
                 />
                 <FavoriteCard
                     title="Ethereum"
-                    imageUrl={require("./logo/ethereum.png")}
+                    imageUrl={require("../logo/ethereum.png")}
                     price="$300"
                 />
                 <FavoriteCard
                     title="Solana"
-                    imageUrl={require("./logo/solana.png")}
+                    imageUrl={require("../logo/solana.png")}
                     price="$400"
                 />
                 <FavoriteCard
                     title="Dogecoin"
-                    imageUrl={require("./logo/dogecoin.png")}
+                    imageUrl={require("../logo/dogecoin.png")}
                     price="$150"
                 />
             </div>

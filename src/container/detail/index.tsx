@@ -4,26 +4,17 @@ import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsiv
 import {stripHtml, truncateDescription} from './utils/descriptionUtils';
 import {prepareChartData, calculateTrendLine, calculateAveragePrice, calculateStatistics} from './utils/chartUtils';
 import {PageContainer, ChartContainer, InfoContainer, CryptoLink, ChartTitle} from './DetailPageStyles';
+import {useLocation} from 'react-router-dom';
 
 const DetailPage = (): React.ReactElement => {
     const [cryptoInfo, setCryptoInfo] = useState<any>(null);
     const [chartData, setChartData] = useState<any>(null);
-    const [error, setError] = useState<string | null>(null);
-
+    const [setError] = useState<string | null>(null);
+    const location = useLocation();
+    const cryptoName = location.state?.cryptoName;
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const cryptoName = 'ethereum';
-
-                await api.login('testUser', 'password123');
-                /*
-                const token = document.cookie('token');
-                if (!token) {
-                    throw new Error('Token not found in cookies');
-                }
-                */
-                //console.log('Успешная авторизация, токен:', token);
-
                 const info = await api.getInfo(cryptoName);
                 setCryptoInfo({...info, name: cryptoName});
 
@@ -31,12 +22,11 @@ const DetailPage = (): React.ReactElement => {
                 setChartData(chart);
             } catch (err: any) {
                 setError(err.message || 'Ошибка');
-                console.error(err);
             }
         };
 
         fetchData();
-    }, []);
+    }, [cryptoName]);
 
     const formattedData = prepareChartData(chartData);
     const trendLineData = calculateTrendLine(formattedData);
