@@ -1,26 +1,5 @@
 import styled from '@emotion/styled';
-import { useTheme, Theme } from '@mui/material/styles';
-
-export const Container = styled.div`
-    text-align: center;
-    margin-top: 50px;
-
-    /* Адаптивность для экранов меньше 600px */
-    @media (max-width: 600px) {
-        margin-top: 30px;
-    }
-`;
-
-export const Title = styled.h1`
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: ${(props) => props.theme.palette.text.primary}; /* Цвет текста зависит от темы */
-
-    /* Адаптивность для экранов меньше 600px */
-    @media (max-width: 600px) {
-        font-size: 1.5rem;
-    }
-`;
+import { Theme } from '@mui/material/styles';
 
 export const InputGroup = styled.div`
     margin-top: 20px;
@@ -58,50 +37,26 @@ export const InputField = styled.input`
     }
 `;
 
-export const PasswordToggle = styled.span`
-    position: absolute;
-    top: 70%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: ${(props) => props.theme.palette.primary.main}; 
-
-    &:hover {
-        color: ${(props) => props.theme.palette.primary.dark}; 
-    }
-
-    /* Адаптивность для экранов меньше 600px */
-    @media (max-width: 600px) {
-        font-size: 1rem;
-    }
-`;
-
 export const Message = styled.div<{ isSuccess: boolean }>`
     color: ${(props) =>
     props.isSuccess
         ? props.theme.palette.success.main
         : props.theme.palette.error.main}; 
-    margin-bottom: 20px;
-
-    /* Адаптивность для экранов меньше 600px */
-    @media (max-width: 600px) {
-        margin-bottom: 10px;
-    }
+    margin-top: 10px; 
 `;
 
-export const SignInButton = styled.button`
+export const EnterButton = styled.button`
     padding: 10px 20px;
-    background-color: ${(props) => props.theme.palette.primary.main}; 
+    background-color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#152525' : '#0056b3'};
     color: white;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     font-size: 1rem;
-    margin-top: 20px; 
+    margin-top: 10px; 
 
     &:hover {
-        background-color: ${(props) => props.theme.palette.primary.dark}; 
+        background-color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#45a049' : '#007bff'};
     }
 
     /* Адаптивность для экранов меньше 600px */

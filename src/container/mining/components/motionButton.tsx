@@ -1,14 +1,31 @@
 import  React from 'react';
 import { motion } from "framer-motion";
 import { motionButtonStyle } from './motionButton.style';
-import { containerCenterStyle } from './containerCenter.style'
+import { ContainerCenterStyle } from './containerCenter.style'
+import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
+
+import Lottie from 'react-lottie';
+import bigCoinAnimation from '../../../assets/lotties/bigCoin.json';
+
+const bigCoinOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: bigCoinAnimation,
+    rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+    }
+};
 
 const MotioButton = ({ progress, setProgress, countMining, stepMining, setCountMining, stepIncrease, maxProgress}): React.ReactElement => {
+    const theme = useTheme();
     return (
         <>
-        <div className={containerCenterStyle}>
+        <ContainerCenterStyle>
             <motion.div
                 className={motionButtonStyle}
+                style={{
+                    background: theme.palette.mode === 'dark' ? '#2F4F4F' : '#007bff'
+                }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 transition={{ type: "spring", stiffness: 800, damping: 10 }}
@@ -16,8 +33,12 @@ const MotioButton = ({ progress, setProgress, countMining, stepMining, setCountM
                     setProgress(Math.min(progress + stepIncrease, maxProgress));
                     setCountMining(countMining + stepMining);
                 }}
-            />
-        </div>
+            >
+                <div>
+                    <Lottie options={bigCoinOptions} height={'100%'} width={'100%'} />
+                </div>
+            </motion.div>
+        </ContainerCenterStyle>
     </>
     )
 };
