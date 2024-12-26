@@ -143,8 +143,11 @@ const CryptoTable: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredData.map((item, index) => (
-                        <tr key={item.id} style={index % 2 === 0 ? styles.evenRow : {}}
+                    {filteredData.map((item) => (
+                        <tr key={item.id}
+                            style={styles.tableRow}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.tableRowHover.backgroundColor}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                             onClick={() => item.name && handleRowClick(item.name.toLowerCase())}>
                             <td style={styles.td}>{item.id}</td>
                             <td style={styles.td}>

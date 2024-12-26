@@ -43,6 +43,13 @@ const styles = {
     evenRow: {
         backgroundColor: 'rgba(121, 121, 147, 0.1)',
     },
+    tableRow: {
+        cursor: 'pointer',
+        transition: 'background-color 0.2s ease',
+    },
+    tableRowHover: {
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    },
     changeUp: {
         color: '#4caf50',
         fontWeight: 'bold' as const,
@@ -95,8 +102,6 @@ const styles = {
         color: '#888888',
         textAlign: 'center',
     },
-
-
 };
 
 export default styles;
