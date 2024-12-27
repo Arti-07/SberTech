@@ -1,43 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FavoriteCard from "./favorite_card";
+import api from "../../../api";
+import { useTheme } from "@mui/material/styles";
+
+interface CryptoData {
+    name: string;
+    imageUrl: string;
+    price: number;
+}
 
 const Favorites = () => {
+    const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
+    const { palette } = useTheme(); // Получаем текущую тему
+
+    const cryptoList = ["bitcoin", "tether", "ethereum", "solana", "dogecoin"];
+
+    useEffect(() => {
+        const fetchCryptoData = async () => {
+            try {
+                const allCryptoData = await api.getListings();
+                const filteredData = allCryptoData.filter((crypto: any) =>
+                    cryptoList.includes(crypto.name.toLowerCase())
+                );
+
+                const detailedDataPromises = filteredData.map(async (crypto: any) => {
+                    const data = await api.getTicker(crypto.id, "USD");
+                    // В зависимости от темы формируем путь к картинке
+                    const themePath = palette.mode === 'dark' ? 'dark' : 'light';
+                    const imageUrl = require(`../logo/${themePath}/${crypto.name.toLowerCase()}.png`);
+
+                    return {
+                        name: crypto.name,
+                        imageUrl,
+                        price: data?.price || 0,
+                    };
+                });
+
+                const detailedData = await Promise.all(detailedDataPromises);
+                setCryptoData(detailedData);
+            } catch (error) {
+                console.error("Failed to fetch crypto data", error);
+            }
+        };
+
+        fetchCryptoData();
+    }, [palette.mode]);
     return (
-        <div style={{ padding: "5px" }}>
-            <div
-                style={{
-                    display: "flex",
-                    gap: "15px",
-                    justifyContent: "center",
-                    marginTop: "0px",
-                }}
-            >
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: "10px",
+                padding: "20px",
+            }}
+        >
+            {cryptoData.map((crypto) => (
                 <FavoriteCard
-                    title="Bitcoin"
-                    imageUrl={require("../logo/bitcoin.png")}
-                    price="$100"
+                    key={crypto.name}
+                    title={crypto.name}
+                    imageUrl={crypto.imageUrl}
+                    price={crypto.price}
                 />
-                <FavoriteCard
-                    title="Tether"
-                    imageUrl={require("../logo/tether.png")}
-                    price="$200"
-                />
-                <FavoriteCard
-                    title="Ethereum"
-                    imageUrl={require("../logo/ethereum.png")}
-                    price="$300"
-                />
-                <FavoriteCard
-                    title="Solana"
-                    imageUrl={require("../logo/solana.png")}
-                    price="$400"
-                />
-                <FavoriteCard
-                    title="Dogecoin"
-                    imageUrl={require("../logo/dogecoin.png")}
-                    price="$150"
-                />
-            </div>
+            ))}
         </div>
     );
 };
