@@ -43,11 +43,10 @@ export const FooterContainer = styled('footer')`
   padding: 5px;
   text-align: center;
   margin-top: auto;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1;
 
   @media (max-width: 900px) {
     padding: 18px;
@@ -85,7 +84,7 @@ export const FooterText = styled(Typography)`
 export const ToggleButton = styled('button')<{ darkMode: boolean }>(({ darkMode }) => ({
     position: 'fixed',
     bottom: '20px',
-    right: '20px',
+    right: '30px',
     width: '100px',
     height: '50px',
     borderRadius: '50px',

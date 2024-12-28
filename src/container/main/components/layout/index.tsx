@@ -13,7 +13,6 @@ const Layout = (): React.ReactElement => {
                     <Outlet/>
                 </Box>
             </Container>
-            <Footer/>
         </Box>
     );
 };

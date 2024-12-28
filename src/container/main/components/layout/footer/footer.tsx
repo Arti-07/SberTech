@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { FooterNavButton, FooterContainer, FooterText, ToggleButton, ToggleIcon } from './components/FooterStyles';
-import PrivacyPolicy from './privacyPolicy';
-import TermsOfService from './termsOfService';
-import ContactUs from './contactUs';
+import { FooterNavButton, FooterContainer, FooterText, ToggleButton, ToggleIcon } from './FooterStyles';
+import PrivacyPolicy from '../privacyPolicy';
+import TermsOfService from '../termsOfService';
+import ContactUs from '../contactUs';
+import { styles } from './FooterStyles';
+
+// Используем стили
+const PageWrapper = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <div style={styles.pageWrapper}>  {/* Применение стилей */}
+            <div style={styles.content}>
+                {children}
+            </div>
+            <Footer />
+        </div>
+    );
+};
 
 const footerNavigations = [
     { name: 'Privacy Policy', content: <PrivacyPolicy /> },
