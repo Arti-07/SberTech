@@ -1,72 +1,39 @@
 import React from "react";
-import { Card, CardContent, Typography, CardMedia } from "@mui/material";
+import { Card, Typography, CardMedia, Box, useTheme } from "@mui/material";
+import {
+    cardStyles,
+    cardMediaStyles,
+    cardContentStyles,
+    cardTitleStyles,
+    cardPriceStyles,
+    cardPriceContainerStyles,
+} from "./card.style";
 
 interface FavoriteCardProps {
     title: string;
     imageUrl: string;
-    price: string;
+    price: number;
 }
 
 const FavoriteCard: React.FC<FavoriteCardProps> = ({ title, imageUrl, price }) => {
+    const theme = useTheme(); // Получаем текущую тему
+
+    // Определяем цвет фона карточки в зависимости от темы
+    const cardBackgroundColor = theme.palette.mode === 'dark' ? '#1E1E2A' : '#797993';
+
     return (
-        <Card
-            sx={{
-                maxWidth: 400,
-                borderRadius: "20px",
-                boxShadow: 5,
-                border: "2px solid transparent",
-                transition: "all 0.3s ease-in-out",
-                "&:hover": {
-                    transform: "scale(1.05) rotate(5deg)",
-                    boxShadow: "0 4px 15px rgba(0, 255, 255, 0.5)",
-                    borderColor: "rgba(78, 57, 222, 1.00)",
-                },
-                "&:active": {
-                    transform: "scale(0.98) rotate(-5deg)",
-                    boxShadow: "0 6px 20px rgba(0, 255, 255, 0.7)",
-                },
-            }}
-        >
-            <CardContent
-                sx={{
-                    display: "flex",
-                    gap: "5px",
-                    padding: "20px",
-                }}
-            >
-                <CardMedia
-                    component="img"
-                    height="50"
-                    image={imageUrl}
-                    alt={title}
-                />
-                <Typography
-                    variant="h6"
-                    gutterBottom
-                    sx={{
-                        marginTop: "10px",
-                        display: "flex",
-                    }}
-                >
+        <Card sx={{ ...cardStyles, backgroundColor: cardBackgroundColor }}>
+            <Box sx={cardContentStyles}>
+                <CardMedia component="img" sx={cardMediaStyles} image={imageUrl} alt={title} />
+                <Typography variant="h6" sx={cardTitleStyles}>
                     {title}
                 </Typography>
-
-                {/* Цена товара */}
-                <Typography
-                    variant="body2"
-                    component="p"
-                    sx={{
-                        marginTop: "13px",
-                        fontWeight: "bold",
-                        fontSize: "20px",
-                        color: "rgba(78, 57, 222, 1.00)",
-                        textAlign: "center",
-                    }}
-                >
-                    {price}
+            </Box>
+            <Box sx={cardPriceContainerStyles}>
+                <Typography variant="body1" sx={cardPriceStyles}>
+                    {price.toFixed(2)} $
                 </Typography>
-
-            </CardContent>
+            </Box>
         </Card>
     );
 };
