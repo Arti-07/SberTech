@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useTheme, Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 
 export const PageContainer = styled.div`
     display: flex;
@@ -12,6 +12,7 @@ export const PageContainer = styled.div`
     max-width: 400px;
     margin: 0 auto;
     border-radius: 25px;
+    justify-content: center;
 
     @media (max-width: 768px) {
         padding: 15px;
@@ -22,13 +23,15 @@ export const PageContainer = styled.div`
 export const Title = styled.h1`
     font-size: 2.5rem;
     color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#ecf0f1' : '#333'};
-    text-shadow: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '1px 1px 3px rgba(0, 0, 0, 0.5)' : '1px 1px 3px rgba(0, 0, 0, 0.2)'};
-    margin-bottom: 30px;
+    text-shadow: ${({ theme }: {
+        theme: Theme
+    }) => theme.palette.mode === 'dark' ? '1px 1px 3px rgba(0, 0, 0, 0.5)' : '1px 1px 3px rgba(0, 0, 0, 0.2)'};
+    margin-bottom: 20px;
     text-align: center;
 
     @media (max-width: 768px) {
         font-size: 2rem;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
 `;
 
@@ -36,11 +39,14 @@ export const UserInfo = styled.div`
     background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#34495e' : '#fff'};
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 4px 10px ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+    box-shadow: 0 4px 10px ${({ theme }: {
+        theme: Theme
+    }) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
     text-align: center;
     width: 100%;
     max-width: 400px;
     transition: transform 0.3s ease;
+    margin-bottom: 20px;
 
     &:hover {
         transform: translateY(-5px);
@@ -72,7 +78,10 @@ export const StyledButton = styled.button`
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 10px ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+    margin: 10px 0 8px 5px;
+    box-shadow: 0 4px 10px ${({ theme }: {
+        theme: Theme
+    }) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
     transition: background-color 0.3s, transform 0.2s;
 
     &:hover {
@@ -108,17 +117,22 @@ export const AmountInput = styled.input`
     background-color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#34495e' : '#fff'};
     color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#ecf0f1' : '#333'};
     border-radius: 20px;
-    width: 150px;
     font-size: 1rem;
-    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    width: 100px;
 
     &:focus {
         outline: none;
         border-color: #007bff;
     }
+`;
+
+export const WalletAddressText = styled.p`
+    font-size: 1rem;
+    color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#ecf0f1' : '#333'};
+    word-wrap: break-word;
+    margin-top: 20px;
 
     @media (max-width: 768px) {
-        width: 120px;
         font-size: 0.9rem;
     }
 `;

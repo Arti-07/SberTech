@@ -9,17 +9,22 @@ import {
     BalanceText,
     StyledButton,
     TopUpContainer,
-    AmountInput,
+    AmountInput
 } from './components/UsersPageStyles';
+import WalletSection from './WalletSection';
+import SendMoneyModal from './SendMoneyModal';
 
 const UsersPage = () => {
-    const theme = useTheme(); // Получаем тему
+    const theme = useTheme();
     const [login, setLogin] = useState<string>('');
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [balance, setBalance] = useState<number>(0);
+    const [walletAddress, setWalletAddress] = useState<string>('');  // Состояние для адреса кошелька
     const [showTopUp, setShowTopUp] = useState<boolean>(false);
     const [topUpAmount, setTopUpAmount] = useState<string>('');
+    const [isWalletVisible, setIsWalletVisible] = useState<boolean>(false);  // Состояние для видимости адреса кошелька
     const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -34,8 +39,11 @@ const UsersPage = () => {
                 try {
                     const data = await api.getBalance();
                     setBalance(data.balance || 0);
+
+                    const walletData = await api.getWallet();
+                    setWalletAddress(walletData.walletAddress || '');
                 } catch (err) {
-                    console.error('Ошибка запроса баланса:', err);
+                    console.error('Ошибка запроса данных:', err);
                 }
             }
         };
@@ -75,19 +83,51 @@ const UsersPage = () => {
             });
     };
 
+    const handleSendMoney = async (amount: number, address: string) => {
+        try {
+            const response = await api.transfer(address, amount);
+            if (response.error) {
+                alert(`Error: ${response.error}`);
+            } else {
+                alert('Transfer successful');
+                setBalance((prevBalance) => prevBalance - amount);
+            }
+        } catch (err) {
+            alert('An error occurred. Please try again.');
+        }
+    };
+
     const handleSignOut = () => {
-        // Очистка данных из sessionStorage и обновление состояния
         sessionStorage.removeItem('login');
         setIsAuthenticated(false);
         navigate('/smartini_crypto/signin');
     };
 
+    const toggleWalletVisibility = () => {
+        setIsWalletVisible(prevState => !prevState);
+    };
+
     return (
-        <PageContainer theme={theme}> {/* Тема передается через контекст */}
+        <PageContainer theme={theme}>
             {isAuthenticated ? (
                 <UserInfo theme={theme}>
                     <Title theme={theme}>Hello, {login}!</Title>
                     <BalanceText theme={theme}>Your balance: {balance}</BalanceText>
+                    <WalletSection
+                        walletAddress={walletAddress}
+                        isVisible={isWalletVisible}
+                        onToggleVisibility={toggleWalletVisibility}
+                        theme={theme}
+                    />
+                    <StyledButton theme={theme} onClick={() => setIsModalOpen(true)}>
+                        Send Money
+                    </StyledButton>
+                    <SendMoneyModal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        onSend={handleSendMoney}
+                        theme={theme}
+                    />
                     <StyledButton theme={theme} onClick={handleSignOut}>Sign out</StyledButton>
                     {!showTopUp && (
                         <StyledButton theme={theme} onClick={handleTopUpClick}>Top up balance</StyledButton>
@@ -95,17 +135,17 @@ const UsersPage = () => {
                     {showTopUp && (
                         <TopUpContainer>
                             <AmountInput theme={theme}
-                                type="number"
-                                placeholder="Enter amount"
-                                value={topUpAmount}
-                                onChange={(e) => setTopUpAmount(e.target.value)}
+                                         type="number"
+                                         placeholder="Enter amount"
+                                         value={topUpAmount}
+                                         onChange={(e) => setTopUpAmount(e.target.value)}
                             />
                             <StyledButton theme={theme} onClick={handleConfirmTopUp}>Submit</StyledButton>
                         </TopUpContainer>
                     )}
                 </UserInfo>
             ) : (
-                <Title theme={theme}>You are not logged in. Please come in.</Title>
+                <Title theme={theme}>You are not logged in. Please log in.</Title>
             )}
         </PageContainer>
     );
