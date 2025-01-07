@@ -2,7 +2,7 @@ import  React from 'react';
 import { motion } from "framer-motion";
 import { motionButtonStyle } from './motionButton.style';
 import { ContainerCenterStyle } from './containerCenter.style'
-import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
+import { useTheme } from '@mui/material/styles'; // Импортируйте Theme
 
 import Lottie from 'react-lottie';
 import bigCoinAnimation from '../../../assets/lotties/bigCoin.json';

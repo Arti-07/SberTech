@@ -16,7 +16,7 @@ const ErrorPage = () => {
     return (
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
             <h1>Error!</h1>
-            <p>You don't have access.</p>
+            <p>You dont have access.</p>
             <p>Please log in or go to the main page.</p>
         </div>
     );

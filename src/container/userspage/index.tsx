@@ -92,8 +92,8 @@ const UsersPage = () => {
                 alert('Transfer successful');
                 setBalance((prevBalance) => prevBalance - amount);
             }
-        } catch (err) {
-            alert('An error occurred. Please try again.');
+        } catch (error) {
+            alert('An error occurred. Please try again.' + error);
         }
     };
 

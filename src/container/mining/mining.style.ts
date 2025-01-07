@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
+import { Theme } from '@mui/material/styles'; // Импортируйте Theme
 
 
 export const AccountTextStyled = styled.h3`
@@ -110,7 +110,7 @@ export const StyledConfirmButton = styled.button`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
     background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#2F4F4F' : '#007bff'};
     color: #fff;
     border: none;
@@ -118,7 +118,9 @@ export const StyledConfirmButton = styled.button`
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 10px ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+    box-shadow: 0 4px 10px ${({ theme }: {
+        theme: Theme
+    }) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
     transition: background-color 0.3s, transform 0.2s;
 
     &:hover {

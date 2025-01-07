@@ -1,6 +1,4 @@
-
 import styled from '@emotion/styled';
-import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
 
 
 export const Wrapper = styled.div`
@@ -8,9 +6,9 @@ export const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 
-export const StyledSpeedometer = styled.div`    
+export const StyledSpeedometer = styled.div`
     aspect-ratio: 2 / 1;
     width: 400px;
     min-width: 400px;
@@ -26,7 +24,7 @@ export const StyledSpeedometer = styled.div`
         overflow: hidden;
         background: #8a0402;
     }
-    
+
     .guage_body_fill {
         position: absolute;
         top: 100%;
@@ -60,24 +58,24 @@ export const StyledSpeedometer = styled.div`
         animation-range-start: normal;
         animation-range-end: normal;
         background-position: 0px 0px;
-        animation: 5s ease-in-out 0s infinite normal none running body-gradient;            
+        animation: 5s ease-in-out 0s infinite normal none running body-gradient;
     }
 
     @keyframes body-gradient {
         0% {
-            background-position:0% 0%
+            background-position: 0% 0%
         }
         25% {
-            background-position:100% 0%
+            background-position: 100% 0%
         }
         50% {
-            background-position:100% 100%
+            background-position: 100% 100%
         }
         75% {
-            background-position:0% 100%
+            background-position: 0% 100%
         }
         to {
-            background-position:0% 0%
+            background-position: 0% 0%
         }
     }
 
@@ -110,7 +108,7 @@ export const StyledSpeedometer = styled.div`
         top: 80%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 4;        
+        z-index: 4;
         background-color: #8a0402;
         user-select: none;
 
@@ -132,5 +130,5 @@ export const StyledSpeedometer = styled.div`
             margin: 0;
         }
     }
-    
-`
+
+`;

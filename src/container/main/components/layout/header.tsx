@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, useTheme } from '@mui/material';
+import { Toolbar, Typography, useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getNavigationsValue } from '@brojs/cli';
 import { NavButton, ActiveNavButton, StyledAppBar, LogoContainer, LoginText } from './components/HeaderStyles';
@@ -9,7 +9,7 @@ import logoWhite from './logo/logo_white.png';
 const navigations = [
     { name: 'Home', href: getNavigationsValue('smartini_crypto.main') },
     { name: 'Mining', href: getNavigationsValue('smartini_crypto.mining') },
-    { name: 'Account', href: getNavigationsValue('smartini_crypto.account') },
+    { name: 'Account', href: getNavigationsValue('smartini_crypto.account') }
 ];
 
 const Header = (): React.ReactElement => {
@@ -48,7 +48,7 @@ const Header = (): React.ReactElement => {
     };
 
     return (
-        <StyledAppBar position="static">
+        <StyledAppBar position="static" theme={theme}>
             <Toolbar>
                 <LogoContainer>
                     <img
@@ -62,7 +62,7 @@ const Header = (): React.ReactElement => {
                             fontFamily: 'Impact',
                             fontSize: '30px',
                             letterSpacing: '4px',
-                            color: isLightTheme ? 'black' : 'white',
+                            color: isLightTheme ? 'black' : 'white'
                         }}
                     >
                         Smartini Crypto
@@ -83,6 +83,7 @@ const Header = (): React.ReactElement => {
                         return (
                             <ButtonComponent
                                 key={item.name}
+                                theme={theme}
                                 onClick={() => handleNavigationClick(item.href)} // Обработка клика
                             >
                                 {item.name}

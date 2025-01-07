@@ -1,16 +1,18 @@
-export const prepareChartData = (chartData: any[]): any[] => {
+import { ChartPoint } from '../types';
+
+export const prepareChartData = (chartData: ChartPoint): ChartPoint[] => {
     if (!chartData || !Array.isArray(chartData)) {
         return [];
     }
     return chartData
         .filter((_, index) => index % 10 === 0) // Отображать только каждую 10-ю точку
-        .map((priceData: any) => ({
-            timestamp: new Date(priceData.date).toLocaleTimeString(),
-            price: priceData.price,
+        .map((priceData: ChartPoint) => ({
+            timestamp: new Date(priceData.timestamp).toLocaleTimeString(),
+            price: priceData.price
         }));
 };
 
-export const calculateTrendLine = (data: any[]): any[] => {
+export const calculateTrendLine = (data: ChartPoint[]): ChartPoint[] => {
     if (!data || data.length < 2) return [];
     const n = data.length;
 
@@ -29,17 +31,17 @@ export const calculateTrendLine = (data: any[]): any[] => {
 
     return data.map((_, index) => ({
         timestamp: data[index].timestamp,
-        price: slope * index + intercept,
+        price: slope * index + intercept
     }));
 };
 
-export const calculateAveragePrice = (data: any[]): number | null => {
+export const calculateAveragePrice = (data: ChartPoint[]): number | null => {
     if (!data || data.length === 0) return null;
     const total = data.reduce((sum, point) => sum + point.price, 0);
     return total / data.length;
 };
 
-export const calculateStatistics = (data: any[]) => {
+export const calculateStatistics = (data: ChartPoint[]) => {
     if (!data || data.length === 0) return null;
 
     const prices = data.map(point => point.price);
@@ -52,5 +54,5 @@ export const calculateStatistics = (data: any[]) => {
     const median =
         prices.length % 2 !== 0 ? prices[mid] : (prices[mid - 1] + prices[mid]) / 2;
 
-    return {min, max, avg, median};
-}
+    return { min, max, avg, median };
+};
