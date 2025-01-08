@@ -34,7 +34,7 @@ class ApiClient {
         return this.axiosInstance.get('/api/listings').then(res => res.data);
     }
 
-    async getTicker(id: string, convert: string = 'USD') {
+    async getTicker(id: number, convert: string = 'USD') {
         return this.axiosInstance.get(`/api/ticker/${id}`, { params: { convert } }).then(res => res.data);
     }
 
