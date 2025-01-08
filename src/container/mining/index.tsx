@@ -54,18 +54,17 @@ const MiningPage = (): React.ReactElement => {
     const lottieRef = useRef(null);
     const theme = useTheme();
 
-    const [countMining, setCountMining] = useState(0);
-    const [stepMining, setStepMining] = useState(1);
-    const [progress, setProgress] = useState(0);
-    const [isVisible, setIsVisible] = useState(0);
-    const [isConvertBalance, setIsConvertBalance] = useState<boolean>(false);
+    const [countMining, setCountMining] = useState<number>(0);
+    const [stepMining, setStepMining] = useState<number>(1);
+    const [progress, setProgress] = useState<number>(0);
+    const [isVisible, setIsVisible] = useState<number>(0);
+
     const stepDecrease = 0.007;
     const stepIncrease = 0.1;
     const maxProgress = 1.5;
     const timeDecrease = 10;
     const minStepMining = 1;
     const maxStepMining = 5;
-
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -79,10 +78,9 @@ const MiningPage = (): React.ReactElement => {
     const handleConfirmTopUp = () => {
         api.updateBalance(countMining)
             .then(() => {
-                setIsConvertBalance(true);
                 setCountMining(0);
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error('Ошибка запроса:', err);
             });
     };
@@ -143,12 +141,14 @@ const MiningPage = (): React.ReactElement => {
                                 <Lottie options={transferCoinAnimations} height={'100%'} width={'100%'} />
                             </div>
                             <div className="account">
-                                <StyledConfirmButton theme={theme}
-                                                     onClick={handleConfirmTopUp}>Submit</StyledConfirmButton>
+                                <StyledConfirmButton theme={theme} onClick={handleConfirmTopUp}>
+                                    Submit
+                                </StyledConfirmButton>
                             </div>
                             <div className="account">
-                                <StyledConfirmButton theme={theme} onClick={handleClickOpen}>Promo
-                                    code</StyledConfirmButton>
+                                <StyledConfirmButton theme={theme} onClick={handleClickOpen}>
+                                    Promo code
+                                </StyledConfirmButton>
                             </div>
                             <div className="coin">
                                 <Lottie options={transferCoinAnimations} height={'100%'} width={'100%'} />
