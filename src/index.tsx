@@ -2,22 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
 
-const RootComponent = () => <App/>;
+export default function AppWrapper() {
+    return <App />;
+}
+let rootElement: ReactDOM.Root
 
-RootComponent.displayName = 'RootComponent';
-
-export default RootComponent;
-
-let rootElement: ReactDOM.Root;
-
-export const mount = (Component, element = document.getElementById('app')) => {
+export const mount = (Сomponent, element = document.getElementById('app')) => {
     const rootElement = ReactDOM.createRoot(element);
-    rootElement.render(<Component/>);
+    rootElement.render(<Сomponent/>);
 
     if (module.hot) {
         module.hot.accept('./app', () => {
-            rootElement.render(<Component/>);
-        });
+            rootElement.render(<Сomponent/>);
+        })
     }
 };
 

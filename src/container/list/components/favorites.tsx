@@ -5,6 +5,7 @@ import { useTheme } from "@mui/material/styles";
 
 interface CryptoData {
     name: string;
+    id: number;
     imageUrl: string;
     price: number;
 }
@@ -19,15 +20,17 @@ const Favorites = () => {
         const fetchCryptoData = async () => {
             try {
                 const allCryptoData = await api.getListings();
-                const filteredData = allCryptoData.filter((crypto: any) =>
+                const filteredData = allCryptoData.filter((crypto: CryptoData) =>
                     cryptoList.includes(crypto.name.toLowerCase())
                 );
 
-                const detailedDataPromises = filteredData.map(async (crypto: any) => {
-                    const data = await api.getTicker(crypto.id, "USD");
+                const detailedDataPromises = filteredData.map(async (crypto: CryptoData) => {
+                    const data = await api.getTicker(crypto.id, 'USD');
                     // В зависимости от темы формируем путь к картинке
                     const themePath = palette.mode === 'dark' ? 'dark' : 'light';
-                    const imageUrl = require(`../logo/${themePath}/${crypto.name.toLowerCase()}.png`);
+                    const imageUrl = await import(
+                        `../logo/${themePath}/${crypto.name.toLowerCase()}.png`
+                        ).then(module => module.default);
 
                     return {
                         name: crypto.name,
