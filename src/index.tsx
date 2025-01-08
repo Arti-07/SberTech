@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
 
-export default () => <App/>;
-
+export default function AppWrapper() {
+    return <App />;
+}
 let rootElement: ReactDOM.Root
 
 export const mount = (Сomponent, element = document.getElementById('app')) => {
