@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 import api from '../../api';
 import {
     Container,
@@ -38,9 +39,11 @@ const SignInPage = (): React.ReactElement => {
             sessionStorage.setItem('login', login); // Сохраняем информацию о логине
             window.dispatchEvent(new Event('loginChanged')); // Генерируем событие
             navigate('/smartini_crypto/userspage'); // Перенаправляем после успешного входа
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Ошибка:', error);
-            if (error.response && error.response.status === 401) {
+
+            // Проверяем, является ли ошибка экземпляром AxiosError
+            if ((error as AxiosError).response && (error as AxiosError).response?.status === 401) {
                 setMessage('Неверный логин или пароль');
             } else {
                 setMessage('Произошла ошибка. Попробуйте позже.');
