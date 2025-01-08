@@ -7,7 +7,9 @@
         "start": "brojs server --port=8099 --with-open-browser",
         "build": "npm run clean && brojs build --dev",
         "build:prod": "npm run clean && brojs build",
-        "clean": "rimraf dist"
+        "clean": "rimraf dist",
+        "eslint": "npx eslint",
+        "lint": ""
     },
     "author": "",
     "license": "ISC",
