@@ -5,7 +5,14 @@ import Speedometer from './components/speedometer';
 import MotioButton from './components/motionButton';
 import PromocodeForm from './components/promocodeForm';
 
-import {AccountTextStyled, confettiStyle, MiningContainer, ContainerAccount, StyledConfirmButton, ContainerSubmit} from "./mining.style"
+import {
+    AccountTextStyled,
+    confettiStyle,
+    MiningContainer,
+    ContainerAccount,
+    StyledConfirmButton,
+    ContainerSubmit
+} from './mining.style';
 
 import confettiAnimation from '../../assets/lotties/confetti.json';
 import coinAnimation from '../../assets/lotties/coin.json';
@@ -13,7 +20,7 @@ import transferCoinAnimation from '../../assets/lotties/transferCoin.json';
 import Lottie from 'react-lottie';
 
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
-import { useTheme, Theme } from '@mui/material/styles'; // Импортируйте Theme
+import { useTheme } from '@mui/material/styles'; // Импортируйте Theme
 import api from '../../api';
 
 const confettiOptions = {
@@ -50,7 +57,7 @@ const MiningPage = (): React.ReactElement => {
     const [countMining, setCountMining] = useState(0);
     const [stepMining, setStepMining] = useState(1);
     const [progress, setProgress] = useState(0);
-    const [isVisible, setIsVisible] = useState(0);    
+    const [isVisible, setIsVisible] = useState(0);
     const [isConvertBalance, setIsConvertBalance] = useState<boolean>(false);
     const stepDecrease = 0.007;
     const stepIncrease = 0.1;
@@ -58,7 +65,7 @@ const MiningPage = (): React.ReactElement => {
     const timeDecrease = 10;
     const minStepMining = 1;
     const maxStepMining = 5;
-    
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -136,10 +143,12 @@ const MiningPage = (): React.ReactElement => {
                                 <Lottie options={transferCoinAnimations} height={'100%'} width={'100%'} />
                             </div>
                             <div className="account">
-                                <StyledConfirmButton theme={theme} onClick={handleConfirmTopUp}>Submit</StyledConfirmButton>
+                                <StyledConfirmButton theme={theme}
+                                                     onClick={handleConfirmTopUp}>Submit</StyledConfirmButton>
                             </div>
                             <div className="account">
-                                <StyledConfirmButton theme={theme} onClick={handleClickOpen}>Promo code</StyledConfirmButton>
+                                <StyledConfirmButton theme={theme} onClick={handleClickOpen}>Promo
+                                    code</StyledConfirmButton>
                             </div>
                             <div className="coin">
                                 <Lottie options={transferCoinAnimations} height={'100%'} width={'100%'} />
@@ -151,7 +160,7 @@ const MiningPage = (): React.ReactElement => {
                 <Dialog open={open} onClose={handleClose}>
                     <DialogTitle>Promo code</DialogTitle>
                     <DialogContent>
-                        <PromocodeForm/>
+                        <PromocodeForm />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} style={{ color: '#1E1E2A' }}>

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useTheme, Theme } from '@mui/material/styles';
 
 export const Container = styled.div`
     text-align: center;
@@ -40,15 +39,15 @@ export const InputField = styled.input`
     width: 100%;
     padding: 10px;
     margin-top: 0px;
-    border: 1px solid ${(props) => props.theme.palette.text.secondary}; 
+    border: 1px solid ${(props) => props.theme.palette.text.secondary};
     border-radius: 25px;
     font-size: 1rem;
     box-sizing: border-box;
-    background-color: ${(props) => props.theme.palette.background.paper}; 
-    color: ${(props) => props.theme.palette.text.primary}; 
+    background-color: ${(props) => props.theme.palette.background.paper};
+    color: ${(props) => props.theme.palette.text.primary};
 
     &:focus {
-        border-color: ${(props) => props.theme.palette.primary.main}; 
+        border-color: ${(props) => props.theme.palette.primary.main};
         outline: none;
     }
 
@@ -65,10 +64,10 @@ export const PasswordToggle = styled.span`
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 1.2rem;
-    color: ${(props) => props.theme.palette.primary.main}; 
+    color: ${(props) => props.theme.palette.primary.main};
 
     &:hover {
-        color: ${(props) => props.theme.palette.primary.dark}; 
+        color: ${(props) => props.theme.palette.primary.dark};
     }
 
     /* Адаптивность для экранов меньше 600px */
@@ -79,9 +78,9 @@ export const PasswordToggle = styled.span`
 
 export const Message = styled.div<{ isSuccess: boolean }>`
     color: ${(props) =>
-    props.isSuccess
-        ? props.theme.palette.success.main
-        : props.theme.palette.error.main}; 
+            props.isSuccess
+                    ? props.theme.palette.success.main
+                    : props.theme.palette.error.main};
     margin-bottom: 20px;
 
     /* Адаптивность для экранов меньше 600px */
@@ -92,16 +91,16 @@ export const Message = styled.div<{ isSuccess: boolean }>`
 
 export const SignInButton = styled.button`
     padding: 10px 20px;
-    background-color: ${(props) => props.theme.palette.primary.main}; 
+    background-color: ${(props) => props.theme.palette.primary.main};
     color: white;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     font-size: 1rem;
-    margin-top: 20px; 
+    margin-top: 20px;
 
     &:hover {
-        background-color: ${(props) => props.theme.palette.primary.dark}; 
+        background-color: ${(props) => props.theme.palette.primary.dark};
     }
 
     /* Адаптивность для экранов меньше 600px */

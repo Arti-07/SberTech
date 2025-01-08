@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useTheme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 
 // Контейнер для GIF
 export const GifContainer = styled.div`
@@ -22,7 +22,7 @@ export const GifContainer = styled.div`
 // Сообщение об успешной операции
 export const SuccessMessage = styled.div`
     animation: slideUp 0.5s ease-in-out;
-    color: ${(props: { theme: any }) => props.theme.palette.success.main};
+    color: ${(props: { theme: Theme }) => props.theme.palette.success.main};
     font-weight: bold;
     margin-top: -5px;
     text-align: center;
@@ -48,7 +48,7 @@ export const SuccessMessage = styled.div`
 // Сообщение об ошибке
 export const ErrorMessage = styled.div`
     animation: shake 0.5s ease-in-out;
-    color: ${(props: { theme: any }) => props.theme.palette.error.main};
+    color: ${(props: { theme: Theme }) => props.theme.palette.error.main};
     font-weight: bold;
     margin-top: -5px;
     text-align: center;
@@ -103,7 +103,7 @@ export const SignupTitle = styled.h1`
     font-size: 2.5rem;
     margin-bottom: 10px;
     text-align: center;
-    color: ${(props: { theme: any }) => props.theme.palette.text.primary};
+    color: ${(props: { theme: Theme }) => props.theme.palette.text.primary};
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), 0 0 25px rgba(255, 255, 255, 0.1);
@@ -140,42 +140,42 @@ export const FormInput = styled.input`
     font-size: 1rem;
     width: 100%;
     border-radius: 20px;
-    border: 1px solid ${(props: { theme: any }) => props.theme.palette.text.primary};
-    background-color: ${(props: { theme: any }) => props.theme.palette.background.paper};
+    border: 1px solid ${(props: { theme: Theme }) => props.theme.palette.text.primary};
+    background-color: ${(props: { theme: Theme }) => props.theme.palette.background.paper};
     box-sizing: border-box;
     transition: border-color 0.3s ease, background-color 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-    color: ${(props: { theme: any }) => props.theme.palette.text.primary};
+    color: ${(props: { theme: Theme }) => props.theme.palette.text.primary};
 
     &:focus {
-        border-color: ${(props: { theme: any }) => props.theme.palette.primary.main};
+        border-color: ${(props: { theme: Theme }) => props.theme.palette.primary.main};
         outline: none;
     }
 
     &:disabled {
-        background-color: ${(props: { theme: any }) => props.theme.palette.action.disabledBackground};
+        background-color: ${(props: { theme: Theme }) => props.theme.palette.action.disabledBackground};
     }
 
     &[type='password'] {
         &::placeholder {
-            color: ${(props: { theme: any }) => props.theme.palette.text.primary};
+            color: ${(props: { theme: Theme }) => props.theme.palette.text.primary};
         }
     }
 
     &[type='text'] {
         &::placeholder {
-            color: ${(props: { theme: any }) => props.theme.palette.text.primary};
+            color: ${(props: { theme: Theme }) => props.theme.palette.text.primary};
         }
     }
 
     @media (max-width: 768px) {
-        font-size: 0.9rem; /* Уменьшаем размер шрифта для мобильных */
-        padding: 10px; /* Уменьшаем отступы на мобильных */
+        font-size: 0.9rem;
+        padding: 10px;
     }
 
     @media (max-width: 480px) {
-        font-size: 0.8rem; /* Ещё меньше для маленьких экранов */
+        font-size: 0.8rem;
     }
 `;
 
@@ -187,11 +187,11 @@ export const Tooltip = styled.span`
     transform: translateY(-20%);
     cursor: pointer;
     font-size: 1.5rem;
-    color: ${(props: { theme: any }) => props.theme.palette.primary.main};
+    color: ${(props: { theme: Theme }) => props.theme.palette.primary.main};
     transition: color 0.3s ease;
 
     &:hover {
-        color: ${(props: { theme: any }) => props.theme.palette.primary.dark};
+        color: ${(props: { theme: Theme }) => props.theme.palette.primary.dark};
     }
 
     @media (max-width: 768px) {
@@ -223,20 +223,20 @@ export const Button = styled.button`
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     &.button-primary {
-        background-color: ${(props: { theme: any }) => props.theme.palette.primary.main};
+        background-color: ${(props: { theme: Theme }) => props.theme.palette.primary.main};
         color: white;
 
         &:hover {
-            background-color: ${(props: { theme: any }) => props.theme.palette.primary.dark};
+            background-color: ${(props: { theme: Theme }) => props.theme.palette.primary.dark};
         }
     }
 
     &.button-secondary {
-        background-color: ${(props: { theme: any }) => props.theme.palette.secondary.main};
+        background-color: ${(props: { theme: Theme }) => props.theme.palette.secondary.main};
         color: white;
 
         &:hover {
-            background-color: ${(props: { theme: any }) => props.theme.palette.secondary.dark};
+            background-color: ${(props: { theme: Theme }) => props.theme.palette.secondary.dark};
         }
     }
 
