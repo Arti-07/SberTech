@@ -97,12 +97,6 @@ const UsersPage = () => {
         }
     };
 
-    const handleSignOut = () => {
-        sessionStorage.removeItem('login');
-        setIsAuthenticated(false);
-        navigate('/smartini_crypto/signin');
-    };
-
     const toggleWalletVisibility = () => {
         setIsWalletVisible(prevState => !prevState);
     };
@@ -128,7 +122,6 @@ const UsersPage = () => {
                         onSend={handleSendMoney}
                         theme={theme}
                     />
-                    <StyledButton theme={theme} onClick={handleSignOut}>Sign out</StyledButton>
                     {!showTopUp && (
                         <StyledButton theme={theme} onClick={handleTopUpClick}>Top up balance</StyledButton>
                     )}

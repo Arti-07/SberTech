@@ -113,3 +113,52 @@ export const LoginText = styled(Typography)<{ isLightTheme: boolean }>`
     padding: 3px;
   }
 `;
+
+export const SignOutButton = styled(NavButton)<{ theme: Theme }>`
+  background: ${({ theme }) =>
+    theme.palette.mode === 'dark'
+        ? 'linear-gradient(90deg, #ff7e5f, #feb47b)'
+        : 'linear-gradient(90deg, #6A5ACD, #836FFF)'};
+  color: ${({ theme }) => theme.palette.text.primary};
+  font-weight: bold;
+  border: 2px solid ${({ theme }) => theme.palette.primary.dark};
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: ${({ theme }) =>
+    theme.palette.mode === 'dark'
+        ? '0px 4px 10px rgba(255, 126, 95, 0.5)'
+        : '0px 4px 10px rgba(106, 90, 205, 0.5)'};
+
+  &:hover {
+    background: ${({ theme }) =>
+    theme.palette.mode === 'dark'
+        ? 'linear-gradient(90deg, #feb47b, #ff7e5f)'
+        : 'linear-gradient(90deg, #836FFF, #6A5ACD)'};
+    box-shadow: ${({ theme }) =>
+    theme.palette.mode === 'dark'
+        ? '0px 6px 15px rgba(255, 126, 95, 0.7)'
+        : '0px 6px 15px rgba(106, 90, 205, 0.7)'};
+    transform: translateY(-3px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: ${({ theme }) =>
+    theme.palette.mode === 'dark'
+        ? '0 0 8px 2px rgba(255, 126, 95, 0.9)'
+        : '0 0 8px 2px rgba(106, 90, 205, 0.9)'};
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+`;
+
+
