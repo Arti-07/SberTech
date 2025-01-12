@@ -12,7 +12,9 @@ export const ModalOverlay = styled.div`
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    pointer-events: none;
 `;
+
 
 export const ModalContainer = styled.div`
     background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#2c3e50' : '#fff'};
