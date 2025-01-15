@@ -5,6 +5,7 @@ import Main from './container/main';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BackgroundContainer, ScrollableContent, BackgroundImage, GlobalStyle } from './AppStyled1';
 import Footer from './container/main/components/layout/footer/footer';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
     const storedDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -38,6 +39,7 @@ const App = () => {
                     <Footer darkMode={darkMode} toggleTheme={toggleTheme} />
                 </BackgroundContainer>
             </ThemeProvider>
+            <ToastContainer />
         </StrictMode>
     );
 };
