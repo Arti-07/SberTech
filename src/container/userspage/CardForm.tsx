@@ -54,8 +54,6 @@ const CardForm: React.FC<CardFormProps> = ({ onSubmitCardDetails, theme }) => {
         setError(null);
         onSubmitCardDetails(amountNumber);
 
-        console.log('Successfully submitted card');
-
         toast.success('Your balance was successfully topped up!', {
             position: 'top-right',
             autoClose: 3000,
