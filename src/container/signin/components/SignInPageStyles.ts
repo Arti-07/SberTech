@@ -109,3 +109,38 @@ export const SignInButton = styled.button`
         font-size: 0.9rem;
     }
 `;
+
+export const SignUpButton = styled.button`
+    padding: 10px 20px;
+    background-color: ${(props) => props.theme.palette.secondary.main};
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+
+    &:hover {
+        background-color: ${(props) => props.theme.palette.secondary.dark};
+    }
+
+    /* Адаптивность для экранов меньше 600px */
+    @media (max-width: 600px) {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+`;
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Расстояние между кнопками */
+    margin-top: 20px;
+
+    /* Адаптивность для экранов меньше 600px */
+    @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px; /* Меньшее расстояние между кнопками */
+    }
+`;

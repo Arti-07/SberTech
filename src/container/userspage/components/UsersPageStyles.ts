@@ -9,7 +9,7 @@ export const PageContainer = styled.div`
     font-family: 'Poppins', sans-serif;
     background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#1E1E2A' : '#f0f8ff'};
     min-height: 30vh;
-    max-width: 400px;
+    max-width: 600px;
     margin: 0 auto;
     border-radius: 25px;
     justify-content: center;
@@ -44,12 +44,12 @@ export const UserInfo = styled.div`
     }) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
     text-align: center;
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     transition: transform 0.3s ease;
     margin-bottom: 20px;
 
     &:hover {
-        transform: translateY(-5px);
+        transform: none;
     }
 
     @media (max-width: 768px) {
@@ -86,7 +86,7 @@ export const StyledButton = styled.button`
 
     &:hover {
         background-color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#45a049' : '#0056b3'};
-        transform: translateY(-2px);
+        transform: none;
     }
 
     &:active {
@@ -112,17 +112,18 @@ export const TopUpContainer = styled.div`
 `;
 
 export const AmountInput = styled.input`
-    padding: 10px;
-    border: 1px solid ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#ecf0f1' : '#ccc'};
-    background-color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#34495e' : '#fff'};
-    color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#ecf0f1' : '#333'};
-    border-radius: 20px;
-    font-size: 1rem;
-    width: 100px;
+    padding: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 1.2rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
 
     &:focus {
         outline: none;
         border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
     }
 `;
 

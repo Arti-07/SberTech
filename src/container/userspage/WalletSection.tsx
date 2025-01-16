@@ -13,7 +13,7 @@ const WalletSection: React.FC<WalletSectionProps> = ({ walletAddress, isVisible,
     return (
         <div>
             <StyledButton onClick={onToggleVisibility} theme={theme}>
-                {isVisible ? 'Hide Wallet Address' : 'Show Wallet Address'}
+                {isVisible ? 'Hide wallet address' : 'Show wallet address'}
             </StyledButton>
             {isVisible && (
                 <div style={{

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Toolbar, Typography, useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getNavigationsValue } from '@brojs/cli';
-import { NavButton, ActiveNavButton, StyledAppBar, LogoContainer, LoginText } from './components/HeaderStyles';
+import { NavButton, ActiveNavButton, StyledAppBar, LogoContainer, LoginText, SignOutButton } from './components/HeaderStyles';
 import logoBlack from './logo/logo_black.png';
 import logoWhite from './logo/logo_white.png';
 
@@ -47,6 +47,12 @@ const Header = (): React.ReactElement => {
         }
     };
 
+    const handleSignOut = () => {
+        sessionStorage.removeItem('login');
+        setLogin(null); // Сбрасываем логин
+        navigate('/smartini_crypto/signin');
+    };
+
     return (
         <StyledAppBar position="static" theme={theme}>
             <Toolbar>
@@ -71,10 +77,16 @@ const Header = (): React.ReactElement => {
 
                 <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
                     {login && (
-                        <LoginText isLightTheme={isLightTheme}>
-                            Hello, {login}
-                        </LoginText>
+                        <>
+                            <LoginText isLightTheme={isLightTheme}>
+                                Hello, {login}
+                            </LoginText>
+                            <SignOutButton theme={theme} onClick={handleSignOut}>
+                                Sign out
+                            </SignOutButton>
+                        </>
                     )}
+
 
                     {navigations.map((item) => {
                         const isActive = location.pathname === item.href;
