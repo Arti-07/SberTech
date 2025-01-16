@@ -10,6 +10,8 @@ import {
     PasswordToggle,
     Message,
     SignInButton,
+    SignUpButton,
+    ButtonGroup,
 } from './components/SignInPageStyles';
 
 const SignInPage = (): React.ReactElement => {
@@ -42,7 +44,6 @@ const SignInPage = (): React.ReactElement => {
         } catch (error: unknown) {
             console.error('Ошибка:', error);
 
-            // Проверяем, является ли ошибка экземпляром AxiosError
             if ((error as AxiosError).response && (error as AxiosError).response?.status === 401) {
                 setMessage('Неверный логин или пароль');
             } else {
@@ -83,7 +84,10 @@ const SignInPage = (): React.ReactElement => {
 
             {message && <Message isSuccess={message === 'Вход выполнен!'}>{message}</Message>}
 
-            <SignInButton onClick={handleSignIn}>Sign In</SignInButton>
+            <ButtonGroup>
+                <SignInButton onClick={handleSignIn}>Sign In</SignInButton>
+                <SignUpButton onClick={() => navigate('/smartini_crypto/signup')}>Sign Up</SignUpButton>
+            </ButtonGroup>
         </Container>
     );
 };

@@ -7,24 +7,25 @@ import {
     Title,
     UserInfo,
     BalanceText,
-    StyledButton,
-    TopUpContainer,
-    AmountInput
+    StyledButton
 } from './components/UsersPageStyles';
 import WalletSection from './WalletSection';
 import SendMoneyModal from './SendMoneyModal';
+import CardForm from './CardForm';
+import Modal from '@mui/material/Modal';
+import { toast } from 'react-toastify';
 
 const UsersPage = () => {
     const theme = useTheme();
     const [login, setLogin] = useState<string>('');
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [balance, setBalance] = useState<number>(0);
-    const [walletAddress, setWalletAddress] = useState<string>('');  // Состояние для адреса кошелька
-    const [showTopUp, setShowTopUp] = useState<boolean>(false);
-    const [topUpAmount, setTopUpAmount] = useState<string>('');
-    const [isWalletVisible, setIsWalletVisible] = useState<boolean>(false);  // Состояние для видимости адреса кошелька
-    const navigate = useNavigate();
+    const [walletAddress, setWalletAddress] = useState<string>('');
+    const [isWalletVisible, setIsWalletVisible] = useState<boolean>(false);
+    useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCardFormVisible, setIsCardFormVisible] = useState(false);
+
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -51,37 +52,28 @@ const UsersPage = () => {
         checkAuth();
     }, []);
 
-    const handleTopUpClick = () => {
-        setShowTopUp(true);
-    };
 
-    const handleConfirmTopUp = () => {
-        const amountNumber = parseFloat(topUpAmount);
-        if (isNaN(amountNumber) || amountNumber <= 0) {
-            alert('Введите корректную сумму');
-            return;
-        }
-
+    const handleCardDetailsSubmit = (amount: number) => {
+        setIsCardFormVisible(false);
         const previousBalance = balance;
-        const updatedBalance = balance + amountNumber;
+        const updatedBalance = balance + amount;
         setBalance(updatedBalance);
 
-        api.updateBalance(amountNumber)
+        api.updateBalance(amount)
             .then(data => {
                 if (data.balance !== undefined) {
                     setBalance(data.balance);
-                    setTopUpAmount('');
-                    setShowTopUp(false);
                 } else if (data.error) {
-                    alert(`Ошибка: ${data.error}`);
+                    alert(`Error: ${data.error}`);
                     setBalance(previousBalance);
                 }
             })
             .catch(err => {
-                console.error('Ошибка запроса:', err);
+                console.error('API error:', err);
                 setBalance(previousBalance);
             });
     };
+
 
     const handleSendMoney = async (amount: number, address: string) => {
         try {
@@ -89,18 +81,18 @@ const UsersPage = () => {
             if (response.error) {
                 alert(`Error: ${response.error}`);
             } else {
-                alert('Transfer successful');
+                toast.success('Transfer successful!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    theme: 'colored',
+                });
                 setBalance((prevBalance) => prevBalance - amount);
             }
         } catch (error) {
             alert('An error occurred. Please try again.' + error);
         }
-    };
-
-    const handleSignOut = () => {
-        sessionStorage.removeItem('login');
-        setIsAuthenticated(false);
-        navigate('/smartini_crypto/signin');
     };
 
     const toggleWalletVisibility = () => {
@@ -120,7 +112,7 @@ const UsersPage = () => {
                         theme={theme}
                     />
                     <StyledButton theme={theme} onClick={() => setIsModalOpen(true)}>
-                        Send Money
+                        Send money
                     </StyledButton>
                     <SendMoneyModal
                         isOpen={isModalOpen}
@@ -128,27 +120,29 @@ const UsersPage = () => {
                         onSend={handleSendMoney}
                         theme={theme}
                     />
-                    <StyledButton theme={theme} onClick={handleSignOut}>Sign out</StyledButton>
-                    {!showTopUp && (
-                        <StyledButton theme={theme} onClick={handleTopUpClick}>Top up balance</StyledButton>
-                    )}
-                    {showTopUp && (
-                        <TopUpContainer>
-                            <AmountInput theme={theme}
-                                         type="number"
-                                         placeholder="Enter amount"
-                                         value={topUpAmount}
-                                         onChange={(e) => setTopUpAmount(e.target.value)}
-                            />
-                            <StyledButton theme={theme} onClick={handleConfirmTopUp}>Submit</StyledButton>
-                        </TopUpContainer>
-                    )}
+
+                    <StyledButton
+                        theme={theme}
+                        onClick={() => setIsCardFormVisible(true)}
+                    >
+                        Top up balance
+                    </StyledButton>
+                    <Modal
+                        open={isCardFormVisible}
+                        onClose={() => setIsCardFormVisible(false)}
+                    >
+                        <CardForm
+                            onSubmitCardDetails={handleCardDetailsSubmit}
+                            theme={theme}
+                        />
+                    </Modal>
                 </UserInfo>
             ) : (
                 <Title theme={theme}>You are not logged in. Please log in.</Title>
             )}
         </PageContainer>
     );
+
 };
 
 export default UsersPage;
