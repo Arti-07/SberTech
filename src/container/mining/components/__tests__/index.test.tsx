@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, test } from '@jest/globals';
 
 describe('Heading', () => {
-    test('aaa', () => {
+    test('test h1', () => {
         const children = 'Hello';
         render(<h1>{children}</h1>);
         const headingEl = screen.getByText(children);
