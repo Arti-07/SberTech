@@ -18,6 +18,20 @@ const App = () => {
                 default: darkMode ? '#1E1E2A' : '#ADD8E6',
             },
         },
+        components: {
+            MuiCssBaseline: {
+                styleOverrides: {
+                    body: {
+                        backgroundImage: darkMode
+                            ? 'linear-gradient(to right top, #292934, #424251, #5c5c6f, #77778f, #9494b1);'
+                            : 'linear-gradient(to right top, #9494b1, #afaec4, #c9c8d7, #e4e3eb, #ffffff);',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover',
+                        backgroundAttachment: 'fixed',
+                    },
+                },
+            },
+        },
     });
 
     const toggleTheme = () => {

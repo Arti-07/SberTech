@@ -72,7 +72,7 @@ export const ContainerSubmit = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 10px;
+        margin: 20px;
     }
 
     .card {
@@ -97,6 +97,7 @@ export const ContainerSubmit = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: center;
+        padding: 5px;
     }
 
     .coin {
