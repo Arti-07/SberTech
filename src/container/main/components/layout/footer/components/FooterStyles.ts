@@ -12,6 +12,7 @@ export const FooterNavButton = styled(Button)`
     margin: 0 8px;
     transition: all 0.3s ease;
     z-index: 1;
+    margin-top: auto;
 
     &:hover {
         color: ${({ theme }: { theme: Theme }) => theme.palette.text.primary};
@@ -20,18 +21,21 @@ export const FooterNavButton = styled(Button)`
     }
 
     @media (max-width: 900px) {
+        height: 100%;
         padding: 5px 10px;
         font-size: 14px;
         margin: 0 6px;
     }
 
     @media (max-width: 600px) {
+        height: 100%;  
         padding: 4px 8px;
         font-size: 12px;
         margin: 0 4px;
     }
 
     @media (max-width: 400px) {
+        height: 100%;  
         padding: 3px 6px;
         font-size: 10px;
         margin: 0 3px;
@@ -44,7 +48,7 @@ export const FooterContainer = styled('footer')`
   padding: 5px;
   text-align: center;
   margin-top: auto;
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
@@ -83,7 +87,7 @@ export const FooterText = styled(Typography)`
 `;
 
 export const ToggleButton = styled('button')<{ darkMode: boolean }>(({ darkMode }) => ({
-    position: 'fixed',
+    position: 'absolute',
     bottom: '20px',
     right: '30px',
     width: '100px',
