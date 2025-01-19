@@ -11,4 +11,9 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {files: ['bro.config.js'],
+    globals: globals.node,
+  rules: {
+    '@typescript-eslint/no-require-imports': 'off'
+  }}
 ];
