@@ -21,7 +21,14 @@ const App = () => {
         components: {
             MuiCssBaseline: {
                 styleOverrides: {
+                    html: {
+                        height: '100%',
+                    },
+                    '#app': {
+                        height: '100%',
+                    },
                     body: {
+                        height: '100%',
                         backgroundImage: darkMode
                             ? 'linear-gradient(to right top, #292934, #424251, #5c5c6f, #77778f, #9494b1);'
                             : 'linear-gradient(to right top, #9494b1, #afaec4, #c9c8d7, #e4e3eb, #ffffff);',
@@ -49,8 +56,8 @@ const App = () => {
                     <BackgroundImage />
                     <ScrollableContent>
                         <Main />
+                        <Footer darkMode={darkMode} toggleTheme={toggleTheme} />
                     </ScrollableContent>
-                    <Footer darkMode={darkMode} toggleTheme={toggleTheme} />
                 </BackgroundContainer>
             </ThemeProvider>
             <ToastContainer />

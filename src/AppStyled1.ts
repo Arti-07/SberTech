@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 import backgroundImage from './assets/images/lines.png';
 
 export const BackgroundContainer = styled('div')({
-    height: '100vh',
-    width: '100vw',
+    height:'100%',
     position: 'relative',
     overflow: 'hidden',
     '@media (max-width: 768px)': {
@@ -12,14 +11,16 @@ export const BackgroundContainer = styled('div')({
 });
 
 export const ScrollableContent = styled('div')({
+    flex: '1',
     height: '100%',
     width: '100%',
     overflowY: 'auto',
     position: 'relative',
     zIndex: 1,
-    paddingBottom: '70px',
+    display: 'flex',
+    flexDirection: 'column',
     '@media (max-width: 768px)': {
-        paddingBottom: '40px', // Уменьшаем отступ для мобильных
+        paddingBottom: '40px',
     },
 });
 
@@ -36,7 +37,7 @@ export const BackgroundImage = styled('div')({
     animation: 'zoomEffect 30s infinite ease-in-out',
     zIndex: -1,
     '@media (max-width: 768px)': {
-        backgroundSize: 'cover', // Изменяем размер фона для мобильных устройств
+        backgroundSize: 'cover',
     },
 });
 
@@ -53,40 +54,3 @@ export const GlobalStyle = styled('style')`
         }
     }
 `;
-
-export const ToggleButton = styled('button')<{ darkMode: boolean }>(({ darkMode }) => ({
-    position: 'fixed',
-    bottom: '20px',
-    right: '20px',
-    width: '100px',
-    height: '50px',
-    borderRadius: '50px',
-    backgroundColor: darkMode ? '#333' : '#ccc',
-    display: 'flex',
-    justifyContent: darkMode ? 'flex-end' : 'flex-start',
-    alignItems: 'center',
-    padding: '0',
-    transition: 'background-color 0.3s ease',
-    cursor: 'pointer',
-    boxSizing: 'border-box',
-    zIndex: 2,
-    '@media (max-width: 768px)': {
-        width: '80px',  // Уменьшаем кнопку на мобильных устройствах
-        height: '40px',
-    },
-}));
-
-export const ToggleIcon = styled('div')({
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    backgroundColor: '#fff',
-    transition: 'transform 0.3s ease',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    '@media (max-width: 768px)': {
-        width: '30px',  // Уменьшаем иконку для мобильных устройств
-        height: '30px',
-    },
-});
