@@ -21,7 +21,7 @@ const config = {
     collectCoverage: true,
 
     // An array of glob patterns indicating a set of files for which coverage information should be collected
-    collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}'],
+    collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!**/__tests__/**/*'],
 
     // The directory where Jest should output its coverage files
     coverageDirectory: 'coverage',
@@ -153,7 +153,7 @@ const config = {
     // testLocationInResults: false,
 
     // The glob patterns Jest uses to detect test files
-    testMatch: ['**/?(*.)+(test).[tj]s?(x)']
+    testMatch: ['**/?(*.)+(test).[tj]s?(x)'],
     //['**/__tests__/**/*.[jt]s?(x)']
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -174,10 +174,7 @@ const config = {
     // transform: undefined,
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-    // transformIgnorePatterns: [
-    //   "\\\\node_modules\\\\",
-    //   "\\.pnp\\.[^\\\\]+$"
-    // ],
+    transformIgnorePatterns: ['\\\\node_modules\\\\(?!(@brojs)/)', '\\.pnp\\.[^\\\\]+$']
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
