@@ -74,6 +74,10 @@ class ApiClient {
     async transfer(receiverWallet: string, amount: number) {
         return this.axiosInstance.post('/account/transfer', { receiverWallet, amount }).then(res => res.data);
     }
+
+    async applyPromo(code: string) {
+        return this.axiosInstance.post('/promocode/apply', { code }).then(res => res.data);
+    }
 }
 
 export default ApiClient;

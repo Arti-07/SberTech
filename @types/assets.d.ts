@@ -9,8 +9,15 @@ declare module '*.gif' {
 
     export default gifPath;
 }
+
 declare module '*.png' {
     const pngPath: string;
 
     export default pngPath;
+}
+
+declare module '*.mp3' {
+    const mp3Path: string;
+
+    export default mp3Path;
 }

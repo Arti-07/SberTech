@@ -1,6 +1,4 @@
-import React from 'react';
-import { useState, useEffect, useRef } from 'react';
-
+import React, { useState, useEffect, useRef } from 'react';
 import Speedometer from './components/speedometer';
 import MotioButton from './components/motionButton';
 import PromocodeForm from './components/promocodeForm';
@@ -20,8 +18,18 @@ import transferCoinAnimation from '../../assets/lotties/transferCoin.json';
 import Lottie from 'react-lottie';
 
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles'; // Импортируйте Theme
+import { useTheme } from '@mui/material/styles';
 import api from '../../api';
+
+import postmalon from '../../assets/music/postmalon.mp3';
+import kuduro from '../../assets/music/kuduro.mp3';
+import rihanna from '../../assets/music/rihanna.mp3';
+import dragons from '../../assets/music/dragons.mp3';
+import timberlake from '../../assets/music/timberlake.mp3';
+import calvin from '../../assets/music/calvin.mp3';
+import lusa from '../../assets/music/lusa.mp3';
+
+import { toast } from 'react-toastify';
 
 const confettiOptions = {
     loop: true,
@@ -59,12 +67,28 @@ const MiningPage = (): React.ReactElement => {
     const [progress, setProgress] = useState<number>(0);
     const [isVisible, setIsVisible] = useState<number>(0);
 
+    const musics = [postmalon, kuduro, rihanna, dragons, timberlake, calvin, lusa];
+    const [currentMusic, setCurrentMusic] = useState(musics[0]);
+
     const stepDecrease = 0.007;
     const stepIncrease = 0.1;
     const maxProgress = 1.5;
     const timeDecrease = 10;
     const minStepMining = 1;
     const maxStepMining = 5;
+
+    const handleMusicChange = () => {
+        const randomIndex = Math.floor(Math.random() * musics.length);
+        setCurrentMusic(musics[randomIndex]);
+
+        toast.success('Music changed successfully!', {
+            position: 'top-right',
+            autoClose: 1000,
+            closeOnClick: true,
+            pauseOnHover: true,
+            theme: 'colored'
+        });
+    };
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -102,9 +126,7 @@ const MiningPage = (): React.ReactElement => {
                     <div className={confettiStyle}>
                         <Lottie ref={lottieRef} options={confettiOptions} height={'100%'} width={'100%'} />
                     </div>
-                ) : (
-                    <></>
-                )}
+                ) : null}
 
                 <ContainerAccount>
                     <div className="container">
@@ -132,6 +154,7 @@ const MiningPage = (): React.ReactElement => {
                     setCountMining={setCountMining}
                     stepIncrease={stepIncrease}
                     maxProgress={maxProgress}
+                    currentMusic={currentMusic}
                 />
 
                 <ContainerSubmit>
@@ -147,7 +170,12 @@ const MiningPage = (): React.ReactElement => {
                             </div>
                             <div className="account">
                                 <StyledConfirmButton theme={theme} onClick={handleClickOpen}>
-                                    Promo code
+                                    Promo
+                                </StyledConfirmButton>
+                            </div>
+                            <div className="account">
+                                <StyledConfirmButton theme={theme} onClick={handleMusicChange}>
+                                    Music
                                 </StyledConfirmButton>
                             </div>
                             <div className="coin">
