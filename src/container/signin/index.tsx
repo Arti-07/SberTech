@@ -40,8 +40,6 @@ const SignInPage = (): React.ReactElement => {
             window.dispatchEvent(new Event('loginChanged')); // Генерируем событие
             navigate('/smartini_crypto/userspage'); // Перенаправляем после успешного входа
         } catch (error: unknown) {
-            console.error('Ошибка:', error);
-
             // Проверяем, является ли ошибка экземпляром AxiosError
             if ((error as AxiosError).response && (error as AxiosError).response?.status === 401) {
                 setMessage('Неверный логин или пароль');
