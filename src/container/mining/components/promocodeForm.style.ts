@@ -2,14 +2,11 @@ import styled from '@emotion/styled';
 import { Theme } from '@mui/material/styles';
 
 export const InputGroup = styled.div`
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px auto;
     max-width: 400px;
-    margin: 0 auto;
     position: relative;
-    text-align: left;
+    text-align: center;
 
-    /* Адаптивность для экранов меньше 600px */
     @media (max-width: 600px) {
         max-width: 300px;
     }
@@ -17,21 +14,21 @@ export const InputGroup = styled.div`
 
 export const InputField = styled.input`
     width: 100%;
-    padding: 10px;
-    margin-top: 0px;
-    border: 1px solid ${(props) => props.theme.palette.text.secondary}; 
-    border-radius: 25px;
+    padding: 12px 20px;
+    border: 2px solid ${(props) => props.theme.palette.text.secondary};
+    border-radius: 30px;
     font-size: 1rem;
-    box-sizing: border-box;
-    background-color: ${(props) => props.theme.palette.background.paper}; 
-    color: ${(props) => props.theme.palette.text.primary}; 
+    background-color: ${(props) => props.theme.palette.background.paper};
+    color: ${(props) => props.theme.palette.text.primary};
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
     &:focus {
-        border-color: ${(props) => props.theme.palette.primary.main}; 
+        border-color: ${(props) => props.theme.palette.primary.main};
         outline: none;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
 
-    /* Адаптивность для экранов меньше 600px */
     @media (max-width: 600px) {
         font-size: 0.9rem;
     }
@@ -39,29 +36,51 @@ export const InputField = styled.input`
 
 export const Message = styled.div<{ isSuccess: boolean }>`
     color: ${(props) =>
-    props.isSuccess
-        ? props.theme.palette.success.main
-        : props.theme.palette.error.main}; 
-    margin-top: 10px; 
+            props.isSuccess
+                    ? props.theme.palette.success.main
+                    : props.theme.palette.error.main};
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1rem;
+
+    @media (max-width: 600px) {
+        font-size: 0.9rem;
+    }
 `;
 
 export const EnterButton = styled.button`
-    padding: 10px 20px;
-    background-color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#152525' : '#0056b3'};
+    width: 100%;
+    padding: 12px 25px;
+    background: linear-gradient(
+            90deg,
+            ${(props) => props.theme.palette.primary.main},
+            ${(props) => props.theme.palette.primary.dark}
+    );
     color: white;
     border: none;
-    border-radius: 25px;
+    border-radius: 30px;
     cursor: pointer;
-    font-size: 1rem;
-    margin-top: 10px; 
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
-        background-color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#45a049' : '#007bff'};
+        background: linear-gradient(
+                90deg,
+                ${(props) => props.theme.palette.primary.dark},
+                ${(props) => props.theme.palette.primary.light}
+        );
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
 
-    /* Адаптивность для экранов меньше 600px */
+    &:active {
+        transform: scale(0.98);
+    }
+
     @media (max-width: 600px) {
-        width: 100%;
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 `;

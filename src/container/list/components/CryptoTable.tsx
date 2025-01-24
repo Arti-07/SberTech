@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import api from '../../../api';
 import styles from './cryptoTable.style';
-import Pagination from './pagination';
+import Pagination from './Pagination';
 import { useNavigate } from 'react-router-dom';
 
 interface CryptoData {

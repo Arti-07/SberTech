@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import FavoriteCard from "./favorite_card";
+import FavoriteCard from "./FavoriteCard";
 import api from "../../../api";
 import { useTheme } from "@mui/material/styles";
 
