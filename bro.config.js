@@ -23,7 +23,8 @@ module.exports = {
     },
   },
   config: {
-    "smartini_crypto.api": "/api",
+    "smartini_crypto.api": "https://193.124.118.57",
+    //"smartini_crypto.api": "http://localhost:4000/",
     "smartini_crypto.promocode_new_year": "NEWYEAR",
     "smartini_crypto.promocode_admin": "ADMIN",
   },

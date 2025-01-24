@@ -1,6 +1,6 @@
 import React from 'react';
-import Favorites from "./components/favorites";
-import CryptoTable from './components/cryptoTable';
+import Favorites from "./components/Favorites";
+import CryptoTable from './components/CryptoTable';
 
 const ListPage = (): React.ReactElement => {
     return (

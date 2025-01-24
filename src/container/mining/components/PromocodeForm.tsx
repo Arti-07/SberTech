@@ -2,22 +2,10 @@ import React, { useState } from 'react';
 import { Box, useTheme } from '@mui/material';
 import { InputGroup, InputField, Message, EnterButton } from './promocodeForm.style';
 import api from '../../../api';
-
-import { getConfig } from '@brojs/cli';
-
-
-function getPromocode() {
-    const config = getConfig();
-    const entries_config = Object.entries(config);
-    const promo_config = entries_config.filter(([key]) => key.includes('promocode'));
-    return promo_config.map(([, value]) => value);
-}
+import axios from 'axios';
 
 const PromocodeForm = () => {
     const theme = useTheme();
-    // получаем список промокодов
-    const promo_list = getPromocode();
-
     const [promocode, setPromocode] = useState('');
     const [message, setMessage] = useState('');
 
@@ -32,25 +20,19 @@ const PromocodeForm = () => {
         }
 
         try {
-            const isValidPromo = promo_list.includes(promocode);
-            if (isValidPromo) {
-                const promocodeUseFirst = sessionStorage.getItem(promocode);
-                if (!promocodeUseFirst) {
-                    try {
-                        await api.updateBalance(2024);
-                        sessionStorage.setItem(promocode, 'True');
-                        setMessage('Promocode is valid! Add 2024 coin!');
-                    } catch (error) {
-                        setMessage(error.message);
-                    }
-                } else {
-                    setMessage('Promocode is used!');
-                }
+            const response = await api.applyPromo(promocode);
+            if (response.message === "Promo code applied successfully") {
+                setMessage(`${response.message}`);
             } else {
-                setMessage('Promocode is not valid!');
+                setMessage('Failed to apply promo code.');
             }
         } catch (error) {
-            setMessage(error.message);
+            if (axios.isAxiosError(error) && error.response) {
+                const statusCode = error.response.status;
+                setMessage(`Failed to apply promo code. Status code: ${statusCode}`);
+            } else {
+                setMessage('Failed to apply promo code. Unknown error.');
+            }
         }
     };
 
@@ -71,16 +53,15 @@ const PromocodeForm = () => {
                     type="text"
                     placeholder="Enter promocode"
                     value={promocode}
-                    onChange={(e) => setPromocode(e.target.value.toUpperCase())}
+                    onChange={(e) => setPromocode(e.target.value)}
                 />
             </InputGroup>
 
-            {message && <Message isSuccess={message.includes('Promocode is valid!')}>{message}</Message>}
+            {message && <Message isSuccess={message.includes('successfully')}>{message}</Message>}
 
             <EnterButton theme={theme} onClick={handleSignIn}>Enter</EnterButton>
         </Box>
     );
 };
-
 
 export default PromocodeForm;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Speedometer from './components/speedometer';
-import MotioButton from './components/motionButton';
-import PromocodeForm from './components/promocodeForm';
+import Speedometer from './components/Speedometer';
+import MotioButton from './components/MotionButton';
+import PromocodeForm from './components/PromocodeForm';
 
 import {
     AccountTextStyled,
@@ -67,7 +67,7 @@ const MiningPage = (): React.ReactElement => {
     const [progress, setProgress] = useState<number>(0);
     const [isVisible, setIsVisible] = useState<number>(0);
 
-    const musics = [postmalon, kuduro, rihanna, dragons, timberlake, calvin, lusa];
+    const musics = [kuduro, postmalon, rihanna, dragons, timberlake, calvin, lusa];
     const [currentMusic, setCurrentMusic] = useState(musics[0]);
 
     const stepDecrease = 0.007;
