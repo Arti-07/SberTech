@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import * as yup from 'yup';
 import api from '../../api';
 import Lottie from 'react-lottie';
 import {
@@ -14,64 +15,69 @@ import {
     SignUpButton,
     ButtonGroup,
     defaultOptions,
+    ErrorMessage,
 } from './components/SignInPageStyles';
 
 const SignInPage = (): React.ReactElement => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [message, setMessage] = useState('');
     const [showGif, setShowGif] = useState(false);
 
     const navigate = useNavigate();
 
+    const validationSchema = yup.object().shape({
+        login: yup
+            .string()
+            .required('Login is required')
+            .matches(
+                /^[A-Za-z0-9@$_-]{3,}$/,
+                'Login must be at least 3 characters and can include letters, numbers, @, $, -, and _.'
+            ),
+        password: yup
+            .string()
+            .required('Password is required')
+            .matches(
+                /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+                'Password must be at least 6 characters and include at least one letter and one number.'
+            ),
+    });
+
     const handleSignIn = async () => {
         setMessage('');
+        setErrors({});
         setShowGif(true);
 
-        const validationMessages = {
-            noLoginAndPassword: 'Введите логин и пароль',
-            noLogin: 'Введите логин',
-            noPassword: 'Введите пароль',
-        };
-
-        if (!login && !password) {
-            setMessage(validationMessages.noLoginAndPassword);
-            setShowGif(false);
-            return;
-        }
-
-        if (!login) {
-            setMessage(validationMessages.noLogin);
-            setShowGif(false);
-            return;
-        }
-
-        if (!password) {
-            setMessage(validationMessages.noPassword);
-            setShowGif(false);
-            return;
-        }
-
         try {
+            await validationSchema.validate(
+                { login, password },
+                { abortEarly: false }
+            );
+
             await api.login(login, password);
             sessionStorage.setItem('login', login);
             window.dispatchEvent(new Event('loginChanged'));
             navigate('/smartini_crypto/userspage');
-        } catch (error: unknown) {
-            console.error('Ошибка:', error);
-
-            if ((error as AxiosError).response) {
+        } catch (error) {
+            if (error instanceof yup.ValidationError) {
+                const validationErrors: Record<string, string> = {};
+                error.inner.forEach((err) => {
+                    if (err.path) validationErrors[err.path] = err.message;
+                });
+                setErrors(validationErrors);
+            } else if ((error as AxiosError).response) {
                 const status = (error as AxiosError).response?.status;
                 if (status === 401 || status === 400) {
-                    setMessage('Неверный логин или пароль');
+                    setMessage('Incorrect login or password');
                 } else {
-                    setMessage(`Произошла ошибка. Код ошибки: ${status}`);
+                    setMessage(`Error occurred. Error code: ${status}`);
                 }
             } else if ((error as AxiosError).message === 'Network Error') {
-                setMessage('Проверьте подключение к интернету и попробуйте снова.');
+                setMessage('Check your internet connection and try again.');
             } else {
-                setMessage('Произошла неизвестная ошибка. Попробуйте позже.');
+                setMessage('An unknown error occurred. Try again later.');
             }
             setShowGif(false);
         }
@@ -90,6 +96,7 @@ const SignInPage = (): React.ReactElement => {
                         onChange={(e) => setLogin(e.target.value)}
                     />
                 </label>
+                {errors.login && <ErrorMessage>{errors.login}</ErrorMessage>}
             </InputGroup>
 
             <InputGroup>
@@ -105,16 +112,16 @@ const SignInPage = (): React.ReactElement => {
                 <PasswordToggle onClick={() => setShowPassword((prev) => !prev)}>
                     {showPassword ? '🙉' : '🙈'}
                 </PasswordToggle>
+                {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
             </InputGroup>
 
-            {/* Показать анимацию, если showGif true */}
             {showGif && (
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                     <Lottie options={defaultOptions} height={100} width={100} />
                 </div>
             )}
 
-            {message && <Message isSuccess={message === 'Вход выполнен!'}>{message}</Message>}
+            {message && <Message isSuccess={message === 'Login successful!'}>{message}</Message>}
 
             <ButtonGroup>
                 <SignInButton onClick={handleSignIn}>Sign In</SignInButton>

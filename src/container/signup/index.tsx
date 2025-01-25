@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
 import api from '../../api';
 import gifKiss from '../../assets/gifs/gif_kiss.gif';
 import Lottie from 'react-lottie';
@@ -22,67 +23,63 @@ const SignupPage = (): React.ReactElement => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [birthDate, setBirthDate] = useState('');
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [success, setSuccess] = useState('');
     const [showGif, setShowGif] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    const loginRegex = /^[A-Za-z0-9@$_-]{3,}$/;
 
-    const validationMessages = {
-        passwordsDontMatch: 'Passwords don\'t match',
-        fillFields: 'Fill in all fields',
-        loginInvalid: 'The login must be at least 3 characters long and can contain only letters, numbers, @, $, hyphen and underscore.',
-        passwordInvalid: 'The password must contain at least 6 characters, including a letter and a number.',
-    };
+    const validationSchema = yup.object().shape({
+        login: yup
+            .string()
+            .matches(/^[A-Za-z0-9@$_-]{3,}$/, 'Login must be at least 3 characters and can include letters, numbers, @, $, -, and _.')
+            .required('Login is required'),
+        password: yup
+            .string()
+            .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/, 'Password must be at least 6 characters and include at least one letter and one number.')
+            .required('Password is required'),
+        confirmPassword: yup
+            .string()
+            .oneOf([yup.ref('password')], 'Passwords do not match')
+            .required('Password confirmation is required'),
+        birthDate: yup
+            .date()
+            .required('Date of birth is required')
+            .max(new Date(), 'Birth date cannot be in the future'),
+    });
 
     const handleSignup = async () => {
-        if (password !== confirmPassword) {
-            setError(validationMessages.passwordsDontMatch);
-            setSuccess('');
-            return;
-        }
-
-        if (!login || !password || !confirmPassword || !birthDate) {
-            setError(validationMessages.fillFields);
-            setSuccess('');
-            return;
-        }
-
-        if (!loginRegex.test(login)) {
-            setError(validationMessages.loginInvalid);
-            setSuccess('');
-            return;
-        }
-
-        if (!passwordRegex.test(password)) {
-            setError(validationMessages.passwordInvalid);
-            setSuccess('');
-            return;
-        }
-
         try {
+
+            setErrors({});
+            setSuccess('');
+
+            await validationSchema.validate(
+                { login, password, confirmPassword, birthDate },
+                { abortEarly: false }
+            );
+
             setLoading(true);
             const regResponse = await api.register(login, password, birthDate);
 
             if (regResponse && regResponse.message === 'User registered successfully') {
                 setSuccess('Registration is successful! Please come in.');
-                setError('');
                 setShowGif(true);
                 setTimeout(() => setShowGif(false), 5000);
             } else {
-                setError('Unknown registration error. Try again later.');
-                setSuccess('');
+                setErrors({ general: 'Unknown registration error. Try again later.' });
             }
-        } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setError('The user with this username already exists');
+        } catch (validationError) {
+            if (validationError instanceof yup.ValidationError) {
+                const validationErrors: Record<string, string> = {};
+                validationError.inner.forEach((err) => {
+                    if (err.path) validationErrors[err.path] = err.message;
+                });
+                setErrors(validationErrors);
             } else {
-                setError('Registration error. Try again later');
+                setErrors({ general: 'Registration error. Try again later.' });
             }
-            setSuccess('');
         } finally {
             setLoading(false);
         }
@@ -108,11 +105,7 @@ const SignupPage = (): React.ReactElement => {
                             onChange={(e) => setLogin(e.target.value)}
                         />
                     </label>
-                    <Tooltip
-                        title="The login must be at least 3 characters long and can contain only letters, numbers, @, $, hyphen and underscore."
-                    >
-                        ❓
-                    </Tooltip>
+                    {errors.login && <ErrorMessage>{errors.login}</ErrorMessage>}
                 </FormGroup>
 
                 <FormGroup>
@@ -121,14 +114,11 @@ const SignupPage = (): React.ReactElement => {
                         <FormInput
                             type="password"
                             placeholder="Enter the password"
-
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
-                    <Tooltip title="The password must contain at least 6 characters, including a letter and a number.">
-                        ❓
-                    </Tooltip>
+                    {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
                 </FormGroup>
 
                 <FormGroup>
@@ -141,6 +131,7 @@ const SignupPage = (): React.ReactElement => {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                     </label>
+                    {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
                 </FormGroup>
 
                 <FormGroup>
@@ -152,6 +143,7 @@ const SignupPage = (): React.ReactElement => {
                             onChange={(e) => setBirthDate(e.target.value)}
                         />
                     </label>
+                    {errors.birthDate && <ErrorMessage>{errors.birthDate}</ErrorMessage>}
                 </FormGroup>
 
                 {loading && (
@@ -159,7 +151,7 @@ const SignupPage = (): React.ReactElement => {
                         <Lottie options={defaultOptions} height={50} width={50} />
                     </div>
                 )}
-                {error && <ErrorMessage>{error}</ErrorMessage>}
+                {errors.general && <ErrorMessage>{errors.general}</ErrorMessage>}
                 {success && <SuccessMessage>{success}</SuccessMessage>}
 
                 <ButtonGroup>
@@ -176,3 +168,4 @@ const SignupPage = (): React.ReactElement => {
 };
 
 export default SignupPage;
+
