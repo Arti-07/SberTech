@@ -1,4 +1,15 @@
 import React from 'react';
+import loaderAnimation from '../../../assets/lotties/loader.json';
+
+export const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loaderAnimation,
+    rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice',
+    },
+};
+
 
 const styles = {
     container: {

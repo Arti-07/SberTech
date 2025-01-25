@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import api from '../../../api';
 import styles from './cryptoTable.style';
 import Pagination from './Pagination';
+import {defaultOptions} from './cryptoTable.style';
+import Lottie from 'react-lottie';
 import { useNavigate } from 'react-router-dom';
 
 interface CryptoData {
@@ -116,10 +118,14 @@ const CryptoTable: React.FC = () => {
         item.symbol.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    if (loading && page === 1) {
-        return <p>Loading data...</p>;
-    }
 
+    if (loading && page === 1) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <Lottie options={defaultOptions} height={150} width={150} />
+            </div>
+        );
+    }
     if (error) {
         return <p>Error: {error}</p>;
     }

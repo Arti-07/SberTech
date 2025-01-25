@@ -43,7 +43,7 @@ const Footer = ({ darkMode, toggleTheme }: { darkMode: boolean; toggleTheme: () 
                 ))}
             </Box>
 
-            <FooterText theme={theme}>&copy; 2024 Smartini Crypto | All rights reserved.</FooterText>
+            <FooterText theme={theme}>&copy; 2025 Smartini Crypto | All rights reserved.</FooterText>
 
             <ToggleButton darkMode={darkMode} onClick={toggleTheme}>
                 <ToggleIcon>{darkMode ? '🌙' : '🌞'}</ToggleIcon>
