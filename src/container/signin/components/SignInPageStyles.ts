@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import Lottie from 'react-lottie';
 import loaderAnimation from '../../../assets/lotties/loader.json';
+import {Theme} from "@mui/material/styles";
 
-export const Container = styled.div`
+export const Container = styled.div<{ theme?: Theme }>`
     text-align: center;
     margin-top: 50px;
 
@@ -12,7 +12,7 @@ export const Container = styled.div`
     }
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1<{ theme?: Theme }>`
     font-size: 2rem;
     margin-bottom: 20px;
     color: ${(props) => props.theme.palette.text.primary}; /* Цвет текста зависит от темы */
@@ -23,7 +23,7 @@ export const Title = styled.h1`
     }
 `;
 
-export const InputGroup = styled.div`
+export const InputGroup = styled.div<{ theme?: Theme }>`
     margin-top: 20px;
     margin-bottom: 20px;
     max-width: 400px;
@@ -37,7 +37,7 @@ export const InputGroup = styled.div`
     }
 `;
 
-export const InputField = styled.input`
+export const InputField = styled.input<{ theme?: Theme }>`
     width: 100%;
     padding: 10px;
     margin-top: 0px;
@@ -59,7 +59,7 @@ export const InputField = styled.input`
     }
 `;
 
-export const PasswordToggle = styled.span`
+export const PasswordToggle = styled.span<{ theme?: Theme }>`
     position: absolute;
     top: 70%;
     right: 10px;
@@ -78,7 +78,7 @@ export const PasswordToggle = styled.span`
     }
 `;
 
-export const Message = styled.div<{ isSuccess: boolean }>`
+export const Message = styled.div<{ isSuccess: boolean; theme?:Theme }>`
     color: ${(props) =>
             props.isSuccess
                     ? props.theme.palette.success.main
@@ -91,7 +91,7 @@ export const Message = styled.div<{ isSuccess: boolean }>`
     }
 `;
 
-export const SignInButton = styled.button`
+export const SignInButton = styled.button<{ theme?: Theme }>`
     padding: 10px 20px;
     background-color: ${(props) => props.theme.palette.primary.main};
     color: white;
@@ -112,7 +112,7 @@ export const SignInButton = styled.button`
     }
 `;
 
-export const SignUpButton = styled.button`
+export const SignUpButton = styled.button<{ theme?: Theme }>`
     padding: 10px 20px;
     background-color: ${(props) => props.theme.palette.secondary.main};
     color: white;
@@ -133,7 +133,7 @@ export const SignUpButton = styled.button`
     }
 `;
 
-export const ButtonGroup = styled.div`
+export const ButtonGroup = styled.div<{ theme?: Theme }>`
     display: flex;
     justify-content: center;
     gap: 20px; /* Расстояние между кнопками */

@@ -32,10 +32,10 @@ const SignupPage = (): React.ReactElement => {
     const loginRegex = /^[A-Za-z0-9@$_-]{3,}$/;
 
     const validationMessages = {
-        passwordsDontMatch: 'Пароли не совпадают',
-        fillFields: 'Заполните все поля',
-        loginInvalid: 'Логин должен быть не менее 3 символов и может содержать только буквы, цифры, @, $, дефис и подчеркивание',
-        passwordInvalid: 'Пароль должен содержать как минимум 6 символов, включая букву и цифру',
+        passwordsDontMatch: 'Passwords don\'t match',
+        fillFields: 'Fill in all fields',
+        loginInvalid: 'The login must be at least 3 characters long and can contain only letters, numbers, @, $, hyphen and underscore.',
+        passwordInvalid: 'The password must contain at least 6 characters, including a letter and a number.',
     };
 
     const handleSignup = async () => {
@@ -68,19 +68,19 @@ const SignupPage = (): React.ReactElement => {
             const regResponse = await api.register(login, password, birthDate);
 
             if (regResponse && regResponse.message === 'User registered successfully') {
-                setSuccess('Регистрация успешна! Пожалуйста, войдите.');
+                setSuccess('Registration is successful! Please come in.');
                 setError('');
                 setShowGif(true);
                 setTimeout(() => setShowGif(false), 5000);
             } else {
-                setError('Неизвестная ошибка регистрации. Попробуйте позже.');
+                setError('Unknown registration error. Try again later.');
                 setSuccess('');
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                setError('Пользователь с таким логином уже существует');
+                setError('The user with this username already exists');
             } else {
-                setError('Ошибка регистрации. Попробуйте позже');
+                setError('Registration error. Try again later');
             }
             setSuccess('');
         } finally {
@@ -121,6 +121,7 @@ const SignupPage = (): React.ReactElement => {
                         <FormInput
                             type="password"
                             placeholder="Enter the password"
+
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />

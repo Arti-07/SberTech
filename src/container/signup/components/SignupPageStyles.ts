@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material/styles';
-import Lottie from 'react-lottie';
 import loaderAnimation from '../../../assets/lotties/loader.json';
 
 export const defaultOptions = {
@@ -13,7 +12,7 @@ export const defaultOptions = {
 };
 
 // Контейнер для GIF
-export const GifContainer = styled.div`
+export const GifContainer = styled.div<{ theme?: Theme }>`
     animation: fadeIn 2s ease-in-out;
 
     @keyframes fadeIn {
@@ -31,7 +30,7 @@ export const GifContainer = styled.div`
 `;
 
 // Сообщение об успешной операции
-export const SuccessMessage = styled.div`
+export const SuccessMessage = styled.div<{ theme?: Theme }>`
     animation: slideUp 0.5s ease-in-out;
     color: ${(props: { theme: Theme }) => props.theme.palette.success.main};
     font-weight: bold;
@@ -57,7 +56,7 @@ export const SuccessMessage = styled.div`
 `;
 
 // Сообщение об ошибке
-export const ErrorMessage = styled.div`
+export const ErrorMessage = styled.div<{ theme?: Theme }>`
     animation: shake 0.5s ease-in-out;
     color: ${(props: { theme: Theme }) => props.theme.palette.error.main};
     font-weight: bold;
@@ -90,7 +89,7 @@ export const ErrorMessage = styled.div`
 `;
 
 // Контейнер для формы регистрации
-export const SignupContainer = styled.div`
+export const SignupContainer = styled.div<{ theme?: Theme }>`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,7 +99,7 @@ export const SignupContainer = styled.div`
     margin: 0 auto;
 
     @media (max-width: 768px) {
-        max-width: 90%; /* Для мобильных устройств форма занимает больше ширины */
+        max-width: 90%; 
         padding: 10px 15px; /* Уменьшаем отступы */
     }
 
@@ -110,7 +109,7 @@ export const SignupContainer = styled.div`
 `;
 
 // Заголовок формы
-export const SignupTitle = styled.h1`
+export const SignupTitle = styled.h1<{ theme?: Theme }>`
     font-size: 2.5rem;
     margin-bottom: 10px;
     text-align: center;
@@ -135,7 +134,7 @@ export const SignupTitle = styled.h1`
 `;
 
 // Группа полей ввода
-export const FormGroup = styled.div`
+export const FormGroup = styled.div<{ theme?: Theme }>`
     margin-bottom: 10px;
     position: relative;
 
@@ -145,7 +144,7 @@ export const FormGroup = styled.div`
 `;
 
 // Поля ввода
-export const FormInput = styled.input`
+export const FormInput = styled.input<{ theme?: Theme }>`
     padding: 12px;
     margin-top: 5px;
     font-size: 1rem;
@@ -191,7 +190,7 @@ export const FormInput = styled.input`
 `;
 
 // Tooltip (всплывающее сообщение)
-export const Tooltip = styled.span`
+export const Tooltip = styled.span<{ theme?: Theme }>`
     position: absolute;
     right: -35px;
     top: 50%;
@@ -211,7 +210,7 @@ export const Tooltip = styled.span`
 `;
 
 // Группа кнопок
-export const ButtonGroup = styled.div`
+export const ButtonGroup = styled.div<{ theme?: Theme }>`
     display: flex;
     gap: 10px;
     margin-top: 10px;
@@ -224,7 +223,7 @@ export const ButtonGroup = styled.div`
 `;
 
 // Кнопки
-export const Button = styled.button`
+export const Button = styled.button<{ theme?: Theme }>`
     padding: 12px 25px;
     font-size: 1rem;
     border: none;

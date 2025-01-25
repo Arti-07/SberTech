@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import api from '../../api';
 import Lottie from 'react-lottie';
-import loaderAnimation from '../../assets/lotties/loader.json';
 import {
     Container,
     Title,
