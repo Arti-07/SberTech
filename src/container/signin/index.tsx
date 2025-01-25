@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import api from '../../api';
+import Lottie from 'react-lottie';
+import loaderAnimation from '../../assets/lotties/loader.json';
 import {
     Container,
     Title,
@@ -12,6 +14,7 @@ import {
     SignInButton,
     SignUpButton,
     ButtonGroup,
+    defaultOptions,
 } from './components/SignInPageStyles';
 
 const SignInPage = (): React.ReactElement => {
@@ -19,36 +22,59 @@ const SignInPage = (): React.ReactElement => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState('');
+    const [showGif, setShowGif] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSignIn = async () => {
         setMessage('');
+        setShowGif(true);
+
+        const validationMessages = {
+            noLoginAndPassword: 'Введите логин и пароль',
+            noLogin: 'Введите логин',
+            noPassword: 'Введите пароль',
+        };
 
         if (!login && !password) {
-            setMessage('Введите логин и пароль');
+            setMessage(validationMessages.noLoginAndPassword);
+            setShowGif(false);
             return;
-        } else if (!login) {
-            setMessage('Введите логин');
+        }
+
+        if (!login) {
+            setMessage(validationMessages.noLogin);
+            setShowGif(false);
             return;
-        } else if (!password) {
-            setMessage('Введите пароль');
+        }
+
+        if (!password) {
+            setMessage(validationMessages.noPassword);
+            setShowGif(false);
             return;
         }
 
         try {
-            await api.login(login, password); // Логика проверки через API
-            sessionStorage.setItem('login', login); // Сохраняем информацию о логине
-            window.dispatchEvent(new Event('loginChanged')); // Генерируем событие
-            navigate('/smartini_crypto/userspage'); // Перенаправляем после успешного входа
+            await api.login(login, password);
+            sessionStorage.setItem('login', login);
+            window.dispatchEvent(new Event('loginChanged'));
+            navigate('/smartini_crypto/userspage');
         } catch (error: unknown) {
             console.error('Ошибка:', error);
 
-            if ((error as AxiosError).response && (error as AxiosError).response?.status === 401) {
-                setMessage('Неверный логин или пароль');
+            if ((error as AxiosError).response) {
+                const status = (error as AxiosError).response?.status;
+                if (status === 401 || status === 400) {
+                    setMessage('Неверный логин или пароль');
+                } else {
+                    setMessage(`Произошла ошибка. Код ошибки: ${status}`);
+                }
+            } else if ((error as AxiosError).message === 'Network Error') {
+                setMessage('Проверьте подключение к интернету и попробуйте снова.');
             } else {
-                setMessage('Произошла ошибка. Попробуйте позже.');
+                setMessage('Произошла неизвестная ошибка. Попробуйте позже.');
             }
+            setShowGif(false);
         }
     };
 
@@ -81,6 +107,13 @@ const SignInPage = (): React.ReactElement => {
                     {showPassword ? '🙉' : '🙈'}
                 </PasswordToggle>
             </InputGroup>
+
+            {/* Показать анимацию, если showGif true */}
+            {showGif && (
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <Lottie options={defaultOptions} height={100} width={100} />
+                </div>
+            )}
 
             {message && <Message isSuccess={message === 'Вход выполнен!'}>{message}</Message>}
 

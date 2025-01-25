@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 import gifKiss from '../../assets/gifs/gif_kiss.gif';
+import Lottie from 'react-lottie';
+import { defaultOptions } from './components/SignupPageStyles';
 import {
     GifContainer,
     SuccessMessage,
@@ -23,58 +25,66 @@ const SignupPage = (): React.ReactElement => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [showGif, setShowGif] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     const loginRegex = /^[A-Za-z0-9@$_-]{3,}$/;
 
+    const validationMessages = {
+        passwordsDontMatch: 'Пароли не совпадают',
+        fillFields: 'Заполните все поля',
+        loginInvalid: 'Логин должен быть не менее 3 символов и может содержать только буквы, цифры, @, $, дефис и подчеркивание',
+        passwordInvalid: 'Пароль должен содержать как минимум 6 символов, включая букву и цифру',
+    };
+
     const handleSignup = async () => {
         if (password !== confirmPassword) {
-            setError("Passwords don't match");
+            setError(validationMessages.passwordsDontMatch);
             setSuccess('');
             return;
         }
 
-        if (!login && !password && !confirmPassword && !birthDate) {
-            setError('Fill fields');
+        if (!login || !password || !confirmPassword || !birthDate) {
+            setError(validationMessages.fillFields);
             setSuccess('');
             return;
         }
 
         if (!loginRegex.test(login)) {
-            setError(
-                'The login must be at least 3 characters long and can contain only letters, numbers, @, $, hyphen and underscore characters'
-            );
+            setError(validationMessages.loginInvalid);
             setSuccess('');
             return;
         }
 
         if (!passwordRegex.test(password)) {
-            setError('The password must contain at least 6 characters, including a letter and a number');
+            setError(validationMessages.passwordInvalid);
             setSuccess('');
             return;
         }
 
         try {
+            setLoading(true);
             const regResponse = await api.register(login, password, birthDate);
 
             if (regResponse && regResponse.message === 'User registered successfully') {
-                setSuccess('Registration is successful! Please sign in.');
+                setSuccess('Регистрация успешна! Пожалуйста, войдите.');
                 setError('');
                 setShowGif(true);
                 setTimeout(() => setShowGif(false), 5000);
             } else {
-                setError('Unknown registration error. Try again later.');
+                setError('Неизвестная ошибка регистрации. Попробуйте позже.');
                 setSuccess('');
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                setError('A user with this username already exists');
+                setError('Пользователь с таким логином уже существует');
             } else {
-                setError('Registration error. Try again later');
+                setError('Ошибка регистрации. Попробуйте позже');
             }
             setSuccess('');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -90,16 +100,16 @@ const SignupPage = (): React.ReactElement => {
             <div className="signup-form">
                 <FormGroup>
                     <label>
-                        Username:
+                        Login:
                         <FormInput
                             type="text"
-                            placeholder="Enter your username"
+                            placeholder="Enter your login"
                             value={login}
                             onChange={(e) => setLogin(e.target.value)}
                         />
                     </label>
                     <Tooltip
-                        title="The login must be at least 3 characters long and can contain only letters, numbers, @, $, hyphen and underscore characters"
+                        title="The login must be at least 3 characters long and can contain only letters, numbers, @, $, hyphen and underscore."
                     >
                         ❓
                     </Tooltip>
@@ -115,17 +125,17 @@ const SignupPage = (): React.ReactElement => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
-                    <Tooltip title="The password must contain at least 6 characters, including a letter and a number">
+                    <Tooltip title="The password must contain at least 6 characters, including a letter and a number.">
                         ❓
                     </Tooltip>
                 </FormGroup>
 
                 <FormGroup>
                     <label>
-                        Confirm the password:
+                        Confirm password:
                         <FormInput
                             type="password"
-                            placeholder="Confirm the password"
+                            placeholder="Confirm password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
@@ -143,6 +153,11 @@ const SignupPage = (): React.ReactElement => {
                     </label>
                 </FormGroup>
 
+                {loading && (
+                    <div style={{ marginBottom: '1rem', textAlign: 'center' }}>
+                        <Lottie options={defaultOptions} height={50} width={50} />
+                    </div>
+                )}
                 {error && <ErrorMessage>{error}</ErrorMessage>}
                 {success && <SuccessMessage>{success}</SuccessMessage>}
 

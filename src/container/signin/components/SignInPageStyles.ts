@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import Lottie from 'react-lottie';
+import loaderAnimation from '../../../assets/lotties/loader.json';
 
 export const Container = styled.div`
     text-align: center;
@@ -144,3 +146,12 @@ export const ButtonGroup = styled.div`
         gap: 10px; /* Меньшее расстояние между кнопками */
     }
 `;
+
+export const defaultOptions = {
+    loop: true,
+    autoplay: true, // зациклить анимацию
+    animationData: loaderAnimation, // импортированный JSON
+    rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice', // сохранить пропорции
+    },
+};

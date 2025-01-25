@@ -1,5 +1,16 @@
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material/styles';
+import Lottie from 'react-lottie';
+import loaderAnimation from '../../../assets/lotties/loader.json';
+
+export const defaultOptions = {
+    loop: true,
+    autoplay: true, // зациклить анимацию
+    animationData: loaderAnimation, // импортированный JSON
+    rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice', // сохранить пропорции
+    },
+};
 
 // Контейнер для GIF
 export const GifContainer = styled.div`
