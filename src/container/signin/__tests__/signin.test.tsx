@@ -65,7 +65,7 @@ describe('SignInPage component', () => {
         const signInButton = screen.getByRole('button', { name: 'Sign In' });
         fireEvent.click(signInButton);
 
-        expect(await screen.findByText('Введите логин и пароль')).toBeInTheDocument();
+        expect(await screen.findByText('Login must be at least 3 characters and can include letters, numbers, @, $, -, and _.')).toBeInTheDocument();
     });
 
     test('should display error message when only login provided', async () => {
@@ -83,7 +83,7 @@ describe('SignInPage component', () => {
         const signInButton = screen.getByRole('button', { name: 'Sign In' });
         fireEvent.click(signInButton);
 
-        expect(await screen.findByText('Введите пароль')).toBeInTheDocument();
+        expect(await screen.findByText('Password must be at least 6 characters and include at least one letter and one number.')).toBeInTheDocument();
     });
 
     test('should display error message when only password provided', async () => {
@@ -101,7 +101,7 @@ describe('SignInPage component', () => {
         const signInButton = screen.getByRole('button', { name: 'Sign In' });
         fireEvent.click(signInButton);
 
-        expect(await screen.findByText('Введите логин')).toBeInTheDocument();
+        expect(await screen.findByText('Login must be at least 3 characters and can include letters, numbers, @, $, -, and _.')).toBeInTheDocument();
     });
 
     test.skip('calls API with correct credentials', async () => {
