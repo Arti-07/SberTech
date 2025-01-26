@@ -33,46 +33,6 @@ jest.mock('api', () => {
         async getListings() {
             return [];
         }
-
-        async getTicker(id, convert = 'USD') {
-            return {};
-        }
-
-        async getChart(id, convert = 'USD') {
-            return {};
-        }
-
-        async getInfo(id) {
-            return {};
-        }
-
-        async getBalance() {
-            return {};
-        }
-
-        async updateBalance(amount) {
-            return {};
-        }
-
-        async register(username, password, birthDate) {
-            return {};
-        }
-
-        async login(username, password) {
-            return {};
-        }
-
-        async verifyToken() {
-            return {};
-        }
-
-        async getWallet() {
-            return '';
-        }
-
-        async transfer(receiverWallet, amount) {
-            return {};
-        }
     }
 
     return {

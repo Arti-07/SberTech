@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import mockedBroConfig from '../../../bro.config.js'
 
 jest.mock<typeof import('@brojs/cli')>('@brojs/cli', () => {
     global.System = {
@@ -18,6 +19,9 @@ jest.mock<typeof import('@brojs/cli')>('@brojs/cli', () => {
 
     return {
         ...originalBroJsCli,
+        getConfig: () => {
+            return mockedBroConfig.config;
+        },
         getConfigValue: () => {
             return 'mocked_value';
         }
