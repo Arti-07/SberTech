@@ -4,14 +4,13 @@ import loaderAnimation from '../../../assets/lotties/loader.json';
 
 export const defaultOptions = {
     loop: true,
-    autoplay: true, // зациклить анимацию
-    animationData: loaderAnimation, // импортированный JSON
+    autoplay: true,
+    animationData: loaderAnimation,
     rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice', // сохранить пропорции
+        preserveAspectRatio: 'xMidYMid slice',
     },
 };
 
-// Контейнер для GIF
 export const GifContainer = styled.div<{ theme?: Theme }>`
     animation: fadeIn 2s ease-in-out;
 
@@ -25,11 +24,10 @@ export const GifContainer = styled.div<{ theme?: Theme }>`
     }
 
     @media (max-width: 768px) {
-        width: 100%; /* Для мобильных устройств контент занимает 100% ширины */
+        width: 100%; 
     }
 `;
 
-// Сообщение об успешной операции
 export const SuccessMessage = styled.div<{ theme?: Theme }>`
     animation: slideUp 0.5s ease-in-out;
     color: ${(props: { theme: Theme }) => props.theme.palette.success.main};
@@ -50,17 +48,16 @@ export const SuccessMessage = styled.div<{ theme?: Theme }>`
     }
 
     @media (max-width: 768px) {
-        font-size: 1.1rem; /* Уменьшаем шрифт для мобильных устройств */
-        margin-top: 0; /* Убираем дополнительный отступ */
+        font-size: 1.1rem; 
+        margin-top: 0; 
     }
 `;
 
-// Сообщение об ошибке
 export const ErrorMessage = styled.div<{ theme?: Theme }>`
     animation: shake 0.5s ease-in-out;
     color: ${(props: { theme: Theme }) => props.theme.palette.error.main};
     font-weight: bold;
-    margin-top: -5px;
+    margin-top: 2px;
     text-align: center;
     width: 100%;
 
@@ -83,12 +80,11 @@ export const ErrorMessage = styled.div<{ theme?: Theme }>`
     }
 
     @media (max-width: 768px) {
-        font-size: 1.1rem; /* Уменьшаем шрифт для мобильных устройств */
-        margin-top: 0; /* Убираем дополнительный отступ */
+        font-size: 1.1rem; 
+        margin-top: 0; 
     }
 `;
 
-// Контейнер для формы регистрации
 export const SignupContainer = styled.div<{ theme?: Theme }>`
     display: flex;
     flex-direction: column;
@@ -100,15 +96,14 @@ export const SignupContainer = styled.div<{ theme?: Theme }>`
 
     @media (max-width: 768px) {
         max-width: 90%; 
-        padding: 10px 15px; /* Уменьшаем отступы */
+        padding: 10px 15px; 
     }
 
     @media (max-width: 480px) {
-        max-width: 100%; /* Форма занимает 100% ширины для самых маленьких экранов */
+        max-width: 100%; 
     }
 `;
 
-// Заголовок формы
 export const SignupTitle = styled.h1<{ theme?: Theme }>`
     font-size: 2.5rem;
     margin-bottom: 10px;
@@ -125,25 +120,23 @@ export const SignupTitle = styled.h1<{ theme?: Theme }>`
     }
 
     @media (max-width: 768px) {
-        font-size: 2rem; /* Уменьшаем размер шрифта для мобильных устройств */
+        font-size: 2rem; 
     }
 
     @media (max-width: 480px) {
-        font-size: 1.5rem; /* Ещё меньше для самых маленьких экранов */
+        font-size: 1.5rem; 
     }
 `;
 
-// Группа полей ввода
 export const FormGroup = styled.div<{ theme?: Theme }>`
     margin-bottom: 10px;
     position: relative;
 
     @media (max-width: 768px) {
-        margin-bottom: 8px; /* Уменьшаем отступы на мобильных */
+        margin-bottom: 8px; 
     }
 `;
 
-// Поля ввода
 export const FormInput = styled.input<{ theme?: Theme }>`
     padding: 12px;
     margin-top: 5px;
@@ -189,7 +182,6 @@ export const FormInput = styled.input<{ theme?: Theme }>`
     }
 `;
 
-// Tooltip (всплывающее сообщение)
 export const Tooltip = styled.span<{ theme?: Theme }>`
     position: absolute;
     right: -35px;
@@ -205,11 +197,10 @@ export const Tooltip = styled.span<{ theme?: Theme }>`
     }
 
     @media (max-width: 768px) {
-        font-size: 1.2rem; /* Уменьшаем шрифт на мобильных устройствах */
+        font-size: 1.2rem;
     }
 `;
 
-// Группа кнопок
 export const ButtonGroup = styled.div<{ theme?: Theme }>`
     display: flex;
     gap: 10px;
@@ -217,12 +208,11 @@ export const ButtonGroup = styled.div<{ theme?: Theme }>`
     justify-content: center;
 
     @media (max-width: 768px) {
-        flex-direction: column; /* Для мобильных кнопки становятся в колонку */
-        gap: 8px; /* Уменьшаем расстояние между кнопками */
+        flex-direction: column; 
+        gap: 8px; 
     }
 `;
 
-// Кнопки
 export const Button = styled.button<{ theme?: Theme }>`
     padding: 12px 25px;
     font-size: 1rem;
@@ -251,12 +241,12 @@ export const Button = styled.button<{ theme?: Theme }>`
     }
 
     @media (max-width: 768px) {
-        padding: 10px 20px; /* Уменьшаем отступы на мобильных устройствах */
-        font-size: 0.9rem; /* Уменьшаем размер шрифта */
+        padding: 10px 20px; 
+        font-size: 0.9rem; 
     }
 
     @media (max-width: 480px) {
-        padding: 8px 16px; /* Уменьшаем ещё больше для маленьких экранов */
-        font-size: 0.8rem; /* Минимальный размер шрифта */
+        padding: 8px 16px; 
+        font-size: 0.8rem; 
     }
 `;

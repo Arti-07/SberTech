@@ -1,12 +1,20 @@
 import styled from '@emotion/styled';
 import loaderAnimation from '../../../assets/lotties/loader.json';
-import {Theme} from "@mui/material/styles";
+import { Theme } from '@mui/material/styles';
+
+export const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loaderAnimation,
+    rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice',
+    },
+};
 
 export const Container = styled.div<{ theme?: Theme }>`
     text-align: center;
     margin-top: 50px;
-
-    /* Адаптивность для экранов меньше 600px */
+    
     @media (max-width: 600px) {
         margin-top: 30px;
     }
@@ -15,23 +23,21 @@ export const Container = styled.div<{ theme?: Theme }>`
 export const Title = styled.h1<{ theme?: Theme }>`
     font-size: 2rem;
     margin-bottom: 20px;
-    color: ${(props) => props.theme.palette.text.primary}; /* Цвет текста зависит от темы */
-
-    /* Адаптивность для экранов меньше 600px */
+    color: ${(props) => props.theme.palette.text.primary}; 
+    
     @media (max-width: 600px) {
         font-size: 1.5rem;
     }
 `;
 
 export const InputGroup = styled.div<{ theme?: Theme }>`
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px !important; 
+    margin-bottom: 50px !important;
     max-width: 400px;
     margin: 0 auto;
-    position: relative;
+    position: relative; 
     text-align: left;
-
-    /* Адаптивность для экранов меньше 600px */
+    
     @media (max-width: 600px) {
         max-width: 300px;
     }
@@ -52,8 +58,7 @@ export const InputField = styled.input<{ theme?: Theme }>`
         border-color: ${(props) => props.theme.palette.primary.main};
         outline: none;
     }
-
-    /* Адаптивность для экранов меньше 600px */
+    
     @media (max-width: 600px) {
         font-size: 0.9rem;
     }
@@ -71,23 +76,54 @@ export const PasswordToggle = styled.span<{ theme?: Theme }>`
     &:hover {
         color: ${(props) => props.theme.palette.primary.dark};
     }
-
-    /* Адаптивность для экранов меньше 600px */
+    
     @media (max-width: 600px) {
         font-size: 1rem;
     }
 `;
 
-export const Message = styled.div<{ isSuccess: boolean; theme?:Theme }>`
+export const Message = styled.div<{ isSuccess: boolean; theme?: Theme }>`
     color: ${(props) =>
-            props.isSuccess
-                    ? props.theme.palette.success.main
-                    : props.theme.palette.error.main};
+    props.isSuccess
+        ? props.theme.palette.success.main
+        : props.theme.palette.error.main};
     margin-bottom: 20px;
-
-    /* Адаптивность для экранов меньше 600px */
+    font-weight: bold;
     @media (max-width: 600px) {
         margin-bottom: 10px;
+    }
+`;
+
+export const ErrorMessage = styled.span<{ theme?: Theme }>`
+    animation: shake 0.5s ease-in-out;
+    color: ${(props: { theme: Theme }) => props.theme.palette.error.main};
+    font-weight: bold;
+    text-align: center;
+    position: absolute; 
+    top: 100%; 
+    left: 0;
+    width: 100%;
+    display: block;
+    
+    @keyframes shake {
+        0% {
+            transform: translateX(-5px);
+        }
+        25% {
+            transform: translateX(5px);
+        }
+        50% {
+            transform: translateX(-5px);
+        }
+        75% {
+            transform: translateX(5px);
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+    @media (max-width: 768px) {
+        font-size: 1.1rem; 
     }
 `;
 
@@ -104,8 +140,7 @@ export const SignInButton = styled.button<{ theme?: Theme }>`
     &:hover {
         background-color: ${(props) => props.theme.palette.primary.dark};
     }
-
-    /* Адаптивность для экранов меньше 600px */
+    
     @media (max-width: 600px) {
         width: 100%;
         font-size: 0.9rem;
@@ -125,8 +160,7 @@ export const SignUpButton = styled.button<{ theme?: Theme }>`
     &:hover {
         background-color: ${(props) => props.theme.palette.secondary.dark};
     }
-
-    /* Адаптивность для экранов меньше 600px */
+    
     @media (max-width: 600px) {
         width: 100%;
         font-size: 0.9rem;
@@ -136,22 +170,13 @@ export const SignUpButton = styled.button<{ theme?: Theme }>`
 export const ButtonGroup = styled.div<{ theme?: Theme }>`
     display: flex;
     justify-content: center;
-    gap: 20px; /* Расстояние между кнопками */
+    gap: 20px; 
     margin-top: 20px;
-
-    /* Адаптивность для экранов меньше 600px */
+    
     @media (max-width: 600px) {
         flex-direction: column;
         align-items: center;
-        gap: 10px; /* Меньшее расстояние между кнопками */
+        gap: 10px; 
     }
 `;
 
-export const defaultOptions = {
-    loop: true,
-    autoplay: true, // зациклить анимацию
-    animationData: loaderAnimation, // импортированный JSON
-    rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice', // сохранить пропорции
-    },
-};
