@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 import axios, { AxiosInstance } from 'axios';
 
-var mockAxios = axios;
+const mockAxios = axios;
 
 jest.mock('./apiClient', () => {
     class MockApiClient {
@@ -30,45 +30,6 @@ jest.mock('./apiClient', () => {
             return [];
         }
 
-        async getTicker(id: number, convert: string = 'USD') {
-            return {};
-        }
-
-        async getChart(id: string, convert: string = 'USD') {
-            return {};
-        }
-
-        async getInfo(id: string) {
-            return {};
-        }
-
-        async getBalance() {
-            return {};
-        }
-
-        async updateBalance(amount: number) {
-            return {};
-        }
-
-        async register(username: string, password: string, birthDate: string) {
-            return {};
-        }
-
-        async login(username: string, password: string) {
-            return {};
-        }
-
-        async verifyToken() {
-            return {};
-        }
-
-        async getWallet() {
-            return '';
-        }
-
-        async transfer(receiverWallet: string, amount: number) {
-            return {};
-        }
     }
 
     return {
