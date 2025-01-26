@@ -1,71 +1,110 @@
-import React from 'react';
-import {AppBar, Toolbar, Typography, Button} from '@mui/material';
-import {Link} from 'react-router-dom';
-import {getNavigationsValue} from '@brojs/cli';
-import {styled} from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import { Toolbar, Typography, useTheme } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getNavigationsValue } from '@brojs/cli';
+import { NavButton, ActiveNavButton, StyledAppBar, LogoContainer, LoginText, SignOutButton } from './components/HeaderStyles';
+import logoBlack from './logo/logo_black.png';
+import logoWhite from './logo/logo_white.png';
 
-const navigations: Array<{ name: string; href: string }> = [
-    {
-        name: 'Account Page',
-        href: getNavigationsValue('smartini_crypto.account'),
-    },
-    {
-        name: 'Main Page',
-        href: getNavigationsValue('smartini_crypto.main'),
-    },
-    {
-        name: 'Detail',
-        href: getNavigationsValue('smartini_crypto.detail'),
-    },
-    {
-        name: 'Mining your crypto',
-        href: getNavigationsValue('smartini_crypto.mining'),
-    },
+const navigations = [
+    { name: 'Home', href: getNavigationsValue('smartini_crypto.main') },
+    { name: 'Mining', href: getNavigationsValue('smartini_crypto.mining') },
+    { name: 'Account', href: getNavigationsValue('smartini_crypto.account') }
 ];
 
-// Кастомные стили для кнопок
-const GradientButton = styled(Button)(({theme}) => ({
-    color: '#fff',
-    borderRadius: '20px',
-    padding: '8px 16px',
-    marginLeft: theme.spacing(1),
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    textTransform: 'none',
-    transition: 'transform 0.3s, box-shadow 0.3s',
-    '&:hover': {
-        transform: 'scale(1.1)',
-        boxShadow: '0 5px 8px 3px rgba(255, 105, 135, .4)',
-    },
-}));
-
 const Header = (): React.ReactElement => {
+    const [login, setLogin] = useState<string | null>(null); // Состояние для логина
+    const location = useLocation();
+    const theme = useTheme();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedLogin = sessionStorage.getItem('login');
+        if (storedLogin) {
+            setLogin(storedLogin); // Устанавливаем логин, если он есть
+        }
+
+        // Слушаем событие, которое будет обновлять состояние логина
+        const handleLoginChanged = () => {
+            const newLogin = sessionStorage.getItem('login');
+            setLogin(newLogin); // Обновляем состояние с новым логином
+        };
+
+        window.addEventListener('loginChanged', handleLoginChanged);
+
+        return () => {
+            window.removeEventListener('loginChanged', handleLoginChanged);
+        };
+    }, []); // Монтируем один раз при загрузке компонента
+
+    const isLightTheme = theme.palette.mode === 'light';
+
+    const handleNavigationClick = (href: string) => {
+        if (href === getNavigationsValue('smartini_crypto.account') && login) {
+            navigate('/smartini_crypto/userspage');
+        } else {
+            navigate(href);
+        }
+    };
+
+    const handleSignOut = () => {
+        sessionStorage.removeItem('login');
+        setLogin(null); // Сбрасываем логин
+        navigate('/smartini_crypto/signin');
+    };
+
     return (
-        <AppBar
-            position="static"
-            sx={{
-                background: 'linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)',
-            }}
-        >
+        <StyledAppBar position="static" theme={theme}>
             <Toolbar>
-                <Typography
-                    variant="h6"
-                    sx={{
-                        flexGrow: 1,
-                        fontWeight: 'bold',
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase',
-                    }}
-                >
-                    Smartini Crypto
-                </Typography>
-                {navigations.map((item) => (
-                    <GradientButton key={item.name} component={Link} to={item.href}>
-                        {item.name}
-                    </GradientButton>
-                ))}
+                <LogoContainer>
+                    <img
+                        src={isLightTheme ? logoBlack : logoWhite}
+                        alt="Smartini Crypto Logo"
+                        style={{ width: '50px', height: '50px', marginTop: '-8px' }}
+                    />
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            fontFamily: 'Impact',
+                            fontSize: '30px',
+                            letterSpacing: '4px',
+                            color: isLightTheme ? 'black' : 'white'
+                        }}
+                    >
+                        Smartini Crypto
+                    </Typography>
+                </LogoContainer>
+
+                <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
+                    {login && (
+                        <>
+                            <LoginText isLightTheme={isLightTheme}>
+                                Hello, {login}
+                            </LoginText>
+                            <SignOutButton theme={theme} onClick={handleSignOut}>
+                                Sign out
+                            </SignOutButton>
+                        </>
+                    )}
+
+
+                    {navigations.map((item) => {
+                        const isActive = location.pathname === item.href;
+                        const ButtonComponent = isActive ? ActiveNavButton : NavButton;
+
+                        return (
+                            <ButtonComponent
+                                key={item.name}
+                                theme={theme}
+                                onClick={() => handleNavigationClick(item.href)} // Обработка клика
+                            >
+                                {item.name}
+                            </ButtonComponent>
+                        );
+                    })}
+                </div>
             </Toolbar>
-        </AppBar>
+        </StyledAppBar>
     );
 };
 

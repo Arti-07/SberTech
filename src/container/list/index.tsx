@@ -1,11 +1,12 @@
 import React from 'react';
-import Favorites from "./favorites";
+import Favorites from "./components/Favorites";
+import CryptoTable from './components/CryptoTable';
 
 const ListPage = (): React.ReactElement => {
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Favorites</h1>
             <Favorites />
+            <CryptoTable />
         </div>
     );
 };
