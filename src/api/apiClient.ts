@@ -10,6 +10,16 @@ class ApiClient {
         });
     }
 
+    async loginWithCode(username: string, verificationCode: string) {
+        return this.axiosInstance.post('/auth/login-with-telegram-code', { username, verificationCode }).then(res => res.data);
+    }
+
+
+    async sendCode(username: string) {
+        return this.axiosInstance.post('/auth/sendcode', { username }).then(res => res.data);
+    }
+
+
     setToken(token: string) {
         this.axiosInstance.defaults.headers['secretoken'] = token;
     }
@@ -54,9 +64,18 @@ class ApiClient {
         return this.axiosInstance.patch('/account/balance', { amount }).then(res => res.data);
     }
 
-    async register(username: string, password: string, birthDate: string) {
-        return this.axiosInstance.post('/auth/register', { username, password, birthDate }).then(res => res.data);
+    // async register(username: string, password: string, birthDate: string) {
+    //     return this.axiosInstance.post('/auth/register', { username, password, birthDate }).then(res => res.data);
+    // }
+
+    async register(username: string, password: string, birthDate: string, chatIDuser?: string) {
+        const payload: Record<string, any> = { username, password, birthDate };
+        if (chatIDuser) {
+            payload.chatIDuser = chatIDuser;
+        }
+        return this.axiosInstance.post('/auth/register', payload).then((res) => res.data);
     }
+
 
     async login(username: string, password: string) {
         const response = await this.axiosInstance.post('/auth/login', { username, password });

@@ -182,24 +182,24 @@ export const FormInput = styled.input<{ theme?: Theme }>`
     }
 `;
 
-export const Tooltip = styled.span<{ theme?: Theme }>`
-    position: absolute;
-    right: -35px;
-    top: 50%;
-    transform: translateY(-20%);
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: ${(props: { theme: Theme }) => props.theme.palette.primary.main};
-    transition: color 0.3s ease;
-
-    &:hover {
-        color: ${(props: { theme: Theme }) => props.theme.palette.primary.dark};
-    }
-
-    @media (max-width: 768px) {
-        font-size: 1.2rem;
-    }
-`;
+// export const Tooltip = styled.span<{ theme?: Theme }>`
+//     position: absolute;
+//     right: -35px;
+//     top: 50%;
+//     transform: translateY(-20%);
+//     cursor: pointer;
+//     font-size: 1.5rem;
+//     color: ${(props: { theme: Theme }) => props.theme.palette.primary.main};
+//     transition: color 0.3s ease;
+//
+//     &:hover {
+//         color: ${(props: { theme: Theme }) => props.theme.palette.primary.dark};
+//     }
+//
+//     @media (max-width: 768px) {
+//         font-size: 1.2rem;
+//     }
+// `;
 
 export const ButtonGroup = styled.div<{ theme?: Theme }>`
     display: flex;

@@ -11,6 +11,7 @@ import { getNavigationsValue } from '@brojs/cli';
 import Layout from './components/layout';
 import NotFoundPage from "../404/NotFoundPage";
 import ProtectedRoute from './ProtectedRoute';
+import SignWithTelegram from '../signin/SignWithTelegram';  // Убедитесь, что путь к компоненту правильный
 
 const ErrorPage = () => {
     return (
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
                         <UsersPage />
                     </ProtectedRoute>
                 )
+            },
+            {
+                path: getNavigationsValue('smartini_crypto.signin.signwithtelegram'),
+                element: <SignWithTelegram />  // Добавьте компонент для SignWithTelegram
             },
             {
                 path: "*",

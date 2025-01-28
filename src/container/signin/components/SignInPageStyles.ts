@@ -2,6 +2,41 @@ import styled from '@emotion/styled';
 import loaderAnimation from '../../../assets/lotties/loader.json';
 import { Theme } from '@mui/material/styles';
 
+// export const TelegramButton = styled.button`
+//     background-color: #0088cc;
+//     color: white;
+//     padding: 10px 20px;
+//     border: none;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     font-size: 16px;
+//     &:hover {
+//         background-color: #0077aa;
+//     }
+// `;
+
+
+export const TelegramButton = styled.button<{ theme?: Theme }>`
+    padding: 10px 20px;
+    background-color: ${(props) => props.theme.palette.primary.main};
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+
+    &:hover {
+        background-color: ${(props) => props.theme.palette.primary.dark};
+    }
+
+    @media (max-width: 600px) {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+`;
+
+
 export const defaultOptions = {
     loop: true,
     autoplay: true,
