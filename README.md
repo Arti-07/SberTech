@@ -1,5 +1,5 @@
 
-# SMARTINI CRYPTO
+#  🚀 SMARTINI CRYPTO - Your Gateway to the World of Cryptocurrency
 [![Dependencies](https://img.shields.io/badge/react-18.3.1-blue?style=flat-square&logo=react)](https://www.npmjs.com/package/react)
 [![Dependencies](https://img.shields.io/badge/@react-router-dom?style=flat-square&logo=router)](https://www.npmjs.com/package/react-router-dom)
 [![Dependencies](https://img.shields.io/badge/recharts-lightgrey?style=flat-square&logo=chart.js)](https://www.npmjs.com/package/recharts)
@@ -12,7 +12,6 @@
 
 ![Logo smartini crypto](https://github.com/Arti-07/SberTech/blob/dev/src/assets/images/Logo_smartini_crypto.jpg?raw=true)
 
-# 🚀 CryptoApp - Your Gateway to the World of Cryptocurrency
 
 ## 🎯 Goal of the Application
 CryptoApp is designed to be an intuitive and user-friendly platform that allows users to:
