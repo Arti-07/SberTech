@@ -5,6 +5,7 @@ import DetailPage from '../detail';
 import MiningPage from "../mining";
 import AccountPage from "../account";
 import SigninPage from "../signin";
+import GoogleAuthButton from "../signin";
 import SignupPage from "../signup";
 import UsersPage from "../userspage";
 import { getNavigationsValue } from '@brojs/cli';

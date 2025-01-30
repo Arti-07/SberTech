@@ -10,15 +10,41 @@ class ApiClient {
         });
     }
 
+    async googleAuth() {
+        try {
+            window.location.href = "http://localhost:4000/auth/google";
+        } catch (error) {
+            console.error('Error during Google Auth:', error);
+            throw error;
+        }
+    }
+
+    // Метод для получения защищенных данных с токеном из cookies
+    async getProtectedData() {
+        try {
+            const response = await this.axiosInstance.get('/protected-route');
+            return response.data;
+        } catch (error) {
+            console.error('Error while fetching protected data:', error);
+            throw error;
+        }
+    }
+
+    // Метод для выхода из системы (удаление cookies)
+    logout() {
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        window.location.href = '/'; // Перенаправляем на главную страницу
+    }
+
+
+
     async loginWithCode(username: string, verificationCode: string) {
         return this.axiosInstance.post('/auth/login-with-telegram-code', { username, verificationCode }).then(res => res.data);
     }
 
-
     async sendCode(username: string) {
         return this.axiosInstance.post('/auth/sendcode', { username }).then(res => res.data);
     }
-
 
     setToken(token: string) {
         this.axiosInstance.defaults.headers['secretoken'] = token;
@@ -64,10 +90,6 @@ class ApiClient {
         return this.axiosInstance.patch('/account/balance', { amount }).then(res => res.data);
     }
 
-    // async register(username: string, password: string, birthDate: string) {
-    //     return this.axiosInstance.post('/auth/register', { username, password, birthDate }).then(res => res.data);
-    // }
-
     async register(username: string, password: string, birthDate: string, chatIDuser?: string) {
         const payload: Record<string, any> = { username, password, birthDate };
         if (chatIDuser) {
@@ -75,7 +97,6 @@ class ApiClient {
         }
         return this.axiosInstance.post('/auth/register', payload).then((res) => res.data);
     }
-
 
     async login(username: string, password: string) {
         const response = await this.axiosInstance.post('/auth/login', { username, password });

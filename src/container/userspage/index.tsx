@@ -26,7 +26,6 @@ const UsersPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isCardFormVisible, setIsCardFormVisible] = useState(false);
 
-
     useEffect(() => {
         const checkAuth = async () => {
             const authStatus = await api.isAuthenticated();
