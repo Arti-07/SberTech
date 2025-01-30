@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Main from './container/main';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BackgroundContainer, ScrollableContent, BackgroundImage, GlobalStyle } from './AppStyled';
-import Footer from './container/main/components/layout/footer/footer';
+import Footer from './container/main/components/layout/footer/Footer';
 import { ToastContainer } from 'react-toastify';
 
 const App = () => {
