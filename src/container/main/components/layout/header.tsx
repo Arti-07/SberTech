@@ -2,7 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Toolbar, Typography, useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getNavigationsValue } from '@brojs/cli';
-import { NavButton, ActiveNavButton, StyledAppBar, LogoContainer, LoginText, SignOutButton } from './components/HeaderStyles';
+import {
+    NavButton,
+    ActiveNavButton,
+    StyledAppBar,
+    LogoContainer,
+    LoginText,
+    SignOutButton
+} from './components/HeaderStyles';
 import logoBlack from './logo/logo_black.png';
 import logoWhite from './logo/logo_white.png';
 
@@ -13,7 +20,7 @@ const navigations = [
 ];
 
 const Header = (): React.ReactElement => {
-    const [login, setLogin] = useState<string | null>(null); // Состояние для логина
+    const [login, setLogin] = useState<string | null>(null);
     const location = useLocation();
     const theme = useTheme();
     const navigate = useNavigate();
@@ -21,13 +28,13 @@ const Header = (): React.ReactElement => {
     useEffect(() => {
         const storedLogin = sessionStorage.getItem('login');
         if (storedLogin) {
-            setLogin(storedLogin); // Устанавливаем логин, если он есть
+            setLogin(storedLogin);
         }
 
-        // Слушаем событие, которое будет обновлять состояние логина
+
         const handleLoginChanged = () => {
             const newLogin = sessionStorage.getItem('login');
-            setLogin(newLogin); // Обновляем состояние с новым логином
+            setLogin(newLogin);
         };
 
         window.addEventListener('loginChanged', handleLoginChanged);
@@ -35,7 +42,7 @@ const Header = (): React.ReactElement => {
         return () => {
             window.removeEventListener('loginChanged', handleLoginChanged);
         };
-    }, []); // Монтируем один раз при загрузке компонента
+    }, []);
 
     const isLightTheme = theme.palette.mode === 'light';
 

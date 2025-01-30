@@ -28,6 +28,7 @@ import dragons from '../../assets/music/dragons.mp3';
 import timberlake from '../../assets/music/timberlake.mp3';
 import calvin from '../../assets/music/calvin.mp3';
 import lusa from '../../assets/music/lusa.mp3';
+import numb from '../../assets/music/numb.mp3';
 
 import { toast } from 'react-toastify';
 
@@ -67,7 +68,7 @@ const MiningPage = (): React.ReactElement => {
     const [progress, setProgress] = useState<number>(0);
     const [isVisible, setIsVisible] = useState<number>(0);
 
-    const musics = [kuduro, postmalon, rihanna, dragons, timberlake, calvin, lusa];
+    const musics = [numb, kuduro, postmalon, rihanna, dragons, timberlake, calvin, lusa];
     const [currentMusic, setCurrentMusic] = useState(musics[0]);
 
     const stepDecrease = 0.007;
