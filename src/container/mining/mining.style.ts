@@ -23,6 +23,52 @@ export const confettiStyle = css`
     pointer-events: none;
 `;
 
+export const danceStyle = css`
+    position: absolute;
+    height: 100%;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 5;
+    pointer-events: none;
+`;
+
+export const GlobalContainer = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+`
+
+export const TvContainer = styled.div`
+width: 33%;
+height: 500px;
+
+.tv-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 40px auto;
+    border: 10px solid #000;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    background-color:rgb(255, 255, 255);
+}
+
+/* Рамка вокруг экрана */
+.tv-screen::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%;
+}
+
+@media screen and (max-width: 1200px) {
+    .tv-screen{
+        display: none;
+    }
+}
+`
 export const MiningContainer = styled.div`
     position: relative;
     overflow: hidden;
