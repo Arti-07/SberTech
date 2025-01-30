@@ -44,7 +44,7 @@ export const FooterNavButton = styled(Button)`
 
 export const FooterContainer = styled('footer')`
   background-color: ${({ theme }: { theme: Theme }) =>
-    theme.palette.mode === 'dark' ? '#1E1E2A' : '#ADD8E6'};
+    theme.palette.mode === 'dark' ? '#1E1E2A' : '#797993'};
   padding: 5px;
   text-align: center;
   margin-top: auto;
@@ -93,7 +93,7 @@ export const ToggleButton = styled('button')<{ darkMode: boolean }>(({ darkMode 
     width: '100px',
     height: '50px',
     borderRadius: '50px',
-    backgroundColor: darkMode ? '#333' : '#ccc',
+    backgroundColor: darkMode ? '#47485A' : '#9494b3',
     display: 'flex',
     justifyContent: darkMode ? 'flex-end' : 'flex-start',
     alignItems: 'center',

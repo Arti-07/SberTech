@@ -10,7 +10,6 @@ export const NavButton = styled(Button)<{ theme: Theme }>`
   text-transform: none;
   padding: 8px 16px;
   margin: 0 8px;
-  background-color: #242428;
   transition: all 0.3s ease;
 
   &:hover {
@@ -58,7 +57,7 @@ export const ActiveNavButton = styled(NavButton)<{ theme: Theme }>`
 
 export const StyledAppBar = styled(AppBar)<{ theme: Theme }>`
   background-color: ${({ theme }) =>
-    theme.palette.mode === 'dark' ? '#1E1E2A' : '#ADD8E6'};
+    theme.palette.mode === 'dark' ? '#1E1E2A' : '#797993'};
   box-shadow: none;
 
   @media (max-width: 768px) {

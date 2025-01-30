@@ -40,7 +40,7 @@ const teamMembers = [
 const TeamContacts: React.FC = () => {
     const theme = useTheme(); // Получаем текущую тему
 
-    const backgroundColor = theme.palette.mode === 'dark' ? '#2F4F4F' : '#f9f9f9'; // Темный или светлый фон
+    const backgroundColor = theme.palette.mode === 'dark' ? '#47485A' : '#f9f9f9'; // Темный или светлый фон
     const textColor = theme.palette.mode === 'dark' ? '#ffffff' : '#1E1E2A'; // Цвет текста
     const roleColor = theme.palette.mode === 'dark' ? '#B0B0B0' : '#797993'; // Цвет описания роли
     const linkColor = theme.palette.mode === 'dark' ? '#4CAF50' : '#007AFF'; // Цвет ссылок

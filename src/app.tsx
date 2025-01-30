@@ -15,7 +15,7 @@ const App = () => {
         palette: {
             mode: darkMode ? 'dark' : 'light',
             background: {
-                default: darkMode ? '#1E1E2A' : '#ADD8E6',
+                default: darkMode ? '#1E1E2A' : '#797993',
             },
         },
         components: {

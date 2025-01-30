@@ -9,7 +9,7 @@ const PromocodeForm = () => {
     const [promocode, setPromocode] = useState('');
     const [message, setMessage] = useState('');
 
-    const backgroundColor = theme.palette.mode === 'dark' ? '#2F4F4F' : '#f9f9f9';
+    const backgroundColor = theme.palette.mode === 'dark' ? '#47485A' : '#f9f9f9';
 
     const handleSignIn = async () => {
         setMessage('');

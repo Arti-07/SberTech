@@ -13,7 +13,7 @@ const navigations = [
 ];
 
 const Header = (): React.ReactElement => {
-    const [login, setLogin] = useState<string | null>(null); // Состояние для логина
+    const [login, setLogin] = useState<string | null>(null);
     const location = useLocation();
     const theme = useTheme();
     const navigate = useNavigate();
@@ -21,13 +21,12 @@ const Header = (): React.ReactElement => {
     useEffect(() => {
         const storedLogin = sessionStorage.getItem('login');
         if (storedLogin) {
-            setLogin(storedLogin); // Устанавливаем логин, если он есть
+            setLogin(storedLogin);
         }
 
-        // Слушаем событие, которое будет обновлять состояние логина
         const handleLoginChanged = () => {
             const newLogin = sessionStorage.getItem('login');
-            setLogin(newLogin); // Обновляем состояние с новым логином
+            setLogin(newLogin);
         };
 
         window.addEventListener('loginChanged', handleLoginChanged);
@@ -35,7 +34,7 @@ const Header = (): React.ReactElement => {
         return () => {
             window.removeEventListener('loginChanged', handleLoginChanged);
         };
-    }, []); // Монтируем один раз при загрузке компонента
+    }, []);
 
     const isLightTheme = theme.palette.mode === 'light';
 
@@ -49,7 +48,7 @@ const Header = (): React.ReactElement => {
 
     const handleSignOut = () => {
         sessionStorage.removeItem('login');
-        setLogin(null); // Сбрасываем логин
+        setLogin(null);
         navigate('/smartini_crypto/signin');
     };
 
@@ -96,7 +95,7 @@ const Header = (): React.ReactElement => {
                             <ButtonComponent
                                 key={item.name}
                                 theme={theme}
-                                onClick={() => handleNavigationClick(item.href)} // Обработка клика
+                                onClick={() => handleNavigationClick(item.href)}
                             >
                                 {item.name}
                             </ButtonComponent>
