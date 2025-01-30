@@ -4,10 +4,9 @@ import { useTheme } from '@mui/material/styles';
 import { Container, Message, Button } from './StyledProtectedRoute';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    // Проверяем, если в sessionStorage есть логин, значит пользователь авторизован
     const isAuthenticated = !!sessionStorage.getItem('login');
     const navigate = useNavigate();
-    const theme = useTheme(); // Хук для доступа к теме
+    const theme = useTheme();
 
     return isAuthenticated ? (
         <>{children}</>

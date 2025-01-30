@@ -5,10 +5,10 @@ export const prepareChartData = (chartData: ChartPoint): ChartPoint[] => {
         return [];
     }
     return chartData
-        .filter((_, index) => index % 10 === 0) // Отображать только каждую 10-ю точку
+        .filter((_, index) => index % 8 === 0)
         .map((priceData: ChartPoint) => ({
             timestamp: new Date(priceData.timestamp).toLocaleTimeString(),
-            price: priceData.price
+            price: parseFloat(priceData.price.toFixed(2))
         }));
 };
 

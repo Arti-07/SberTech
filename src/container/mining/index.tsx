@@ -45,6 +45,7 @@ import dragons from '../../assets/music/dragons.mp3';
 import timberlake from '../../assets/music/timberlake.mp3';
 import calvin from '../../assets/music/calvin.mp3';
 import lusa from '../../assets/music/lusa.mp3';
+import numb from '../../assets/music/numb.mp3';
 
 import { toast } from 'react-toastify';
 
