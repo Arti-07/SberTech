@@ -15,7 +15,8 @@ export const AccountTextStyled = styled.h3`
 
 export const confettiStyle = css`
     position: absolute;
-    height: 100%;
+    height: 100%;    
+    width: 100%;
     top: 0%;
     left: 50%;
     transform: translate(-50%, 0%);
@@ -26,6 +27,7 @@ export const confettiStyle = css`
 export const danceStyle = css`
     position: absolute;
     height: 100%;
+    width: 100%;
     top: 0%;
     left: 50%;
     transform: translate(-50%, 0%);
@@ -49,7 +51,6 @@ height: 500px;
     position: relative;
     width: 100%;
     height: 100%;
-    margin: 40px auto;
     border: 10px solid #000;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.75);
     overflow: hidden;
