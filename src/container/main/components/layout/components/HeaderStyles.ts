@@ -161,4 +161,22 @@ export const SignOutButton = styled(NavButton)<{ theme: Theme }>`
   }
 `;
 
+export const LottieContainer = styled('div')`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2s;
+
+  &.visible {
+    opacity: 1;
+  }
+`;
+
+
 

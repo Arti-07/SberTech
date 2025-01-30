@@ -20,17 +20,17 @@ export const Container = styled.div<{ theme: Theme }>`
     transform: translate(-50%, -50%);
 
     @media (max-width: 1024px) {
-        width: 250px; /* уменьшаем ширину для планшетов */
+        width: 250px; 
         padding: 18px;
     }
 
     @media (max-width: 768px) {
-        width: 220px; /* уменьшаем ширину для мобильных устройств */
+        width: 220px; 
         padding: 16px;
     }
 
     @media (max-width: 480px) {
-        width: 180px; /* ещё меньше для самых маленьких экранов */
+        width: 180px; 
         padding: 12px;
     }
 `;
@@ -42,17 +42,17 @@ export const Message = styled.p<{ theme: Theme }>`
     margin-bottom: 20px;
 
     @media (max-width: 1024px) {
-        font-size: 16px; /* уменьшаем шрифт для планшетов */
-        margin-bottom: 15px; /* уменьшаем отступ */
+        font-size: 16px; 
+        margin-bottom: 15px; 
     }
 
     @media (max-width: 768px) {
-        font-size: 14px; /* уменьшаем шрифт для мобильных */
-        margin-bottom: 12px; /* уменьшаем отступ */
+        font-size: 14px; 
+        margin-bottom: 12px; 
     }
 
     @media (max-width: 480px) {
-        font-size: 12px; /* ещё меньше для маленьких экранов */
+        font-size: 12px; 
         margin-bottom: 10px;
     }
 `;
@@ -77,17 +77,17 @@ export const Button = styled.button<{ theme: Theme }>`
     }
 
     @media (max-width: 1024px) {
-        padding: 10px 20px; /* уменьшаем отступы для планшетов */
-        font-size: 14px; /* уменьшаем шрифт */
+        padding: 10px 20px; 
+        font-size: 14px; 
     }
 
     @media (max-width: 768px) {
-        padding: 8px 16px; /* ещё меньше отступы для мобильных */
-        font-size: 12px; /* ещё меньше шрифт */
+        padding: 8px 16px; 
+        font-size: 12px; 
     }
 
     @media (max-width: 480px) {
-        padding: 6px 12px; /* минимальные отступы для маленьких экранов */
+        padding: 6px 12px; 
         font-size: 10px;
     }
 `;

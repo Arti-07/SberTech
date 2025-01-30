@@ -38,12 +38,12 @@ const teamMembers = [
 ];
 
 const TeamContacts: React.FC = () => {
-    const theme = useTheme(); // Получаем текущую тему
+    const theme = useTheme();
 
-    const backgroundColor = theme.palette.mode === 'dark' ? '#2F4F4F' : '#f9f9f9'; // Темный или светлый фон
-    const textColor = theme.palette.mode === 'dark' ? '#ffffff' : '#1E1E2A'; // Цвет текста
-    const roleColor = theme.palette.mode === 'dark' ? '#B0B0B0' : '#797993'; // Цвет описания роли
-    const linkColor = theme.palette.mode === 'dark' ? '#4CAF50' : '#007AFF'; // Цвет ссылок
+    const backgroundColor = theme.palette.mode === 'dark' ? '#2F4F4F' : '#f9f9f9';
+    const textColor = theme.palette.mode === 'dark' ? '#ffffff' : '#1E1E2A';
+    const roleColor = theme.palette.mode === 'dark' ? '#B0B0B0' : '#797993';
+    const linkColor = theme.palette.mode === 'dark' ? '#4CAF50' : '#007AFF';
 
     return (
         <Box sx={{ textAlign: 'center', py: 4, backgroundColor, borderRadius: '8px' }}>
