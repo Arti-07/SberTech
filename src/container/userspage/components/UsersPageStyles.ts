@@ -7,7 +7,7 @@ export const PageContainer = styled.div`
     align-items: center;
     padding: 20px;
     font-family: 'Poppins', sans-serif;
-    background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#1E1E2A' : '#f0f8ff'};
+    background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#1E1E2A' : '#9494b3'};
     min-height: 30vh;
     max-width: 600px;
     margin: 0 auto;
@@ -22,6 +22,7 @@ export const PageContainer = styled.div`
 
 export const Title = styled.h1`
     font-size: 2.5rem;
+    font-family: Verdana, sans-serif;
     color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#ecf0f1' : '#333'};
     text-shadow: ${({ theme }: {
         theme: Theme
@@ -36,13 +37,14 @@ export const Title = styled.h1`
 `;
 
 export const UserInfo = styled.div`
-    background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#34495e' : '#fff'};
+    background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#47485A' : '#fff'};
     border-radius: 20px;
     padding: 30px;
     box-shadow: 0 4px 10px ${({ theme }: {
         theme: Theme
     }) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
     text-align: center;
+    font-family: Verdana, sans-serif;
     width: 100%;
     max-width: 600px;
     transition: transform 0.3s ease;
@@ -60,8 +62,9 @@ export const UserInfo = styled.div`
 
 export const BalanceText = styled.p`
     font-size: 1.5rem;
+    font-family: Verdana, sans-serif;
     margin: 20px 0;
-    color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#3498db' : '#007bff'};
+    color: #45a049;
     font-weight: 600;
 
     @media (max-width: 768px) {
@@ -71,7 +74,8 @@ export const BalanceText = styled.p`
 `;
 
 export const StyledButton = styled.button`
-    background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#2F4F4F' : '#007bff'};
+    background: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? 'rgba(30, 30, 42, 0.9)' : '#9494B3'};
+    font-family: Verdana, sans-serif;
     color: #fff;
     border: none;
     border-radius: 25px;
@@ -85,7 +89,7 @@ export const StyledButton = styled.button`
     transition: background-color 0.3s, transform 0.2s;
 
     &:hover {
-        background-color: ${({ theme }: { theme: Theme }) => theme.palette.mode === 'dark' ? '#45a049' : '#0056b3'};
+        background-color: #45a049;
         transform: none;
     }
 

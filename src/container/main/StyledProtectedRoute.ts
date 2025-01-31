@@ -60,6 +60,7 @@ export const Message = styled.p<{ theme: Theme }>`
 export const Button = styled.button<{ theme: Theme }>`
     padding: 12px 25px;
     font-size: 16px;
+    width: 60%;
     font-weight: 600;
     color: white;
     background-color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#47485A' : '#9494b3')};

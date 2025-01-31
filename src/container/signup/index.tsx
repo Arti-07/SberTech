@@ -13,7 +13,6 @@ import {
     SignupTitle,
     FormGroup,
     FormInput,
-    Tooltip,
     ButtonGroup,
     Button,
 } from './components/SignupPageStyles';
