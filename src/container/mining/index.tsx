@@ -216,7 +216,7 @@ const MiningPage = (): React.ReactElement => {
     // const [curAnim, setNumAnim] = useState(danceAnim[0]);
 
     const stepDecrease = 0.007;
-    const stepIncrease = 0.1;
+    const stepIncrease = 0.2;
     const maxProgress = 1.5;
     const timeDecrease = 10;
     const minStepMining = 1;
