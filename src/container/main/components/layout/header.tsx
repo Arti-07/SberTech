@@ -2,9 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { Toolbar, Typography, useTheme } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getNavigationsValue } from '@brojs/cli';
-import { NavButton, ActiveNavButton, StyledAppBar, LogoContainer, LoginText, SignOutButton } from './components/HeaderStyles';
+import Lottie from 'react-lottie';
+import sadMorty from '../../../../assets/lotties/sadmorty.json';
+import sadBear from '../../../../assets/lotties/sadbear.json';
+import sadSpace from '../../../../assets/lotties/sadspace.json';
+import {
+    NavButton,
+    ActiveNavButton,
+    StyledAppBar,
+    LogoContainer,
+    LoginText,
+    SignOutButton,
+    LottieContainer
+} from './components/HeaderStyles';
 import logoBlack from './logo/logo_black.png';
 import logoWhite from './logo/logo_white.png';
+import exitBlack from '../../../../assets/images/exit_black.png';
+import exitWhite from '../../../../assets/images/exit_white.png';
+import { createRoot } from 'react-dom/client';
 
 const navigations = [
     { name: 'Home', href: getNavigationsValue('smartini_crypto.main') },
@@ -13,7 +28,7 @@ const navigations = [
 ];
 
 const Header = (): React.ReactElement => {
-    const [login, setLogin] = useState<string | null>(null); // Состояние для логина
+    const [login, setLogin] = useState<string | null>(null);
     const location = useLocation();
     const theme = useTheme();
     const navigate = useNavigate();
@@ -21,13 +36,12 @@ const Header = (): React.ReactElement => {
     useEffect(() => {
         const storedLogin = sessionStorage.getItem('login');
         if (storedLogin) {
-            setLogin(storedLogin); // Устанавливаем логин, если он есть
+            setLogin(storedLogin);
         }
 
-        // Слушаем событие, которое будет обновлять состояние логина
         const handleLoginChanged = () => {
             const newLogin = sessionStorage.getItem('login');
-            setLogin(newLogin); // Обновляем состояние с новым логином
+            setLogin(newLogin);
         };
 
         window.addEventListener('loginChanged', handleLoginChanged);
@@ -35,7 +49,7 @@ const Header = (): React.ReactElement => {
         return () => {
             window.removeEventListener('loginChanged', handleLoginChanged);
         };
-    }, []); // Монтируем один раз при загрузке компонента
+    }, []);
 
     const isLightTheme = theme.palette.mode === 'light';
 
@@ -48,9 +62,45 @@ const Header = (): React.ReactElement => {
     };
 
     const handleSignOut = () => {
-        sessionStorage.removeItem('login');
-        setLogin(null); // Сбрасываем логин
-        navigate('/smartini_crypto/signin');
+        const animations = [sadMorty, sadBear, sadSpace];
+        const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+
+        const lottieOptions = {
+            loop: true,
+            autoplay: true,
+            animationData: randomAnimation,
+            rendererSettings: {
+                preserveAspectRatio: 'xMidYMid slice'
+            }
+        };
+
+        const lottieElement = (
+            <LottieContainer className="lottie-container">
+                <Lottie options={lottieOptions} height="100%" width="100%" />
+            </LottieContainer>
+        );
+
+        const lottieContainer = document.createElement('div');
+        document.body.appendChild(lottieContainer);
+        const root = createRoot(lottieContainer);
+        root.render(lottieElement);
+
+        setTimeout(() => {
+            lottieContainer.querySelector('.lottie-container')?.classList.add('visible');
+        }, 500);
+
+        const firstConfirmExit = window.confirm('Are you sure you want to sign out?');
+        if (firstConfirmExit) {
+            const secondConfirmExit = window.confirm('Bro, are you sure?');
+            if (secondConfirmExit) {
+                setTimeout(() => {
+                    document.body.removeChild(lottieContainer);
+                    sessionStorage.removeItem('login');
+                    setLogin(null);
+                    navigate('/smartini_crypto/signin');
+                }, 4000);
+            }
+        }
     };
 
     return (
@@ -81,27 +131,36 @@ const Header = (): React.ReactElement => {
                             <LoginText isLightTheme={isLightTheme}>
                                 Hello, {login}
                             </LoginText>
-                            <SignOutButton theme={theme} onClick={handleSignOut}>
-                                Sign out
-                            </SignOutButton>
                         </>
                     )}
 
-
-                    {navigations.map((item) => {
-                        const isActive = location.pathname === item.href;
-                        const ButtonComponent = isActive ? ActiveNavButton : NavButton;
+                    {login &&
+                        navigations.map((item) => {
+                            let  isActive = location.pathname === item.href;
+                            if (item.name === 'Account' && location.pathname === '/smartini_crypto/userspage') {
+                                isActive = true;
+                            }
+                            const ButtonComponent = isActive ? ActiveNavButton : NavButton;
 
                         return (
                             <ButtonComponent
                                 key={item.name}
                                 theme={theme}
-                                onClick={() => handleNavigationClick(item.href)} // Обработка клика
+                                onClick={() => handleNavigationClick(item.href)}
                             >
                                 {item.name}
                             </ButtonComponent>
                         );
                     })}
+                    {login && (
+                        <SignOutButton theme={theme} onClick={handleSignOut}>
+                            <img
+                                src={isLightTheme ? exitBlack : exitWhite}
+                                alt="Sign out"
+                                style={{ width: '24px', height: '24px' }}
+                            />
+                        </SignOutButton>
+                    )}
                 </div>
             </Toolbar>
         </StyledAppBar>

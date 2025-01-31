@@ -75,7 +75,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Main from './container/main';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BackgroundContainer, ScrollableContent, BackgroundImage, GlobalStyle } from './AppStyled';
-import Footer from './container/main/components/layout/footer/footer';
+import Footer from './container/main/components/layout/footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import { GoogleOAuthProvider } from '@react-oauth/google';  // Импортируем GoogleOAuthProvider
 
@@ -87,7 +87,7 @@ const App = () => {
         palette: {
             mode: darkMode ? 'dark' : 'light',
             background: {
-                default: darkMode ? '#1E1E2A' : '#ADD8E6',
+                default: darkMode ? '#1E1E2A' : '#797993',
             },
         },
         components: {

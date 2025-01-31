@@ -5,9 +5,6 @@ export const BackgroundContainer = styled('div')({
     height:'100%',
     position: 'relative',
     overflow: 'hidden',
-    '@media (max-width: 768px)': {
-        height: 'auto',
-    },
 });
 
 export const ScrollableContent = styled('div')({
@@ -19,9 +16,6 @@ export const ScrollableContent = styled('div')({
     zIndex: 1,
     display: 'flex',
     flexDirection: 'column',
-    '@media (max-width: 768px)': {
-        paddingBottom: '40px',
-    },
 });
 
 export const BackgroundImage = styled('div')({
@@ -31,7 +25,7 @@ export const BackgroundImage = styled('div')({
     right: 0,
     bottom: 0,
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: 'contain',
+    backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     animation: 'zoomEffect 30s infinite ease-in-out',

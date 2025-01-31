@@ -670,7 +670,13 @@ const SignupPage = (): React.ReactElement => {
             if (regResponse && regResponse.message === 'User registered successfully') {
                 setSuccess('Registration is successful! Please come in.');
                 setShowGif(true);
-                setTimeout(() => setShowGif(false), 5000);
+                setTimeout(() => {
+                    setShowGif(false);
+                    sessionStorage.setItem('login', login);
+                    window.dispatchEvent(new Event('loginChanged'));
+                    navigate('/smartini_crypto/userspage');
+                }, 2000);
+
             } else {
                 setErrors({ general: 'Unknown registration error. Try again later.' });
             }
@@ -785,10 +791,10 @@ const SignupPage = (): React.ReactElement => {
 
                 <ButtonGroup>
                     <Button className="button-secondary" onClick={() => navigate('/smartini_crypto/signin')}>
-                        Sign In
+                        ←
                     </Button>
                     <Button className="button-primary" onClick={handleSignup}>
-                        Sign Up
+                        Registration
                     </Button>
                 </ButtonGroup>
             </div>

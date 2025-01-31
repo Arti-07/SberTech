@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import api from '../../../api';
 import styles from './cryptoTable.style';
 import Pagination from './Pagination';
-import {defaultOptions} from './cryptoTable.style';
+import { defaultOptions } from './cryptoTable.style';
 import Lottie from 'react-lottie';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,30 +17,55 @@ interface CryptoData {
 }
 
 const CryptoTable: React.FC = () => {
-    const [data, setData] = useState<CryptoData[]>([]);
-    const navigate = useNavigate();
+    const [allData, setAllData] = useState<CryptoData[]>([]);
     const [displayedData, setDisplayedData] = useState<CryptoData[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [page, setPage] = useState<number>(1);
-    const [totalPages, setTotalPages] = useState<number>(1);
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const [tempSearchQuery, setTempSearchQuery] = useState<string>('');
     const [sortConfig, setSortConfig] = useState<{ key: keyof CryptoData; direction: string } | null>(null);
     const itemsPerPage = 10;
+    const navigate = useNavigate();
 
-    const fetchCryptoData = useCallback(async () => {
+    const fetchListings = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
             const allCryptoData = await api.getListings();
+
+            const uniqueData = allCryptoData.reduce((acc: CryptoData[], current: CryptoData) => {
+                if (!acc.some((item) => item.id === current.id)) {
+                    acc.push(current);
+                }
+                return acc;
+            }, []);
+
+            setAllData(uniqueData);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message || 'Ошибка загрузки данных');
+            } else {
+                setError('Неизвестная ошибка');
+            }
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const fetchPageData = useCallback(async (page: number, dataToFetch: CryptoData[]) => {
+        setLoading(true);
+        setError(null);
+        try {
             const startIndex = (page - 1) * itemsPerPage;
-            const paginatedData = allCryptoData.slice(startIndex, startIndex + itemsPerPage);
+            const paginatedData = dataToFetch.slice(startIndex, startIndex + itemsPerPage);
 
             const detailedDataPromises = paginatedData.map(async (crypto: CryptoData) => {
                 try {
                     const data = await api.getTicker(crypto.id, 'USD');
                     return {
                         id: crypto.id,
+                        icon: crypto.icon,
                         name: crypto.name,
                         symbol: crypto.symbol,
                         price: data?.price || 0,
@@ -51,6 +76,7 @@ const CryptoTable: React.FC = () => {
                     console.error(`Error fetching details for ${crypto.id}:`, err);
                     return {
                         id: crypto.id,
+                        icon: crypto.icon,
                         name: crypto.name,
                         symbol: crypto.symbol,
                         price: 0,
@@ -58,36 +84,75 @@ const CryptoTable: React.FC = () => {
                         percentage_change_24h: 0,
                     };
                 }
-
             });
 
             const detailedData = await Promise.all(detailedDataPromises);
-            const uniqueData = detailedData.reduce((acc: CryptoData[], current: CryptoData) => {
-                if (!acc.some((item) => item.id === current.id)) {
-                    acc.push(current);
-                }
-                return acc;
-            }, []);
-            const newDataWithSequentialId = uniqueData.map((item, index) => ({
+
+            const filteredData = detailedData.filter((item) => item.price !== 0);
+
+            if (filteredData.length < itemsPerPage) {
+                const additionalData = dataToFetch.slice(startIndex + filteredData.length, startIndex + itemsPerPage);
+
+                const additionalDetailedDataPromises = additionalData.map(async (crypto: CryptoData) => {
+                    try {
+                        const data = await api.getTicker(crypto.id, 'USD');
+                        return {
+                            id: crypto.id,
+                            icon: crypto.icon,
+                            name: crypto.name,
+                            symbol: crypto.symbol,
+                            price: data?.price || 0,
+                            percentage_change_1h: data?.percentage_change_1h || 0,
+                            percentage_change_24h: data?.percentage_change_24h || 0,
+                        };
+                    } catch (err: unknown) {
+                        console.error(`Error fetching details for ${crypto.id}:`, err);
+                        return {
+                            id: crypto.id,
+                            icon: crypto.icon,
+                            name: crypto.name,
+                            symbol: crypto.symbol,
+                            price: 0,
+                            percentage_change_1h: 0,
+                            percentage_change_24h: 0,
+                        };
+                    }
+                });
+
+                const additionalDetailedData = await Promise.all(additionalDetailedDataPromises);
+                filteredData.push(...additionalDetailedData.filter((item) => item.price !== 0));
+            }
+
+            const dataWithSequentialId = filteredData.map((item, index) => ({
                 ...item,
                 id: startIndex + index + 1,
             }));
-            setDisplayedData(newDataWithSequentialId);
-            setTotalPages(Math.ceil(allCryptoData.length / itemsPerPage));
+
+            setDisplayedData(dataWithSequentialId as CryptoData[]);
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message || 'Ошибка загрузки данных');
             } else {
                 setError('Неизвестная ошибка');
-        }
+            }
         } finally {
             setLoading(false);
         }
-    }, [page]);
+    }, []);
 
     useEffect(() => {
-        fetchCryptoData();
-    }, [fetchCryptoData]);
+        fetchListings();
+    }, [fetchListings]);
+
+    useEffect(() => {
+        if (allData.length > 0) {
+            const filtered = allData.filter(item =>
+                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            fetchPageData(page, filtered);
+        }
+    }, [page, allData, searchQuery, fetchPageData]);
 
     const handlePageChange = (newPage: number) => {
         if (newPage !== page) {
@@ -97,27 +162,25 @@ const CryptoTable: React.FC = () => {
 
     const handleRowClick = (name: string) => {
         navigate('/smartini_crypto/detail', { state: { cryptoName: name } });
-    }
+    };
 
     const sortData = (key: keyof CryptoData) => {
         let direction = 'ascending';
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
             direction = 'descending';
         }
-        const sortedData = [...data].sort((a, b) => {
-            if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
-            if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
-            return 0;
-        });
-        setData(sortedData);
         setSortConfig({ key, direction });
     };
 
-    const filteredData = displayedData.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.symbol.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTempSearchQuery(e.target.value);
+    };
 
+    const handleSearchInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            setSearchQuery(tempSearchQuery);
+        }
+    };
 
     if (loading && page === 1) {
         return (
@@ -135,8 +198,9 @@ const CryptoTable: React.FC = () => {
             <input
                 type="text"
                 placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={tempSearchQuery}
+                onChange={handleSearchInputChange}
+                onKeyDown={handleSearchInputKeyPress}
                 style={styles.searchInput}
             />
             <div style={styles.tableContainer}>
@@ -151,7 +215,7 @@ const CryptoTable: React.FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredData.map((item, index) => (
+                    {displayedData.map((item, index) => (
                         <tr key={item.id}
                             style={{
                                 ...styles.tableRow,
@@ -187,8 +251,8 @@ const CryptoTable: React.FC = () => {
                 </table>
                 {loading && <p>Loading more...</p>}
             </div>
-            <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
-
+            <Pagination currentPage={page} totalPages={Math.ceil(allData.length / itemsPerPage)}
+                        onPageChange={handlePageChange} />
         </div>
     );
 };

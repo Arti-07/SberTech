@@ -46,7 +46,10 @@ const DetailPage = (): React.ReactElement => {
                                 <CartesianGrid stroke="#444" strokeDasharray="5 5" />
                                 <XAxis dataKey="timestamp" stroke="#ccc" />
                                 <YAxis domain={['auto', 'auto']} stroke="#ccc" />
-                                <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none', color: '#fff' }} />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: '#333', border: 'none', color: '#fff' }}
+                                    formatter={(value: number) => `$${value.toFixed(2)}`}
+                                />
                                 <Legend wrapperStyle={{ color: '#fff' }} />
                                 <Line type="monotone" dataKey="price" stroke="#00ff3c" strokeWidth={2} dot={{ r: 3 }} />
                             </LineChart>
