@@ -6,7 +6,15 @@ import Lottie from 'react-lottie';
 import sadMorty from '../../../../assets/lotties/sadmorty.json';
 import sadBear from '../../../../assets/lotties/sadbear.json';
 import sadSpace from '../../../../assets/lotties/sadspace.json';
-import { NavButton, ActiveNavButton, StyledAppBar, LogoContainer, LoginText, SignOutButton, LottieContainer } from './components/HeaderStyles';
+import {
+    NavButton,
+    ActiveNavButton,
+    StyledAppBar,
+    LogoContainer,
+    LoginText,
+    SignOutButton,
+    LottieContainer
+} from './components/HeaderStyles';
 import logoBlack from './logo/logo_black.png';
 import logoWhite from './logo/logo_white.png';
 import ReactDOM from 'react-dom';
@@ -60,8 +68,8 @@ const Header = (): React.ReactElement => {
             autoplay: true,
             animationData: randomAnimation,
             rendererSettings: {
-                preserveAspectRatio: 'xMidYMid slice',
-            },
+                preserveAspectRatio: 'xMidYMid slice'
+            }
         };
 
         const lottieElement = (
@@ -78,9 +86,9 @@ const Header = (): React.ReactElement => {
             lottieContainer.querySelector('.lottie-container')?.classList.add('visible');
         }, 500);
 
-        const firstConfirmExit = window.confirm("Are you sure you want to sign out?");
+        const firstConfirmExit = window.confirm('Are you sure you want to sign out?');
         if (firstConfirmExit) {
-            const secondConfirmExit = window.confirm("Bro, are you sure?");
+            const secondConfirmExit = window.confirm('Bro, are you sure?');
             if (secondConfirmExit) {
                 setTimeout(() => {
                     document.body.removeChild(lottieContainer);
@@ -117,29 +125,28 @@ const Header = (): React.ReactElement => {
                 <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
                     {login && (
                         <>
-                            <LoginText isLightTheme={isLightTheme}>
-                                Hello, {login}
-                            </LoginText>
+                            <LoginText isLightTheme={isLightTheme}>Hello, {login}</LoginText>
                             <SignOutButton theme={theme} onClick={handleSignOut}>
                                 Sign out
                             </SignOutButton>
                         </>
                     )}
 
-                    {navigations.map((item) => {
-                        const isActive = location.pathname === item.href;
-                        const ButtonComponent = isActive ? ActiveNavButton : NavButton;
+                    {login &&
+                        navigations.map((item) => {
+                            const isActive = location.pathname === item.href;
+                            const ButtonComponent = isActive ? ActiveNavButton : NavButton;
 
-                        return (
-                            <ButtonComponent
-                                key={item.name}
-                                theme={theme}
-                                onClick={() => handleNavigationClick(item.href)}
-                            >
-                                {item.name}
-                            </ButtonComponent>
-                        );
-                    })}
+                            return (
+                                <ButtonComponent
+                                    key={item.name}
+                                    theme={theme}
+                                    onClick={() => handleNavigationClick(item.href)}
+                                >
+                                    {item.name}
+                                </ButtonComponent>
+                            );
+                        })}
                 </div>
             </Toolbar>
         </StyledAppBar>
