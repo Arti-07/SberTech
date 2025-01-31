@@ -64,8 +64,9 @@ const SignupPage = (): React.ReactElement => {
             if (regResponse && regResponse.message === 'User registered successfully') {
                 setSuccess('Registration is successful! Please come in.');
                 setShowGif(true);
-                setTimeout(() => {
+                setTimeout(async () => {
                     setShowGif(false);
+                    await api.login(login, password);
                     sessionStorage.setItem('login', login);
                     window.dispatchEvent(new Event('loginChanged'));
                     navigate('/smartini_crypto/userspage');
