@@ -56,7 +56,7 @@ const catmoneyOptions = {
     animationData: catmoney,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const bigmonkeyOptions = {
@@ -65,7 +65,7 @@ const bigmonkeyOptions = {
     animationData: bigmonkey,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const monkeyOptions = {
@@ -74,7 +74,7 @@ const monkeyOptions = {
     animationData: monkey,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const MJOptions = {
@@ -83,7 +83,7 @@ const MJOptions = {
     animationData: MJ,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const mortyOptions = {
@@ -92,7 +92,7 @@ const mortyOptions = {
     animationData: morty,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const blackdancerOptions = {
@@ -101,7 +101,7 @@ const blackdancerOptions = {
     animationData: blackdancer,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const elephantOptions = {
@@ -110,7 +110,7 @@ const elephantOptions = {
     animationData: elephant,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 
@@ -120,7 +120,7 @@ const danceGrandOptions = {
     animationData: danceGrand,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const doctorDanceOptions = {
@@ -129,7 +129,7 @@ const doctorDanceOptions = {
     animationData: doctorDance,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 
@@ -139,7 +139,7 @@ const progDanceOptions = {
     animationData: progDance,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const chillGuyVoidOptions = {
@@ -148,7 +148,7 @@ const chillGuyVoidOptions = {
     animationData: chillGuyVoid,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-    },
+    }
 };
 
 const chillGuyFillOptions = {
@@ -160,7 +160,6 @@ const chillGuyFillOptions = {
     },
     isClickToPauseDisabled: true
 };
-
 
 
 const confettiOptions = {
@@ -194,7 +193,6 @@ const transferCoinAnimations = {
 };
 
 
-
 const MiningPage = (): React.ReactElement => {
     const theme = useTheme();
 
@@ -203,15 +201,15 @@ const MiningPage = (): React.ReactElement => {
     const [progress, setProgress] = useState<number>(0);
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [isVisibleLvlTwo, setIsVisibleLvlTwo] = useState<boolean>(false);
-    
-    const musics = [kuduro, postmalon, rihanna, dragons, timberlake, calvin, lusa];
+
+    const musics = [numb, kuduro, postmalon, rihanna, dragons, timberlake, calvin, lusa];
     const [currentMusic, setCurrentMusic] = useState(musics[0]);
-    
+
     // discoOptions
     // coinsSubmitOptions
 
-    const danceAnim = [progDanceOptions, chillGuyFillOptions, 
-        catmoneyOptions, bigmonkeyOptions, chillGuyVoidOptions, MJOptions, mortyOptions, blackdancerOptions, 
+    const danceAnim = [progDanceOptions, chillGuyFillOptions,
+        catmoneyOptions, bigmonkeyOptions, chillGuyVoidOptions, MJOptions, mortyOptions, blackdancerOptions,
         elephantOptions, monkeyOptions, danceGrandOptions, doctorDanceOptions
     ];
     const [curAnimNum, setNumAnimNum] = useState<number>(0);
@@ -225,10 +223,10 @@ const MiningPage = (): React.ReactElement => {
     const maxStepMining = 5;
 
     const handleMusicChange = () => {
-        const randomIndex = Math.floor(Math.random() * musics.length);        
+        const randomIndex = Math.floor(Math.random() * musics.length);
         setCurrentMusic(musics[randomIndex]);
 
-        setNumAnimNum(curAnimNum >= danceAnim.length-1 ? 0: curAnimNum+1);
+        setNumAnimNum(curAnimNum >= danceAnim.length - 1 ? 0 : curAnimNum + 1);
 
         toast.success('Music changed successfully!', {
             position: 'top-right',
@@ -242,11 +240,11 @@ const MiningPage = (): React.ReactElement => {
     useEffect(() => {
         const interval = setInterval(() => {
             setProgress((p) => Math.max(p - stepDecrease, 0));
-                        
-            if(progress >= 0.5 && progress < 1) {
-                setIsVisible(true);                
-            } else if(progress >= 1){
-                setIsVisibleLvlTwo(true);                
+
+            if (progress >= 0.5 && progress < 1) {
+                setIsVisible(true);
+            } else if (progress >= 1) {
+                setIsVisibleLvlTwo(true);
             }
 
             setStepMining(isVisibleLvlTwo ? maxStepMining : minStepMining);
@@ -259,7 +257,7 @@ const MiningPage = (): React.ReactElement => {
         api.updateBalance(countMining)
             .then(() => {
                 setCountMining(0);
-            })
+            });
     };
 
     const [open, setOpen] = useState(false);
@@ -272,57 +270,56 @@ const MiningPage = (): React.ReactElement => {
         setOpen(false);
     };
 
-    
 
     return (
         <>
             <GlobalContainer>
                 <TvContainer>
-                    <div className={"tv-screen"}>
+                    <div className={'tv-screen'}>
                         <div className={danceStyle}>
-                            <Lottie 
-                            options={danceAnim[curAnimNum]}
-                            height={'100%'} 
-                            width={'100%'}
-                            isStopped={!isVisibleLvlTwo}
-                            eventListeners={[
-                                {
-                                eventName: 'complete',
-                                callback: () => setIsVisibleLvlTwo(false)
-                                }
-                            ]}
+                            <Lottie
+                                options={danceAnim[curAnimNum]}
+                                height={'100%'}
+                                width={'100%'}
+                                isStopped={!isVisibleLvlTwo}
+                                eventListeners={[
+                                    {
+                                        eventName: 'complete',
+                                        callback: () => setIsVisibleLvlTwo(false)
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
                 </TvContainer>
                 <MiningContainer>
-                    
+
                     <div className={confettiStyle}>
                         <Lottie
-                        options={confettiOptions} 
-                        height={'100%'} 
-                        width={'100%'}
-                        isStopped={!isVisibleLvlTwo}
-                        eventListeners={[
-                            {
-                            eventName: 'complete',
-                            callback: () => setIsVisibleLvlTwo(false)
-                            }
-                        ]}
+                            options={confettiOptions}
+                            height={'100%'}
+                            width={'100%'}
+                            isStopped={!isVisibleLvlTwo}
+                            eventListeners={[
+                                {
+                                    eventName: 'complete',
+                                    callback: () => setIsVisibleLvlTwo(false)
+                                }
+                            ]}
                         />
                     </div>
                     <div className={confettiStyle}>
-                        <Lottie 
-                        options={confettiOptions} 
-                        height={'100%'} 
-                        width={'100%'}
-                        isStopped={!isVisible}
-                        eventListeners={[
-                            {
-                            eventName: 'complete',
-                            callback: () => setIsVisible(false)
-                            }
-                        ]}
+                        <Lottie
+                            options={confettiOptions}
+                            height={'100%'}
+                            width={'100%'}
+                            isStopped={!isVisible}
+                            eventListeners={[
+                                {
+                                    eventName: 'complete',
+                                    callback: () => setIsVisible(false)
+                                }
+                            ]}
                         />
                     </div>
 
@@ -396,19 +393,19 @@ const MiningPage = (): React.ReactElement => {
                     </Dialog>
                 </MiningContainer>
                 <TvContainer>
-                    <div className={"tv-screen"}>
+                    <div className={'tv-screen'}>
                         <div className={danceStyle}>
-                            <Lottie 
-                            options={danceAnim[curAnimNum]}
-                            height={'100%'} 
-                            width={'100%'}
-                            isStopped={!isVisibleLvlTwo}
-                            eventListeners={[
-                                {
-                                eventName: 'complete',
-                                callback: () => setIsVisibleLvlTwo(false)
-                                }
-                            ]}
+                            <Lottie
+                                options={danceAnim[curAnimNum]}
+                                height={'100%'}
+                                width={'100%'}
+                                isStopped={!isVisibleLvlTwo}
+                                eventListeners={[
+                                    {
+                                        eventName: 'complete',
+                                        callback: () => setIsVisibleLvlTwo(false)
+                                    }
+                                ]}
                             />
                         </div>
                     </div>
