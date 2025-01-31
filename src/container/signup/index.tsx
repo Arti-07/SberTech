@@ -672,10 +672,11 @@ const SignupPage = (): React.ReactElement => {
                 setShowGif(true);
                 setTimeout(() => {
                     setShowGif(false);
+                    api.login(login, password);
                     sessionStorage.setItem('login', login);
                     window.dispatchEvent(new Event('loginChanged'));
                     navigate('/smartini_crypto/userspage');
-                }, 2000);
+                }, 9000);
 
             } else {
                 setErrors({ general: 'Unknown registration error. Try again later.' });
