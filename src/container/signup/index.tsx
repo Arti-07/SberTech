@@ -161,10 +161,10 @@ const SignupPage = (): React.ReactElement => {
 
                 <ButtonGroup>
                     <Button className="button-secondary" onClick={() => navigate('/smartini_crypto/signin')}>
-                        Sign In
+                        ←
                     </Button>
                     <Button className="button-primary" onClick={handleSignup}>
-                        Sign Up
+                        Registration
                     </Button>
                 </ButtonGroup>
             </div>
