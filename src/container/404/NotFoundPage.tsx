@@ -1,7 +1,8 @@
-import React, {useState} from "react";
-import styled from "@emotion/styled";
-import {Global, css} from "@emotion/react";
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { Global, css } from '@emotion/react';
 import BackgroundImage from '../../assets/images/404_image.jpg';
+import { getNavigationsValue } from '@brojs/cli';
 
 const GlobalStyles = css`
     * {
@@ -46,28 +47,28 @@ const Switch = styled.button<{ active: boolean; index: number }>`
     height: 150px;
     border: none;
     border-radius: 10px;
-    background-color: ${({active}) => (active ? "#4caf50" : "#333333")};
-    box-shadow: ${({active}) =>
-            active ? "0 0 15px #4caf50" : "0 0 5px #000000"};
+    background-color: ${({ active }) => (active ? '#4caf50' : '#333333')};
+    box-shadow: ${({ active }) =>
+            active ? '0 0 15px #4caf50' : '0 0 5px #000000'};
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
     position: relative;
 
     &:hover {
-        background-color: ${({active}) =>
-                active ? "#43a047" : "#444444"};
+        background-color: ${({ active }) =>
+                active ? '#43a047' : '#444444'};
     }
 
     &::after {
-        content: ${({index}) => (index === 1 ? "'0'" : "'4'")};
+        content: ${({ index }) => (index === 1 ? '\'0\'' : '\'4\'')};
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 3rem;
         font-weight: bold;
-        color: ${({active}) => (active ? "#ffffff" : "#555555")};
-        opacity: ${({active}) => (active ? "1" : "0.3")};
+        color: ${({ active }) => (active ? '#ffffff' : '#555555')};
+        opacity: ${({ active }) => (active ? '1' : '0.3')};
         transition: color 0.3s, opacity 0.3s;
     }
 `;
@@ -102,9 +103,10 @@ const NotFoundPage = () => {
         );
     };
 
+    const navigationUrl = getNavigationsValue('smartini_crypto.main');
     return (
         <>
-            <Global styles={GlobalStyles}/>
+            <Global styles={GlobalStyles} />
             <Container>
                 <SwitchContainer>
                     {switches.map((isActive, index) => (
@@ -117,7 +119,7 @@ const NotFoundPage = () => {
                     ))}
                 </SwitchContainer>
                 <Subtitle>Page Not Found</Subtitle>
-                <BackButton href="/">Go Back to Home</BackButton>
+                <BackButton href={navigationUrl}>Go Back to Home</BackButton>
             </Container>
         </>
     );
