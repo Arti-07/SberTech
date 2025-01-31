@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { FooterNavButton, FooterContainer, FooterText, ToggleButton, ToggleIcon } from './components/FooterStyles';
@@ -19,6 +19,8 @@ const Footer = ({ darkMode, toggleTheme }: { darkMode: boolean; toggleTheme: () 
     const [modalTitle, setModalTitle] = useState('');
     const theme = useTheme();
 
+    const [initialRenderDone, setInitialRenderDone] = useState(false);
+
     const handleClickOpen = (title: string, content: React.ReactNode) => {
         setModalTitle(title);
         setModalContent(content);
@@ -28,6 +30,10 @@ const Footer = ({ darkMode, toggleTheme }: { darkMode: boolean; toggleTheme: () 
     const handleClose = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        setInitialRenderDone(true);
+    }, []);
 
     return (
         <FooterContainer theme={theme}>
@@ -45,11 +51,11 @@ const Footer = ({ darkMode, toggleTheme }: { darkMode: boolean; toggleTheme: () 
 
             <FooterText theme={theme}>&copy; 2025 Smartini Crypto | All rights reserved.</FooterText>
 
-            <ToggleButton darkMode={darkMode} onClick={toggleTheme} >
+            <ToggleButton darkMode={darkMode} onClick={toggleTheme}>
                 <motion.div
-                    initial={{ x: darkMode ? 0 : 50 }}
-                    animate={{ x: darkMode ? 50 : 0 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    initial={{ x: darkMode ? 50 : 0 }}
+                    animate={{ x: darkMode ? 0 : 50 }}
+                    transition={{ duration: initialRenderDone ? 0.3 : 0 }}
                     style={{
                         position: 'absolute',
                         top: 3,
@@ -76,4 +82,3 @@ const Footer = ({ darkMode, toggleTheme }: { darkMode: boolean; toggleTheme: () 
 };
 
 export default Footer;
-
