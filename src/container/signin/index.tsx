@@ -24,7 +24,7 @@ const SignInPage = (): React.ReactElement => {
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [message, setMessage] = useState('');
-    const [showGif, setShowGif] = useState(false);
+    const [setLoading, setSetLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ const SignInPage = (): React.ReactElement => {
     const handleSignIn = async () => {
         setMessage('');
         setErrors({});
-        setShowGif(true);
+        setSetLoading(true);
 
         try {
             await validationSchema.validate(
@@ -79,7 +79,7 @@ const SignInPage = (): React.ReactElement => {
             } else {
                 setMessage('An unknown error occurred. Try again later.');
             }
-            setShowGif(false);
+            setSetLoading(false);
         }
     };
 
@@ -115,7 +115,7 @@ const SignInPage = (): React.ReactElement => {
                 {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
             </InputGroup>
 
-            {showGif && (
+            {setLoading && (
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                     <Lottie options={defaultOptions} height={100} width={100} />
                 </div>

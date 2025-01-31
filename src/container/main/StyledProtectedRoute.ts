@@ -30,7 +30,7 @@ export const Container = styled.div<{ theme: Theme }>`
     }
 
     @media (max-width: 480px) {
-        width: 180px;
+        width: 180px; 
         padding: 12px;
     }
 `;
@@ -42,8 +42,8 @@ export const Message = styled.p<{ theme: Theme }>`
     margin-bottom: 20px;
 
     @media (max-width: 1024px) {
-        font-size: 16px;
-        margin-bottom: 15px;
+        font-size: 16px; 
+        margin-bottom: 15px; 
     }
 
     @media (max-width: 768px) {
