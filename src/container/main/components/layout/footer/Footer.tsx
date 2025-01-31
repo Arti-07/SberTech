@@ -5,7 +5,7 @@ import { FooterNavButton, FooterContainer, FooterText, ToggleButton, ToggleIcon 
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import ContactUs from './ContactUs';
-
+import { motion } from 'framer-motion';
 
 const footerNavigations = [
     { name: 'Privacy Policy', content: <PrivacyPolicy /> },
@@ -45,8 +45,21 @@ const Footer = ({ darkMode, toggleTheme }: { darkMode: boolean; toggleTheme: () 
 
             <FooterText theme={theme}>&copy; 2025 Smartini Crypto | All rights reserved.</FooterText>
 
-            <ToggleButton darkMode={darkMode} onClick={toggleTheme}>
-                <ToggleIcon>{darkMode ? '🌙' : '🌞'}</ToggleIcon>
+            <ToggleButton darkMode={darkMode} onClick={toggleTheme} >
+                <motion.div
+                    initial={{ x: darkMode ? 0 : 50 }}
+                    animate={{ x: darkMode ? 50 : 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    style={{
+                        position: 'absolute',
+                        top: 3,
+                        left: 3,
+                    }}
+                >
+                    <ToggleIcon>
+                        {darkMode ? '🌙' : '🌞'}
+                    </ToggleIcon>
+                </motion.div>
             </ToggleButton>
 
             <Dialog open={open} onClose={handleClose}>
