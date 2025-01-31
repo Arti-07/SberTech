@@ -182,25 +182,6 @@ export const FormInput = styled.input<{ theme?: Theme }>`
     }
 `;
 
-// export const Tooltip = styled.span<{ theme?: Theme }>`
-//     position: absolute;
-//     right: -35px;
-//     top: 50%;
-//     transform: translateY(-20%);
-//     cursor: pointer;
-//     font-size: 1.5rem;
-//     color: ${(props: { theme: Theme }) => props.theme.palette.primary.main};
-//     transition: color 0.3s ease;
-//
-//     &:hover {
-//         color: ${(props: { theme: Theme }) => props.theme.palette.primary.dark};
-//     }
-//
-//     @media (max-width: 768px) {
-//         font-size: 1.2rem;
-//     }
-// `;
-
 export const ButtonGroup = styled.div<{ theme?: Theme }>`
     display: flex;
     gap: 10px;
@@ -249,4 +230,37 @@ export const Button = styled.button<{ theme?: Theme }>`
         padding: 8px 16px; 
         font-size: 0.8rem; 
     }
+`;
+
+export const ModalContent = styled.div<{ theme?: Theme }>`
+    background-color: ${(props) =>
+            props.theme?.palette.mode === 'dark' ? '#222e3c' : props.theme?.palette.background.paper || '#fff'};
+    color: ${(props) => props.theme?.palette.text.primary || '#000'};
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+`;
+
+export const ModalContainer = styled.div<{ theme?: Theme }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+`;
+
+export const QrImage = styled.img<{ theme?: Theme }>`
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; // добавим немного отступа сверху
 `;
