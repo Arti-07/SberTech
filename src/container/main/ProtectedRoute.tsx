@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
                 Log In
             </Button>
             <Button theme={theme} onClick={() => navigate('/smartini_crypto/signup')}>
-                Sign Up
+                Registration
             </Button>
         </Container>
     );

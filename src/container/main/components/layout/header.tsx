@@ -5,6 +5,8 @@ import { getNavigationsValue } from '@brojs/cli';
 import { NavButton, ActiveNavButton, StyledAppBar, LogoContainer, LoginText, SignOutButton } from './components/HeaderStyles';
 import logoBlack from './logo/logo_black.png';
 import logoWhite from './logo/logo_white.png';
+import exitBlack from '../../../../assets/images/exit_black.png';
+import exitWhite from '../../../../assets/images/exit_white.png';
 
 const navigations = [
     { name: 'Home', href: getNavigationsValue('smartini_crypto.main') },
@@ -44,6 +46,7 @@ const Header = (): React.ReactElement => {
         } else {
             navigate(href);
         }
+
     };
 
     const handleSignOut = () => {
@@ -80,15 +83,15 @@ const Header = (): React.ReactElement => {
                             <LoginText isLightTheme={isLightTheme}>
                                 Hello, {login}
                             </LoginText>
-                            <SignOutButton theme={theme} onClick={handleSignOut}>
-                                Sign out
-                            </SignOutButton>
                         </>
                     )}
 
 
                     {navigations.map((item) => {
-                        const isActive = location.pathname === item.href;
+                        let  isActive = location.pathname === item.href;
+                        if (item.name === 'Account' && location.pathname === '/smartini_crypto/userspage') {
+                            isActive = true;
+                        }
                         const ButtonComponent = isActive ? ActiveNavButton : NavButton;
 
                         return (
@@ -101,6 +104,15 @@ const Header = (): React.ReactElement => {
                             </ButtonComponent>
                         );
                     })}
+                    {login && (
+                        <SignOutButton theme={theme} onClick={handleSignOut}>
+                            <img
+                                src={isLightTheme ? exitBlack : exitWhite}
+                                alt="Sign out"
+                                style={{ width: '24px', height: '24px' }}
+                            />
+                        </SignOutButton>
+                    )}
                 </div>
             </Toolbar>
         </StyledAppBar>

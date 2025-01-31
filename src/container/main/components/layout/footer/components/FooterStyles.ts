@@ -53,7 +53,7 @@ export const FooterContainer = styled('footer')`
   left: 0;
   right: 0;
 
-  @media (max-width: 900px) {
+    @media (max-width: 900px) {
     padding: 18px;
   }
 
@@ -102,6 +102,11 @@ export const ToggleButton = styled('button')<{ darkMode: boolean }>(({ darkMode 
     cursor: 'pointer',
     boxSizing: 'border-box',
     zIndex: 2,
+
+    '&:focus': {
+        outline: 'none',
+        boxShadow: 'none',
+    },
 
     '@media (max-width: 900px)': {
         width: '90px',

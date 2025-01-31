@@ -55,7 +55,8 @@ export const SuccessMessage = styled.div<{ theme?: Theme }>`
 
 export const ErrorMessage = styled.div<{ theme?: Theme }>`
     animation: shake 0.5s ease-in-out;
-    color: ${(props: { theme: Theme }) => props.theme.palette.error.main};
+    font-family: 'Verdana', sans-serif;
+    color: darkred;
     font-weight: bold;
     margin-top: 2px;
     text-align: center;
@@ -90,9 +91,13 @@ export const SignupContainer = styled.div<{ theme?: Theme }>`
     flex-direction: column;
     align-items: center;
     padding: 10px 20px 20px;
+    font-family: 'Verdana', sans-serif;
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
+    background-color: ${({ theme }) => theme.palette.background.default};
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     @media (max-width: 768px) {
         max-width: 90%; 
@@ -107,9 +112,9 @@ export const SignupContainer = styled.div<{ theme?: Theme }>`
 export const SignupTitle = styled.h1<{ theme?: Theme }>`
     font-size: 2.5rem;
     margin-bottom: 10px;
+    font-family: 'Verdana', sans-serif;
     text-align: center;
     color: ${(props: { theme: Theme }) => props.theme.palette.text.primary};
-    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), 0 0 25px rgba(255, 255, 255, 0.1);
     letter-spacing: 1px;
@@ -203,8 +208,8 @@ export const Tooltip = styled.span<{ theme?: Theme }>`
 
 export const ButtonGroup = styled.div<{ theme?: Theme }>`
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 20px;
+    margin-top: 25px;
     justify-content: center;
 
     @media (max-width: 768px) {
@@ -221,23 +226,31 @@ export const Button = styled.button<{ theme?: Theme }>`
     cursor: pointer;
     transition: background-color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
+    
     &.button-primary {
-        background-color: ${(props: { theme: Theme }) => props.theme.palette.primary.main};
+        background-color: ${(props) =>
+                props.theme.palette.mode === 'dark' ? '#47485A' : '#9494B3'};
         color: white;
-
         &:hover {
-            background-color: ${(props: { theme: Theme }) => props.theme.palette.primary.dark};
+            background-color: #45a049;
+            transform: translateY(-2px);
         }
     }
 
     &.button-secondary {
-        background-color: ${(props: { theme: Theme }) => props.theme.palette.secondary.main};
+        background-color: ${(props) =>
+                props.theme.palette.mode === 'dark' ? '#47485A' : '#9494B3'};
         color: white;
 
         &:hover {
-            background-color: ${(props: { theme: Theme }) => props.theme.palette.secondary.dark};
+            background-color: lightcoral;
+            transform: translateY(-2px);
         }
+    }
+    
+
+    &:active {
+        transform: translateY(1px);
     }
 
     @media (max-width: 768px) {

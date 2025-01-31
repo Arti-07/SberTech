@@ -9,7 +9,7 @@ export const Container = styled.div<{ theme: Theme }>`
     width: 300px;
     padding: 20px;
     background-color: ${({ theme }) => theme.palette.background.default};
-    font-family: 'Arial', sans-serif;
+    font-family: 'Verdana', sans-serif;
     text-align: center;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -69,7 +69,7 @@ export const Button = styled.button<{ theme: Theme }>`
     transition: background-color 0.3s;
 
     &:hover {
-        background-color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#45a049' : '#1E1E2A')};
+        background-color: #45a049;
     }
 
     & + & {
