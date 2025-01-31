@@ -76,3 +76,4 @@ const Footer = ({ darkMode, toggleTheme }: { darkMode: boolean; toggleTheme: () 
 };
 
 export default Footer;
+
