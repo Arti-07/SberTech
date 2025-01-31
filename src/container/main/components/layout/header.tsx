@@ -17,7 +17,9 @@ import {
 } from './components/HeaderStyles';
 import logoBlack from './logo/logo_black.png';
 import logoWhite from './logo/logo_white.png';
-import ReactDOM from 'react-dom';
+import exitBlack from '../../../../assets/images/exit_black.png';
+import exitWhite from '../../../../assets/images/exit_white.png';
+import { createRoot } from 'react-dom/client';
 
 const navigations = [
     { name: 'Home', href: getNavigationsValue('smartini_crypto.main') },
@@ -80,7 +82,8 @@ const Header = (): React.ReactElement => {
 
         const lottieContainer = document.createElement('div');
         document.body.appendChild(lottieContainer);
-        ReactDOM.render(lottieElement, lottieContainer);
+        const root = createRoot(lottieContainer);
+        root.render(lottieElement);
 
         setTimeout(() => {
             lottieContainer.querySelector('.lottie-container')?.classList.add('visible');
@@ -125,28 +128,39 @@ const Header = (): React.ReactElement => {
                 <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
                     {login && (
                         <>
-                            <LoginText isLightTheme={isLightTheme}>Hello, {login}</LoginText>
-                            <SignOutButton theme={theme} onClick={handleSignOut}>
-                                Sign out
-                            </SignOutButton>
+                            <LoginText isLightTheme={isLightTheme}>
+                                Hello, {login}
+                            </LoginText>
                         </>
                     )}
 
                     {login &&
                         navigations.map((item) => {
-                            const isActive = location.pathname === item.href;
+                            let  isActive = location.pathname === item.href;
+                            if (item.name === 'Account' && location.pathname === '/smartini_crypto/userspage') {
+                                isActive = true;
+                            }
                             const ButtonComponent = isActive ? ActiveNavButton : NavButton;
 
-                            return (
-                                <ButtonComponent
-                                    key={item.name}
-                                    theme={theme}
-                                    onClick={() => handleNavigationClick(item.href)}
-                                >
-                                    {item.name}
-                                </ButtonComponent>
-                            );
-                        })}
+                        return (
+                            <ButtonComponent
+                                key={item.name}
+                                theme={theme}
+                                onClick={() => handleNavigationClick(item.href)}
+                            >
+                                {item.name}
+                            </ButtonComponent>
+                        );
+                    })}
+                    {login && (
+                        <SignOutButton theme={theme} onClick={handleSignOut}>
+                            <img
+                                src={isLightTheme ? exitBlack : exitWhite}
+                                alt="Sign out"
+                                style={{ width: '24px', height: '24px' }}
+                            />
+                        </SignOutButton>
+                    )}
                 </div>
             </Toolbar>
         </StyledAppBar>

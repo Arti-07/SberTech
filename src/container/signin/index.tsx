@@ -125,7 +125,7 @@ const SignInPage = (): React.ReactElement => {
 
             <ButtonGroup>
                 <SignInButton onClick={handleSignIn}>Sign In</SignInButton>
-                <SignUpButton onClick={() => navigate('/smartini_crypto/signup')}>Sign Up</SignUpButton>
+                <SignUpButton onClick={() => navigate('/smartini_crypto/signup')}>Registration</SignUpButton>
             </ButtonGroup>
         </Container>
     );
