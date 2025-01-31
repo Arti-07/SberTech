@@ -10,14 +10,18 @@ class ApiClient {
         });
     }
 
+
+    // В API-классе
     async googleAuth() {
         try {
+            // Редиректим пользователя на Google для авторизации
             window.location.href = "http://localhost:4000/auth/google";
         } catch (error) {
             console.error('Error during Google Auth:', error);
             throw error;
         }
     }
+
 
     // Метод для получения защищенных данных с токеном из cookies
     async getProtectedData() {
