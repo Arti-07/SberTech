@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FavoriteCard from "./FavoriteCard";
-import api from "../../../api";
+import api from "../../../../api";
 import { useTheme } from "@mui/material/styles";
 
 interface CryptoData {
@@ -12,7 +12,7 @@ interface CryptoData {
 
 const Favorites = () => {
     const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
-    const { palette } = useTheme(); // Получаем текущую тему
+    const { palette } = useTheme();
 
     const cryptoList = ["bitcoin", "tether", "ethereum", "solana", "dogecoin"];
 
@@ -26,10 +26,9 @@ const Favorites = () => {
 
                 const detailedDataPromises = filteredData.map(async (crypto: CryptoData) => {
                     const data = await api.getTicker(crypto.id, 'USD');
-                    // В зависимости от темы формируем путь к картинке
                     const themePath = palette.mode === 'dark' ? 'dark' : 'light';
                     const imageUrl = await import(
-                        `../logo/${themePath}/${crypto.name.toLowerCase()}.png`
+                        `../../logo/${themePath}/${crypto.name.toLowerCase()}.png`
                         ).then(module => module.default);
 
                     return {

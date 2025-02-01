@@ -12,6 +12,18 @@ export const defaultOptions = {
 };
 
 export const GifContainer = styled.div<{ theme?: Theme }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
     animation: fadeIn 2s ease-in-out;
 
     @keyframes fadeIn {
@@ -185,25 +197,6 @@ export const FormInput = styled.input<{ theme?: Theme }>`
 
     @media (max-width: 480px) {
         font-size: 0.8rem;
-    }
-`;
-
-export const Tooltip = styled.span<{ theme?: Theme }>`
-    position: absolute;
-    right: -35px;
-    top: 50%;
-    transform: translateY(-20%);
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: ${(props: { theme: Theme }) => props.theme.palette.primary.main};
-    transition: color 0.3s ease;
-
-    &:hover {
-        color: ${(props: { theme: Theme }) => props.theme.palette.primary.dark};
-    }
-
-    @media (max-width: 768px) {
-        font-size: 1.2rem;
     }
 `;
 

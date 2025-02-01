@@ -3,7 +3,7 @@ import api from '../../api';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { stripHtml, truncateDescription } from './utils/descriptionUtils';
 import { prepareChartData, calculateTrendLine, calculateAveragePrice, calculateStatistics } from './utils/chartUtils';
-import { PageContainer, ChartContainer, InfoContainer, CryptoLink } from './DetailPageStyles';
+import { useDetailPageStyles } from './DetailPageStyles'; // Импортируем useDetailPageStyles
 import { useLocation } from 'react-router-dom';
 import { ChartPoint, CryptoInfo } from './types';
 
@@ -13,6 +13,8 @@ const DetailPage = (): React.ReactElement => {
     const [error, setError] = useState<string | null>(null);
     const location = useLocation();
     const cryptoName = location.state?.cryptoName;
+    const { PageContainer, ChartContainer, InfoContainer, CryptoLink } = useDetailPageStyles();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -61,7 +63,6 @@ const DetailPage = (): React.ReactElement => {
                         <ResponsiveContainer width="100%" height={400}>
                             <LineChart
                                 data={formattedData}
-                                style={{ backgroundColor: '#1e1e1e', borderRadius: '8px' }}
                                 margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
                             >
                                 <CartesianGrid stroke="#444" strokeDasharray="5 5" />
@@ -94,7 +95,6 @@ const DetailPage = (): React.ReactElement => {
                                 />
                             </LineChart>
                         </ResponsiveContainer>
-
                     ) : (
                         <p>Loading chart...</p>
                     )}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import api from '../../../api';
-import styles from './cryptoTable.style';
+import api from '../../../../api';
+import { getStyles, defaultOptions } from './cryptoTable.style';
 import Pagination from './Pagination';
-import { defaultOptions } from './cryptoTable.style';
 import Lottie from 'react-lottie';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 
 interface CryptoData {
     id: number;
@@ -27,20 +27,22 @@ const CryptoTable: React.FC = () => {
     const [sortConfig, setSortConfig] = useState<{ key: keyof CryptoData; direction: string } | null>(null);
     const itemsPerPage = 10;
     const navigate = useNavigate();
+    const theme = useTheme();
+
+    // Получаем стили в зависимости от темы
+    const styles = getStyles(theme);
 
     const fetchListings = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
             const allCryptoData = await api.getListings();
-
             const uniqueData = allCryptoData.reduce((acc: CryptoData[], current: CryptoData) => {
                 if (!acc.some((item) => item.id === current.id)) {
                     acc.push(current);
                 }
                 return acc;
             }, []);
-
             setAllData(uniqueData);
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -87,12 +89,10 @@ const CryptoTable: React.FC = () => {
             });
 
             const detailedData = await Promise.all(detailedDataPromises);
-
             const filteredData = detailedData.filter((item) => item.price !== 0);
 
             if (filteredData.length < itemsPerPage) {
                 const additionalData = dataToFetch.slice(startIndex + filteredData.length, startIndex + itemsPerPage);
-
                 const additionalDetailedDataPromises = additionalData.map(async (crypto: CryptoData) => {
                     try {
                         const data = await api.getTicker(crypto.id, 'USD');
@@ -219,30 +219,26 @@ const CryptoTable: React.FC = () => {
                         <tr key={item.id}
                             style={{
                                 ...styles.tableRow,
-                                ...(index % 2 === 0 ? styles.evenRow : {})
+                                ...(index % 2 === 0 ? styles.evenRow : {}),
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = styles.tableRowHover.backgroundColor}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = index % 2 === 0 ? styles.evenRow.backgroundColor : 'transparent'}
                             onClick={() => item.name && handleRowClick(item.name.toLowerCase())}>
                             <td style={styles.td}>{item.id}</td>
-                            <td style={styles.td}>
-                                {item.icon} {item.name} ({item.symbol})
-                            </td>
+                            <td style={styles.td}>{item.icon} {item.name} ({item.symbol})</td>
                             <td style={styles.td}>{item.price.toLocaleString()} $</td>
                             <td style={styles.td}>
                                 {item.percentage_change_1h > 0 ? (
                                     <span style={styles.changeUp}>▲ {item.percentage_change_1h.toFixed(2)}%</span>
                                 ) : (
-                                    <span
-                                        style={styles.changeDown}>▼ {Math.abs(item.percentage_change_1h).toFixed(2)}%</span>
+                                    <span style={styles.changeDown}>▼ {Math.abs(item.percentage_change_1h).toFixed(2)}%</span>
                                 )}
                             </td>
                             <td style={styles.td}>
                                 {item.percentage_change_24h > 0 ? (
                                     <span style={styles.changeUp}>▲ {item.percentage_change_24h.toFixed(2)}%</span>
                                 ) : (
-                                    <span
-                                        style={styles.changeDown}>▼ {Math.abs(item.percentage_change_24h).toFixed(2)}%</span>
+                                    <span style={styles.changeDown}>▼ {Math.abs(item.percentage_change_24h).toFixed(2)}%</span>
                                 )}
                             </td>
                         </tr>
@@ -251,8 +247,7 @@ const CryptoTable: React.FC = () => {
                 </table>
                 {loading && <p>Loading more...</p>}
             </div>
-            <Pagination currentPage={page} totalPages={Math.ceil(allData.length / itemsPerPage)}
-                        onPageChange={handlePageChange} />
+            <Pagination currentPage={page} onPageChange={handlePageChange} />
         </div>
     );
 };
