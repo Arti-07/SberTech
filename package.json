@@ -1,6 +1,6 @@
 {
   "name": "smartini_crypto",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "main": "./src/index.tsx",
   "scripts": {
     "test": "jest",
@@ -24,6 +24,7 @@
     "@nextui-org/theme": "^2.2.11",
     "@types/js-cookie": "^3.0.6",
     "express": "5.0.0",
+    "framer-motion": "^12.0.6",
     "jest-environment-jsdom": "^29.7.0",
     "js-cookie": "^3.0.5",
     "motion": "^11.11.17",

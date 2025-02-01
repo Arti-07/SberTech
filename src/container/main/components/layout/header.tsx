@@ -103,6 +103,9 @@ const Header = (): React.ReactElement => {
             }
         }
     };
+    const handleLogoClick = () => {
+        navigate('/smartini_crypto');
+    };
 
 
     return (
@@ -113,6 +116,9 @@ const Header = (): React.ReactElement => {
                         src={isLightTheme ? logoBlack : logoWhite}
                         alt="Smartini Crypto Logo"
                         style={{ width: '50px', height: '50px', marginTop: '-8px' }}
+                        onClick={handleLogoClick}
+                        onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.9)'}
+                        onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     />
                     <Typography
                         variant="h6"

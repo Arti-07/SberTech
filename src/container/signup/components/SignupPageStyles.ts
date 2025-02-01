@@ -12,6 +12,18 @@ export const defaultOptions = {
 };
 
 export const GifContainer = styled.div<{ theme?: Theme }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
     animation: fadeIn 2s ease-in-out;
 
     @keyframes fadeIn {
@@ -149,7 +161,8 @@ export const FormInput = styled.input<{ theme?: Theme }>`
     width: 100%;
     border-radius: 20px;
     border: 1px solid ${(props: { theme: Theme }) => props.theme.palette.text.primary};
-    background-color: ${(props: { theme: Theme }) => props.theme.palette.background.paper};
+    background: ${(props) => props.theme.palette.mode === 'dark' ? 'linear-gradient(to right, #1e1e2a, #9494b3)' : 'linear-gradient(to right, #9494b3, #ffffff)'            };
+
     box-sizing: border-box;
     transition: border-color 0.3s ease, background-color 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

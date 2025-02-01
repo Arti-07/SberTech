@@ -34,15 +34,13 @@ const SignInPage = (): React.ReactElement => {
             .string()
             .required('Login is required')
             .matches(
-                /^[A-Za-z0-9@$_-]{3,}$/,
-                'Login must be at least 3 characters and can include letters, numbers, @, $, -, and _.'
+                /^[A-Za-z0-9@$_-]{3,}$/
             ),
         password: yup
             .string()
             .required('Password is required')
             .matches(
-                /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
-                'Password must be at least 6 characters and include at least one letter and one number.'
+                /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
             ),
     });
 
@@ -64,10 +62,21 @@ const SignInPage = (): React.ReactElement => {
         } catch (error) {
             if (error instanceof yup.ValidationError) {
                 const validationErrors: Record<string, string> = {};
+                let validationMessage = '';
+
                 error.inner.forEach((err) => {
-                    if (err.path) validationErrors[err.path] = err.message;
+                    if (err.path) {
+                        validationErrors[err.path] = err.message;
+                        if (err.path === 'login' || err.path === 'password') {
+                            validationMessage = 'Enter both your username and password';
+                        }
+                    }
                 });
+
                 setErrors(validationErrors);
+                if (validationMessage) {
+                    setMessage(validationMessage);
+                }
             } else if ((error as AxiosError).response) {
                 const status = (error as AxiosError).response?.status;
                 if (status === 401 || status === 400) {
@@ -97,7 +106,6 @@ const SignInPage = (): React.ReactElement => {
                         onChange={(e) => setLogin(e.target.value)}
                     />
                 </label>
-                {errors.login && <ErrorMessage>{errors.login}</ErrorMessage>}
             </InputGroup>
 
             <InputGroup>
@@ -113,7 +121,6 @@ const SignInPage = (): React.ReactElement => {
                 <PasswordToggle onClick={() => setShowPassword((prev) => !prev)}>
                     {showPassword ? '🙉' : '🙈'}
                 </PasswordToggle>
-                {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
             </InputGroup>
 
             {setLoading && (

@@ -45,7 +45,7 @@ export const Title = styled.h1<{ theme?: Theme }>`
 
 export const InputGroup = styled.div<{ theme?: Theme }>`
     width: 100%;
-    margin: 0 auto;
+    margin: 10px ;
     position: relative; 
     text-align: left;
     
@@ -57,7 +57,7 @@ export const InputGroup = styled.div<{ theme?: Theme }>`
 export const InputField = styled.input<{ theme?: Theme }>`
     width: 100%;
     padding: 12px;
-    margin-top: 5px;
+    margin-top: 10px;
     border: 1px solid ${(props) => props.theme.palette.text.secondary};
     border-radius: 25px;
     font-size: 1rem;
@@ -212,7 +212,7 @@ export const ButtonGroup = styled.div<{ theme?: Theme }>`
     flex-direction: column;
     justify-content: center;
     width: 50%;
-    
+    margin-top:-15px;
     @media (max-width: 600px) {
         flex-direction: column;
         align-items: center;

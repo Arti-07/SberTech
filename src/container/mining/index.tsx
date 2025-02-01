@@ -38,7 +38,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/
 import { useTheme } from '@mui/material/styles';
 import api from '../../api';
 
-import postmalon from '../../assets/music/postmalon.mp3';
+import postmalone from '../../assets/music/Ilkay Sencan - Rockstar (ft. Dynoro).mp3';
 import kuduro from '../../assets/music/kuduro.mp3';
 import rihanna from '../../assets/music/rihanna.mp3';
 import dragons from '../../assets/music/dragons.mp3';
@@ -46,6 +46,8 @@ import timberlake from '../../assets/music/timberlake.mp3';
 import calvin from '../../assets/music/calvin.mp3';
 import lusa from '../../assets/music/lusa.mp3';
 import numb from '../../assets/music/numb.mp3';
+import alleyes from '../../assets/music/DJ Belite - All Eyes On Me.mp3';
+import night from '../../assets/music/mishlawi - all night.mp3';
 
 import { toast } from 'react-toastify';
 
@@ -202,7 +204,8 @@ const MiningPage = (): React.ReactElement => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [isVisibleLvlTwo, setIsVisibleLvlTwo] = useState<boolean>(false);
 
-    const musics = [numb, kuduro, postmalon, rihanna, dragons, timberlake, calvin, lusa];
+    const musics = [numb, alleyes, kuduro, postmalone, rihanna,
+        dragons, timberlake, calvin, lusa, night];
     const [currentMusic, setCurrentMusic] = useState(musics[0]);
 
     // discoOptions
@@ -216,7 +219,7 @@ const MiningPage = (): React.ReactElement => {
     // const [curAnim, setNumAnim] = useState(danceAnim[0]);
 
     const stepDecrease = 0.007;
-    const stepIncrease = 0.1;
+    const stepIncrease = 0.2;
     const maxProgress = 1.5;
     const timeDecrease = 10;
     const minStepMining = 1;
