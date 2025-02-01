@@ -1,138 +1,43 @@
-// import React, { useState } from 'react';
-// import api from '../../api';
-// import { useNavigate } from 'react-router-dom';
-// import { Container, Input, Button, Message } from './components/SignWithTelegramStyles';
-//
-// const SignWithTelegram = () => {
-//     const [username, setUsername] = useState('');
-//     const [verificationCode, setVerificationCode] = useState('');
-//     const [message, setMessage] = useState('');
-//     const navigate = useNavigate();
-//
-//     const handleSendTelegramMessage = async () => {
-//         try {
-//             const response = await api.sendCode(username);
-//             console.log('Ответ сервера:', response);
-//
-//             if (response.code) {
-//                 setMessage(`Код отправлен: ${response.code}`);
-//             } else {
-//                 setMessage('Код успешно отправлен в Telegram!');
-//             }
-//         } catch (error) {
-//             console.error('Ошибка при отправке запроса:', error);
-//             setMessage('Не удалось отправить код.');
-//         }
-//     };
-//
-//     const handleLogin = async () => {
-//         try {
-//             const response = await api.loginWithCode(username, verificationCode);
-//             console.log('Ответ сервера:', response);
-//
-//             if (response.message === 'Logged in successfully') {
-//                 setMessage('Вы успешно вошли в систему!');
-//                 sessionStorage.setItem('login', username);
-//                 window.dispatchEvent(new Event('loginChanged'));
-//                 navigate('/smartini_crypto/userspage');
-//             } else {
-//                 setMessage('Неверный код или логин.');
-//             }
-//         } catch (error) {
-//             console.error('Ошибка при входе:', error);
-//             setMessage('Ошибка при входе. Проверьте данные.');
-//         }
-//     };
-//
-//     return (
-//         <Container>
-//             <h1>Вход через Telegram</h1>
-//             <Input
-//                 type="text"
-//                 placeholder="Введите логин"
-//                 value={username}
-//                 onChange={(e) => setUsername(e.target.value)}
-//             />
-//             <Button onClick={handleSendTelegramMessage}>Отправить код в Telegram</Button>
-//
-//             <Input
-//                 type="text"
-//                 placeholder="Введите код подтверждения"
-//                 value={verificationCode}
-//                 onChange={(e) => setVerificationCode(e.target.value)}
-//             />
-//             <Button onClick={handleLogin}>Войти в личный кабинет</Button>
-//
-//             {message && <Message>{message}</Message>}
-//         </Container>
-//     );
-// };
-//
-// export default SignWithTelegram;
-//
-
-
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
 import { useNavigate } from 'react-router-dom';
-import { Container, Input, Button, Message, ModalOverlay, ModalContent } from './components/SignWithTelegramStyles';
-import { useTheme } from '@mui/material/styles';  // Импортируем хук useTheme
-import confettiAnimation from '../../assets/lotties/confetti.json';
+import { Container, Input, Button, Message, ModalOverlay, ModalContent, ButtonSecondary } from './components/SignWithTelegramStyles';
+import { useTheme } from '@mui/material/styles';
 
 const SignWithTelegram = () => {
     const [username, setUsername] = useState('');
     const [verificationCode, setVerificationCode] = useState('');
     const [message, setMessage] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для модального окна
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
-    const theme = useTheme();  // Получаем текущую тему
-    const [qrImage, setQrImage] = useState("");  // Состояние для хранения пути к изображению QR-кода
+    const theme = useTheme();
+    const [qrImage, setQrImage] = useState("");
 
-    // Функция для установки QR-кода в зависимости от темы
     useEffect(() => {
         if (theme.palette.mode === 'dark') {
             setQrImage(require("../../assets/images/bot_tg_black.jpg"));
         } else {
             setQrImage(require("../../assets/images/bot_tg_white.jpg"));
         }
-    }, [theme]);  // Перезапускаем при изменении темы
-
-    // const handleSendTelegramMessage = async () => {
-    //     try {
-    //         const response = await api.sendCode(username);
-    //         console.log('Ответ сервера:', response);
-    //
-    //         if (response.code) {
-    //             setMessage(`Код отправлен: ${response.code}`);
-    //         } else {
-    //             setMessage('Код успешно отправлен в Telegram!');
-    //         }
-    //     } catch (error) {
-    //         console.error('Ошибка при отправке запроса:', error);
-    //         setMessage('Не удалось отправить код.');
-    //     }
-    // };
+    }, [theme]);
 
     const handleSendTelegramMessage = async () => {
         try {
             const response = await api.sendCode(username);
-            console.log('Ответ сервера:', response);
 
             if (response.code) {
-                setMessage(`Код отправлен: ${response.code}`);
+                setMessage(`The code has been sent: ${response.code}`);
             } else {
-                setMessage('Код успешно отправлен в Telegram!');
+                setMessage('The code has been successfully sent to Telegram!');
             }
         } catch (error) {
-            console.error('Ошибка при отправке запроса:', error);
-            setMessage('Не удалось отправить код.');
+            setMessage('Couldn\'t send the code.');
         }
     };
 
     const handleLogin = async () => {
         try {
             const response = await api.loginWithCode(username, verificationCode);
-            console.log('Ответ сервера:', response);
 
             if (response.message === 'Logged in successfully') {
                 setMessage('Вы успешно вошли в систему!');
@@ -140,59 +45,59 @@ const SignWithTelegram = () => {
                 window.dispatchEvent(new Event('loginChanged'));
                 navigate('/smartini_crypto/userspage');
             } else {
-                setMessage('Неверный код или логин.');
+                setMessage('Invalid code or login.');
             }
         } catch (error) {
-            console.error('Ошибка при входе:', error);
-            setMessage('Ошибка при входе. Проверьте данные.');
+            setMessage('Error when logging in. Check the data.');
         }
     };
 
-    // Функция для открытия модального окна
     const openQRModal = () => {
         setIsModalOpen(true);
     };
 
-    // Функция для закрытия модального окна
     const closeQRModal = () => {
         setIsModalOpen(false);
     };
 
+    const isSuccessMessage = message.includes('code has been')
+
     return (
         <Container>
-            <h1>Вход через Telegram</h1>
+            <h1>Login via Telegram</h1>
             <Input
                 type="text"
-                placeholder="Введите логин"
+                placeholder="Enter your username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
-            <Button onClick={handleSendTelegramMessage}>Отправить код в Telegram</Button>
+            <Button onClick={handleSendTelegramMessage}>Send the code to Telegram</Button>
 
             <Input
                 type="text"
-                placeholder="Введите код подтверждения"
+                placeholder="Enter the confirmation code"
                 value={verificationCode}
                 onChange={(e) => setVerificationCode(e.target.value)}
             />
-            <Button onClick={handleLogin}>Войти в личный кабинет</Button>
+            {message && <Message success={isSuccessMessage}>{message}</Message>}
+            <Button onClick={handleLogin}>Log in to your personal account</Button>
 
-            {/* Кнопка для открытия модального окна с QR-кодом */}
-            <Button onClick={openQRModal}>Получить QR-код для Telegram</Button>
+            <Button onClick={openQRModal}>Get a QR code for Telegram</Button>
+            <ButtonSecondary onClick={() => navigate('/smartini_crypto/signin')}>
+                ←
+            </ButtonSecondary>
 
-            {message && <Message>{message}</Message>}
-
-            {/* Модальное окно для QR-кода */}
             {isModalOpen && (
                 <ModalOverlay>
                     <ModalContent>
-                        <h2>QR-код для перехода в Telegram</h2>
+                        <h2>QR code to go to Telegram</h2>
                         <img
-                            src={qrImage}  // Используем динамическое изображение в зависимости от темы
+                            src={qrImage}
                             alt="QR-код Telegram"
                             style={{ width: '200px', height: '200px' }}
                         />
-                        <Button onClick={closeQRModal}>Закрыть</Button>
+                        <p>Enter the command '/sendcode'</p>
+                        <Button onClick={closeQRModal}>Close</Button>
                     </ModalContent>
                 </ModalOverlay>
             )}

@@ -7,14 +7,14 @@ export const PageContainer = styled.div`
     color: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    flex-wrap: wrap; /* Добавлено для обеспечения адаптивности на маленьких экранах */
+    flex-wrap: wrap; 
 
     @media (max-width: 768px) {
         padding: 15px;
     }
 
     @media (max-width: 480px) {
-        flex-direction: column; /* Переключаем на вертикальное расположение */
+        flex-direction: column; 
         padding: 10px;
     }
 `;
@@ -26,7 +26,7 @@ export const ChartContainer = styled.div`
     @media (max-width: 768px) {
         flex: 1;
         margin-right: 0;
-        margin-bottom: 20px; /* Добавлено отступ для мобильных устройств */
+        margin-bottom: 20px;
     }
 
     @media (max-width: 480px) {

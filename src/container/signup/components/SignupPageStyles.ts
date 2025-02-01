@@ -229,7 +229,6 @@ export const Button = styled.button<{ theme?: Theme }>`
         }
     }
     
-
     &:active {
         transform: translateY(1px);
     }
@@ -275,5 +274,5 @@ export const QrImage = styled.img<{ theme?: Theme }>`
     max-width: 100%;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; // добавим немного отступа сверху
+    margin-top: 20px; 
 `;

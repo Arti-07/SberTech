@@ -16,9 +16,9 @@ interface FavoriteCardProps {
 }
 
 const FavoriteCard: React.FC<FavoriteCardProps> = ({ title, imageUrl, price }) => {
-    const theme = useTheme(); // Получаем текущую тему
+    const theme = useTheme();
 
-    // Определяем цвет фона карточки в зависимости от темы
+
     const cardBackgroundColor = theme.palette.mode === 'dark' ? '#1E1E2A' : '#797993';
 
     return (

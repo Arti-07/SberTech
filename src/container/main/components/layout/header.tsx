@@ -62,37 +62,38 @@ const Header = (): React.ReactElement => {
     };
 
     const handleSignOut = () => {
-        const animations = [sadMorty, sadBear, sadSpace];
-        const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-
-        const lottieOptions = {
-            loop: true,
-            autoplay: true,
-            animationData: randomAnimation,
-            rendererSettings: {
-                preserveAspectRatio: 'xMidYMid slice'
-            }
-        };
-
-        const lottieElement = (
-            <LottieContainer className="lottie-container">
-                <Lottie options={lottieOptions} height="100%" width="100%" />
-            </LottieContainer>
-        );
-
-        const lottieContainer = document.createElement('div');
-        document.body.appendChild(lottieContainer);
-        const root = createRoot(lottieContainer);
-        root.render(lottieElement);
-
-        setTimeout(() => {
-            lottieContainer.querySelector('.lottie-container')?.classList.add('visible');
-        }, 500);
-
         const firstConfirmExit = window.confirm('Are you sure you want to sign out?');
         if (firstConfirmExit) {
             const secondConfirmExit = window.confirm('Bro, are you sure?');
+
             if (secondConfirmExit) {
+                const animations = [sadMorty, sadBear, sadSpace];
+                const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+
+                const lottieOptions = {
+                    loop: true,
+                    autoplay: true,
+                    animationData: randomAnimation,
+                    rendererSettings: {
+                        preserveAspectRatio: 'xMidYMid slice'
+                    }
+                };
+
+                const lottieElement = (
+                    <LottieContainer className="lottie-container">
+                        <Lottie options={lottieOptions} height="100%" width="100%" />
+                    </LottieContainer>
+                );
+
+                const lottieContainer = document.createElement('div');
+                document.body.appendChild(lottieContainer);
+                const root = createRoot(lottieContainer);
+                root.render(lottieElement);
+
+                setTimeout(() => {
+                    lottieContainer.querySelector('.lottie-container')?.classList.add('visible');
+                }, 500);
+
                 setTimeout(() => {
                     document.body.removeChild(lottieContainer);
                     sessionStorage.removeItem('login');
@@ -102,6 +103,7 @@ const Header = (): React.ReactElement => {
             }
         }
     };
+
 
     return (
         <StyledAppBar position="static" theme={theme}>
