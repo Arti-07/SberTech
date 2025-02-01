@@ -70,6 +70,8 @@ export const LogoContainer = styled('div')`
   align-items: center;
   gap: 10px;
 
+    &:hover {  cursor: pointer;} 
+    
   @media (max-width: 768px) {
     gap: 5px;
   }
