@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useTheme} from '@mui/material/styles';
 import api from '../../api';
 import {
     PageContainer,
@@ -13,7 +13,7 @@ import WalletSection from './WalletSection';
 import SendMoneyModal from './SendMoneyModal';
 import CardForm from './CardForm';
 import Modal from '@mui/material/Modal';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 const UsersPage = () => {
     const theme = useTheme();

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import * as yup from 'yup';
 import api from '../../api';
 import gifKiss from '../../assets/gifs/gif_kiss.gif';
 import Lottie from 'react-lottie';
-import { defaultOptions } from './components/SignupPageStyles';
+import {defaultOptions} from './components/SignupPageStyles';
 import {
     GifContainer,
     SuccessMessage,
@@ -19,7 +19,7 @@ import {
     ModalContent,
     QrImage
 } from './components/SignupPageStyles';
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 
 const SignupPage = (): React.ReactElement => {
     const [login, setLogin] = useState('');
@@ -70,8 +70,8 @@ const SignupPage = (): React.ReactElement => {
             setErrors({});
             setSuccess('');
             await validationSchema.validate(
-                { login, password, confirmPassword, birthDate },
-                { abortEarly: false }
+                {login, password, confirmPassword, birthDate},
+                {abortEarly: false}
             );
 
             setLoading(true);
@@ -81,7 +81,7 @@ const SignupPage = (): React.ReactElement => {
             if (regResponse && regResponse.message === 'User registered successfully') {
                 setSuccess('Registration is successful! Please come in.');
                 setShowGif(true);
-                setTimeout(async() => {
+                setTimeout(async () => {
                     setShowGif(false);
                     await api.login(login, password);
                     sessionStorage.setItem('login', login);
@@ -90,7 +90,7 @@ const SignupPage = (): React.ReactElement => {
                 }, 3000);
 
             } else {
-                setErrors({ general: 'Unknown registration error. Try again later.' });
+                setErrors({general: 'Unknown registration error. Try again later.'});
             }
         } catch (validationError) {
             if (validationError instanceof yup.ValidationError) {
@@ -100,7 +100,7 @@ const SignupPage = (): React.ReactElement => {
                 });
                 setErrors(validationErrors);
             } else {
-                setErrors({ general: 'Registration error. Try again later.' });
+                setErrors({general: 'Registration error. Try again later.'});
             }
         } finally {
             setLoading(false);
@@ -127,7 +127,7 @@ const SignupPage = (): React.ReactElement => {
         <SignupContainer>
             {showGif && (
                 <GifContainer>
-                    <img src={gifKiss} alt="Successful registration" />
+                    <img src={gifKiss} alt="Successful registration"/>
                 </GifContainer>
             )}
 
@@ -191,8 +191,8 @@ const SignupPage = (): React.ReactElement => {
                 </FormGroup>
 
                 {loading && (
-                    <div style={{ marginBottom: '1rem', textAlign: 'center' }}>
-                        <Lottie options={defaultOptions} height={50} width={50} />
+                    <div style={{marginBottom: '1rem', textAlign: 'center'}}>
+                        <Lottie options={defaultOptions} height={50} width={50}/>
                     </div>
                 )}
                 {errors.general && <ErrorMessage>{errors.general}</ErrorMessage>}

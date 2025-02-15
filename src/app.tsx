@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { StrictMode } from 'react';
+import React, {useState} from 'react';
+import {StrictMode} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Main from './container/main';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { BackgroundContainer, ScrollableContent, BackgroundImage, GlobalStyle } from './AppStyled';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+import {BackgroundContainer, ScrollableContent, BackgroundImage, GlobalStyle} from './AppStyled';
 import Footer from './container/main/components/layout/footer/Footer';
-import { ToastContainer } from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 
 const App = () => {
     const storedDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -49,18 +49,18 @@ const App = () => {
 
     return (
         <StrictMode>
-                <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                    <GlobalStyle />
-                    <BackgroundContainer>
-                        <BackgroundImage />
-                        <ScrollableContent>
-                            <Main />
-                            <Footer darkMode={darkMode} toggleTheme={toggleTheme} />
-                        </ScrollableContent>
-                    </BackgroundContainer>
-                </ThemeProvider>
-                <ToastContainer />
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <GlobalStyle/>
+                <BackgroundContainer>
+                    <BackgroundImage/>
+                    <ScrollableContent>
+                        <Main/>
+                        <Footer darkMode={darkMode} toggleTheme={toggleTheme}/>
+                    </ScrollableContent>
+                </BackgroundContainer>
+            </ThemeProvider>
+            <ToastContainer/>
         </StrictMode>
     );
 };

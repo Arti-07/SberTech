@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {AxiosError} from 'axios';
 import * as yup from 'yup';
 import api from '../../api';
 import Lottie from 'react-lottie';
@@ -51,8 +51,8 @@ const SignInPage = (): React.ReactElement => {
 
         try {
             await validationSchema.validate(
-                { login, password },
-                { abortEarly: false }
+                {login, password},
+                {abortEarly: false}
             );
 
             await api.login(login, password);
@@ -124,15 +124,16 @@ const SignInPage = (): React.ReactElement => {
             </InputGroup>
 
             {setLoading && (
-                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                    <Lottie options={defaultOptions} height={100} width={100} />
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+                    <Lottie options={defaultOptions} height={100} width={100}/>
                 </div>
             )}
 
             {message && <Message isSuccess={message === 'Login successful!'}>{message}</Message>}
 
             <ButtonGroup>
-                <TelegramButton onClick={() => navigate('/smartini_crypto/signin/signwithtelegram')}>Auth with tg</TelegramButton>
+                <TelegramButton onClick={() => navigate('/smartini_crypto/signin/signwithtelegram')}>Auth with
+                    tg</TelegramButton>
                 <SignInButton onClick={handleSignIn}>Sign In</SignInButton>
                 <SignUpButton onClick={() => navigate('/smartini_crypto/signup')}>Registration</SignUpButton>
             </ButtonGroup>

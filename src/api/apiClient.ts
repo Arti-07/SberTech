@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, {AxiosInstance} from 'axios';
 
 class ApiClient {
     axiosInstance: AxiosInstance;
@@ -11,11 +11,14 @@ class ApiClient {
     }
 
     async loginWithCode(username: string, verificationCode: string) {
-        return this.axiosInstance.post('/auth/login-with-telegram-code', { username, verificationCode }).then(res => res.data);
+        return this.axiosInstance.post('/auth/login-with-telegram-code', {
+            username,
+            verificationCode
+        }).then(res => res.data);
     }
 
     async sendCode(username: string) {
-        return this.axiosInstance.post('/auth/sendcode', { username }).then(res => res.data);
+        return this.axiosInstance.post('/auth/sendcode', {username}).then(res => res.data);
     }
 
     async isAuthenticated(): Promise<boolean> {
@@ -35,11 +38,11 @@ class ApiClient {
     }
 
     async getTicker(id: number, convert: string = 'USD') {
-        return this.axiosInstance.get(`/api/ticker/${id}`, { params: { convert } }).then(res => res.data);
+        return this.axiosInstance.get(`/api/ticker/${id}`, {params: {convert}}).then(res => res.data);
     }
 
     async getChart(id: string, convert: string = 'USD') {
-        return this.axiosInstance.get(`/api/chart/${id}`, { params: { convert } }).then(res => res.data);
+        return this.axiosInstance.get(`/api/chart/${id}`, {params: {convert}}).then(res => res.data);
     }
 
     async getInfo(id: string) {
@@ -51,11 +54,11 @@ class ApiClient {
     }
 
     async updateBalance(amount: number) {
-        return this.axiosInstance.patch('/account/balance', { amount }).then(res => res.data);
+        return this.axiosInstance.patch('/account/balance', {amount}).then(res => res.data);
     }
 
     async register(username: string, password: string, birthDate: string, chatIDuser?: string) {
-        const payload: Record<string, any> = { username, password, birthDate };
+        const payload: Record<string, any> = {username, password, birthDate};
         if (chatIDuser) {
             payload.chatIDuser = chatIDuser;
         }
@@ -63,7 +66,7 @@ class ApiClient {
     }
 
     async login(username: string, password: string) {
-        const response = await this.axiosInstance.post('/auth/login', { username, password });
+        const response = await this.axiosInstance.post('/auth/login', {username, password});
         return response.data;
     }
 
@@ -72,17 +75,12 @@ class ApiClient {
     }
 
     async transfer(receiverWallet: string, amount: number) {
-        return this.axiosInstance.post('/account/transfer', { receiverWallet, amount }).then(res => res.data);
+        return this.axiosInstance.post('/account/transfer', {receiverWallet, amount}).then(res => res.data);
     }
 
     async applyPromo(code: string) {
-        return this.axiosInstance.post('/promocode/apply', { code }).then(res => res.data);
+        return this.axiosInstance.post('/promocode/apply', {code}).then(res => res.data);
     }
-
-    async loginWithGoogleCode() {
-        return this.axiosInstance.get('/auth/google/callback').then(res => res.data);
-    }
-
 }
 
 export default ApiClient;

@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
+
 export default function AppWrapper() {
-    return <App />;
+    return <App/>;
 }
 let rootElement: ReactDOM.Root
 
