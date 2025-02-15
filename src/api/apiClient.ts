@@ -78,6 +78,11 @@ class ApiClient {
     async applyPromo(code: string) {
         return this.axiosInstance.post('/promocode/apply', { code }).then(res => res.data);
     }
+
+    async loginWithGoogleCode() {
+        return this.axiosInstance.get('/auth/google/callback').then(res => res.data);
+    }
+
 }
 
 export default ApiClient;
