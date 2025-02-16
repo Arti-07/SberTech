@@ -1,9 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
-import { Container, Message, Button } from './StyledProtectedRoute';
+import {useNavigate} from 'react-router-dom';
+import {useTheme} from '@mui/material/styles';
+import {Container, Message, Button} from './StyledProtectedRoute';
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const isAuthenticated = !!sessionStorage.getItem('login');
     const navigate = useNavigate();
     const theme = useTheme();

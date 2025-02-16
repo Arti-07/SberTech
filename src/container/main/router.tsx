@@ -4,12 +4,14 @@ import ListPage from '../list';
 import DetailPage from '../detail';
 import MiningPage from "../mining";
 import SigninPage from "../signin";
+import GoogleAuthButton from "../signin";
 import SignupPage from "../signup";
 import UsersPage from "../userspage";
 import { getNavigationsValue } from '@brojs/cli';
 import Layout from './components/layout';
 import NotFoundPage from "../404/NotFoundPage";
 import ProtectedRoute from './ProtectedRoute';
+import SignWithTelegram from '../signin/SignWithTelegram';
 
 const ErrorPage = () => {
     return (
@@ -66,6 +68,10 @@ export const router = createBrowserRouter([
                         <UsersPage />
                     </ProtectedRoute>
                 )
+            },
+            {
+                path: getNavigationsValue('smartini_crypto.signin.signwithtelegram'),
+                element: <SignWithTelegram />
             },
             {
                 path: "*",

@@ -107,6 +107,7 @@ const Header = (): React.ReactElement => {
         navigate('/smartini_crypto');
     };
 
+
     return (
         <StyledAppBar position="static" theme={theme}>
             <Toolbar>
