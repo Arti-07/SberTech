@@ -176,8 +176,31 @@ export const SignUpButton = styled.button<{ theme?: Theme }>`
     &:hover {
         background-color: #45a049;:
         transform: translateY(-2px);
+        
+    @media (max-width: 600px) {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+`;
 
+export const TelegramButton = styled.button<{ theme?: Theme }>`
+    padding: 12px;
+    font-family: 'Verdana', sans-serif;
+    background-color: ${(props) => props.theme.palette.primary.main};
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
     
+    background-color: ${(props) =>
+            props.theme.palette.mode === 'dark' ? '#47485A' : '#9494B3'};
+    
+    &:hover {
+        background-color: #45a049;:
+    transform: translateY(-2px);
+
     @media (max-width: 600px) {
         width: 100%;
         font-size: 0.9rem;
@@ -197,4 +220,6 @@ export const ButtonGroup = styled.div<{ theme?: Theme }>`
     }
     
 `;
+
+
 

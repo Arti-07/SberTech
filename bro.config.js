@@ -1,5 +1,6 @@
 const pkg = require("./package");
 
+
 module.exports = {
   apiPath: "stubs/api",
   webpackConfig: {
@@ -16,6 +17,7 @@ module.exports = {
     "smartini_crypto.signin": "/smartini_crypto/signin",
     "smartini_crypto.signup": "/smartini_crypto/signup",
     "smartini_crypto.userspage": "/smartini_crypto/userspage",
+    "smartini_crypto.signin.signwithtelegram": "/smartini_crypto/signin/signwithtelegram",
   },
   features: {
     "smartini_crypto": {
@@ -23,8 +25,8 @@ module.exports = {
     },
   },
   config: {
-    "smartini_crypto.api": "https://193.124.118.57",
-    //"smartini_crypto.api": "http://localhost:4000/",
+    //"smartini_crypto.api": "https://193.124.118.57",
+    "smartini_crypto.api": "http://localhost:4000/",
     "smartini_crypto.promocode_new_year": "NEWYEAR",
     "smartini_crypto.promocode_admin": "ADMIN",
   },
