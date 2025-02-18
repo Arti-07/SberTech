@@ -11,43 +11,41 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import SignInPage from '../index';
 
-
 const theme = createTheme({
     palette: {
         mode: 'dark',
-            background: {
-                default: '#1E1E2A',
-            },
-        },
-        components: {
-            MuiCssBaseline: {
-                styleOverrides: {
-                    html: {
-                        height: '100%',
-                    },
-                    '#app': {
-                        height: '100%',
-                    },
-                    body: {
-                        height: '100%',
-                        backgroundImage: 'linear-gradient(to right top, #292934, #424251, #5c5c6f, #77778f, #9494b1);',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                        backgroundAttachment: 'fixed',
-                    },
+        background: {
+            default: '#1E1E2A'
+        }
+    },
+    components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                html: {
+                    height: '100%'
                 },
-            },
-        },
+                '#app': {
+                    height: '100%'
+                },
+                body: {
+                    height: '100%',
+                    backgroundImage: 'linear-gradient(to right top, #292934, #424251, #5c5c6f, #77778f, #9494b1);',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    backgroundAttachment: 'fixed'
+                }
+            }
+        }
+    }
 });
-
 
 describe('SignInPage component', () => {
     let mockAxios;
-    
+
     beforeEach(() => {
         mockAxios = new MockAdapter(axios);
     });
-    
+
     afterEach(() => {
         mockAxios.reset();
         jest.clearAllMocks();
@@ -65,11 +63,11 @@ describe('SignInPage component', () => {
         const signInButton = screen.getByRole('button', { name: 'Sign In' });
         fireEvent.click(signInButton);
 
-        expect(await screen.findByText('Login must be at least 3 characters and can include letters, numbers, @, $, -, and _.')).toBeInTheDocument();
+        expect(await screen.findByText('Enter both your username and password')).toBeInTheDocument();
     });
 
     test('should display error message when only login provided', async () => {
-        render(            
+        render(
             <ThemeProvider theme={theme}>
                 <MemoryRouter>
                     <SignInPage />
@@ -78,12 +76,12 @@ describe('SignInPage component', () => {
         );
 
         const loginInput = screen.getByPlaceholderText('Enter username');
-        fireEvent.change(loginInput, {target: {value: 'test_user'}});
+        fireEvent.change(loginInput, { target: { value: 'test_user' } });
 
         const signInButton = screen.getByRole('button', { name: 'Sign In' });
         fireEvent.click(signInButton);
 
-        expect(await screen.findByText('Password must be at least 6 characters and include at least one letter and one number.')).toBeInTheDocument();
+        expect(await screen.findByText('Enter both your username and password')).toBeInTheDocument();
     });
 
     test('should display error message when only password provided', async () => {
@@ -96,12 +94,12 @@ describe('SignInPage component', () => {
         );
 
         const passwordInput = screen.getByPlaceholderText('Enter password');
-        fireEvent.change(passwordInput, {target: {value: 'valid_password'}});
+        fireEvent.change(passwordInput, { target: { value: 'valid_password' } });
 
         const signInButton = screen.getByRole('button', { name: 'Sign In' });
         fireEvent.click(signInButton);
 
-        expect(await screen.findByText('Login must be at least 3 characters and can include letters, numbers, @, $, -, and _.')).toBeInTheDocument();
+        expect(await screen.findByText('Enter both your username and password')).toBeInTheDocument();
     });
 
     test.skip('calls API with correct credentials', async () => {
@@ -119,12 +117,11 @@ describe('SignInPage component', () => {
         const inputPassword = screen.getByPlaceholderText('Enter password');
         const button = screen.getByRole('button', { name: 'Sign In' });
 
-        fireEvent.change(inputLogin, {target: {value: 'valid_username'}});
-        fireEvent.change(inputPassword, {target: {value: 'valid_password'}});
+        fireEvent.change(inputLogin, { target: { value: 'valid_username' } });
+        fireEvent.change(inputPassword, { target: { value: 'valid_password' } });
 
         fireEvent.click(button);
 
-        expect(await screen.findByText('Проверьте подключение к интернету и попробуйте снова.')).toBeInTheDocument();
+        expect(await screen.findByText('Check your internet connection and try again.')).toBeInTheDocument();
     });
-
 });
