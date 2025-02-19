@@ -141,3 +141,25 @@ export const WalletAddressText = styled.p`
         font-size: 0.9rem;
     }
 `;
+
+export const BalanceAmount = styled('span')(() => ({
+    fontWeight: 600,
+    fontSize: '1.5rem',
+    color: '#03fc20',
+    marginLeft: '8px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    background: 'linear-gradient(135deg, #2a5f34, #3a6b3f)',
+    borderRadius: '4px',
+    padding: '2px 6px',
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+    textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+
+    '&:hover': {
+        transform: 'scale(1.1)',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)'
+    }
+}));
+
+
