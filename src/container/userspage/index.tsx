@@ -1,19 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useTheme} from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import api from '../../api';
 import {
     PageContainer,
     Title,
     UserInfo,
     BalanceText,
-    StyledButton
+    StyledButton,
+    BalanceAmount
 } from './components/UsersPageStyles';
 import WalletSection from './WalletSection';
 import SendMoneyModal from './SendMoneyModal';
 import CardForm from './CardForm';
 import Modal from '@mui/material/Modal';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
+import { Typography } from '@mui/material';
+
+import UsdtLogo from '../../assets/images/tether-usdt-logo.png';
 
 const UsersPage = () => {
     const theme = useTheme();
@@ -85,7 +89,7 @@ const UsersPage = () => {
                     autoClose: 3000,
                     closeOnClick: true,
                     pauseOnHover: true,
-                    theme: 'colored',
+                    theme: 'colored'
                 });
                 setBalance((prevBalance) => prevBalance - amount);
             }
@@ -103,7 +107,22 @@ const UsersPage = () => {
             {isAuthenticated ? (
                 <UserInfo theme={theme}>
                     <Title theme={theme}>Hello, {login}!</Title>
-                    <BalanceText theme={theme}>Your balance: {balance}</BalanceText>
+                    <BalanceText theme={theme}>
+                        Your balance:
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                fontWeight: 600,
+                                marginLeft: 1
+                            }}
+                        >
+                            <BalanceAmount>{balance.toFixed(2)}</BalanceAmount>
+                            <img src={UsdtLogo} alt="USDT Logo" style={{ width: 30, height: 30, marginLeft: 8 }} />
+                        </Typography>
+                    </BalanceText>
+
                     <WalletSection
                         walletAddress={walletAddress}
                         isVisible={isWalletVisible}

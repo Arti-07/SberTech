@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyledButton, WalletAddressText } from './components/UsersPageStyles';
 import { Theme } from '@mui/material/styles';
+import { FaClipboard } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface WalletSectionProps {
     walletAddress: string;
@@ -10,6 +13,32 @@ interface WalletSectionProps {
 }
 
 const WalletSection: React.FC<WalletSectionProps> = ({ walletAddress, isVisible, onToggleVisibility, theme }) => {
+
+    const handleCopyToClipboard = () => {
+        navigator.clipboard.writeText(walletAddress)
+            .then(() => {
+                toast.success('Address copied to clipboard!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    draggable: true,
+                    theme: theme.palette.mode === 'dark' ? 'dark' : 'light'
+                });
+            })
+            .catch(err => {
+                toast.error('Failed to copy address. Please try again.', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    draggable: true,
+                    theme: theme.palette.mode === 'dark' ? 'dark' : 'light'
+                });
+                console.error('Clipboard copy error:', err);
+            });
+    };
+
     return (
         <div>
             <StyledButton onClick={onToggleVisibility} theme={theme}>
@@ -23,8 +52,12 @@ const WalletSection: React.FC<WalletSectionProps> = ({ walletAddress, isVisible,
                     marginTop: '20px',
                     boxShadow: theme.palette.mode === 'dark' ? '0 4px 10px rgba(0, 0, 0, 0.5)' : '0 4px 10px rgba(0, 0, 0, 0.1)'
                 }}>
-                    <WalletAddressText theme={theme}>
+                    <WalletAddressText theme={theme} style={{ display: 'flex', alignItems: 'center' }}>
                         {walletAddress}
+                        <FaClipboard
+                            style={{ marginLeft: '10px', cursor: 'pointer' }}
+                            onClick={handleCopyToClipboard}
+                        />
                     </WalletAddressText>
                 </div>
             )}
