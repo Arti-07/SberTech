@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyledButton, WalletAddressText } from './components/UsersPageStyles';
 import { Theme } from '@mui/material/styles';
-import { FaClipboard } from 'react-icons/fa'; // Иконка для копирования
-import { toast } from 'react-toastify'; // Импорт для уведомлений
-import 'react-toastify/dist/ReactToastify.css'; // Стили для уведомлений
+import { FaClipboard } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface WalletSectionProps {
     walletAddress: string;
